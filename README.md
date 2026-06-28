@@ -1,6 +1,6 @@
 # DataTeaCup
 
-DataTeaCup（数据茶杯）是一套开源的数据集成与智能 BI 平台，面向需要自建数据中台、报表平台、可视化看板和 AI 数据分析能力的团队。
+DataTeaCup（数据茶杯）是一套公开开源的数据集成与智能 BI 平台，面向需要自建数据中台、报表平台、可视化看板和 AI 数据分析能力的团队。项目适合学习、二次开发、私有化部署和行业化数据应用交付。
 
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://openjdk.org/)
@@ -9,6 +9,24 @@ DataTeaCup（数据茶杯）是一套开源的数据集成与智能 BI 平台，
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ed.svg)](docker-compose.yml)
 
 关键词：`BI`、`数据集成`、`数据采集`、`DataX`、`报表设计`、`可视化大屏`、`ECharts`、`数据质量`、`数据血缘`、`AI 助手`、`Spring Boot`、`Vue 3`。
+
+> 如果你正在寻找一个可运行、可扩展、可私有化部署的数据平台底座，DataTeaCup 值得收藏、Star 和二次开发。
+
+## 界面预览
+
+![DataTeaCup 登录页](docs/assets/screenshots/datateacup-login-preview.png)
+
+| 仪表盘 | 数据源管理 |
+| --- | --- |
+| ![DataTeaCup 仪表盘](docs/assets/screenshots/datateacup-dashboard-preview.png) | ![DataTeaCup 数据源管理](docs/assets/screenshots/datateacup-data-source-preview.png) |
+
+| 报表管理 | 系统监控 |
+| --- | --- |
+| ![DataTeaCup 报表管理](docs/assets/screenshots/datateacup-report-manage-preview.png) | ![DataTeaCup 系统监控](docs/assets/screenshots/datateacup-system-monitor-preview.png) |
+
+| AI 助手 |
+| --- |
+| ![DataTeaCup AI 助手](docs/assets/screenshots/datateacup-ai-assistant-preview.png) |
 
 ## 为什么是 DataTeaCup
 
@@ -19,6 +37,14 @@ DataTeaCup（数据茶杯）是一套开源的数据集成与智能 BI 平台，
 - 前端采用 Vue 3 + TypeScript + Vite，内置桌面端和移动端视图。
 - SQL 初始化脚本、Docker Compose 和环境模板已整理好，便于快速启动。
 - 不绑定特定 AI 厂商，支持 OpenAI-compatible API、Qwen、DeepSeek、Ollama 等模型配置。
+
+## 推荐亮点
+
+- 一套平台覆盖数据接入、采集、同步、报表、图表、大屏、监控和协作。
+- 使用主流 Java/Vue 技术栈，团队接手成本低，适合做企业级二开。
+- 保留完整 SQL 初始化脚本和 Docker Compose，一键部署路径清晰。
+- README 和公开截图已整理，适合作为数据平台、BI 平台、低代码数据应用的开源参考项目。
+- 使用 Apache License 2.0，对学习、商用集成和二次开发更友好。
 
 ## 功能总览
 
@@ -69,7 +95,7 @@ docker compose up -d --build
 - 前端：`http://localhost`
 - 网关健康检查：`http://localhost:8888/api/health`
 - 默认账号：`admin`
-- 默认密码：`admin123`
+- 默认密码：`damin123`（如本地初始化数据不同，请以实际初始化密码为准）
 
 ### 本地开发
 

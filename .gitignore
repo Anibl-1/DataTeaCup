@@ -55,6 +55,10 @@ docs/guide/
 docs/specs/
 docs/项目详细设计/
 
+# Public README screenshots keep only optimized preview images.
+docs/assets/screenshots/*.png
+!docs/assets/screenshots/*-preview.png
+
 # License files and release staging
 *license*.json
 *license*.key
