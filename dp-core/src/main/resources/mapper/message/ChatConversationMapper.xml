@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.message.mapper.ChatConversationMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.message.entity.ChatConversation">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="name" property="name"/>
+        <result column="avatar" property="avatar"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_message_time" property="lastMessageTime"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT id, type, name, avatar, create_time, last_message_time
+        FROM chat_conversation WHERE id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO chat_conversation (type, name, avatar, create_time, last_message_time)
+        VALUES (#{type}, #{name}, #{avatar}, #{createTime}, #{lastMessageTime})
+    </insert>
+
+    <update id="update">
+        UPDATE chat_conversation
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="lastMessageTime != null">last_message_time = #{lastMessageTime},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM chat_conversation WHERE id = #{id}
+    </delete>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT c.id, c.type, c.name, c.avatar, c.create_time, c.last_message_time
+        FROM chat_conversation c
+        INNER JOIN chat_conversation_member m ON c.id = m.conversation_id
+        WHERE m.user_id = #{userId}
+        ORDER BY c.last_message_time DESC
+    </select>
+
+    <update id="updateLastMessageTime">
+        UPDATE chat_conversation SET last_message_time = NOW() WHERE id = #{id}
+    </update>
+
+</mapper>

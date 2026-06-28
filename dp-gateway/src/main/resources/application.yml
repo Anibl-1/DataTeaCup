@@ -1,0 +1,92 @@
+server:
+  port: ${GATEWAY_PORT:8888}
+
+spring:
+  application:
+    name: dp-gateway
+  cloud:
+    # Nacos 服务发现（开发时可关闭，使用静态路由）
+    nacos:
+      discovery:
+        enabled: ${NACOS_ENABLED:false}
+        server-addr: ${NACOS_ADDR:localhost:8848}
+        namespace: ${NACOS_NAMESPACE:}
+        group: DEFAULT_GROUP
+    gateway:
+      # ==================== 微服务路由 ====================
+      # CORS for frontend dev server
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
+      routes:
+        # --- 系统服务 → dp-system-service:9001 ---
+        - id: system-routes
+          uri: ${SYSTEM_SERVICE_URI:http://localhost:9001}
+          predicates:
+            - Path=/api/auth/**,/api/user/**,/api/role/**,/api/menu/**,/api/dict/**,/api/system-config/**,/api/operation-log/**,/api/login-log/**,/api/department/**,/api/posts/**,/api/health/**,/api/error-report/**,/api/file/**,/api/system/**,/api/monitor/**,/api/cache/**,/api/logs/**,/api/scheduler/**,/api/sentinel/**,/api/ops/**,/api/alert/**,/api/usage-stats/**,/api/upgrade/**,/api/diag/**
+          filters:
+            - StripPrefix=1
+            - RemoveResponseHeader=Connection
+            - AddResponseHeader=Connection, keep-alive
+
+        # --- 数据服务 → dp-data-service:9002 ---
+        - id: data-routes
+          uri: ${DATA_SERVICE_URI:http://localhost:9002}
+          predicates:
+            - Path=/api/data-source/**,/api/tabledata/**,/api/db-manager/**,/api/query-builder/**,/api/connectors/**,/api/data-sync/**,/api/datax/**,/api/collect/**,/api/pipeline/**,/api/data-dictionary/**,/api/data-lineage/**,/api/data-quality/**,/api/masking/**,/api/permissions/**,/api/rls/**,/api/sql-autocomplete/**,/api/export-task/**,/api/dataview/**
+          filters:
+            - StripPrefix=1
+            - RemoveResponseHeader=Connection
+            - AddResponseHeader=Connection, keep-alive
+
+        # --- 分析服务 → dp-analytics-service:9003 ---
+        - id: analytics-routes
+          uri: ${ANALYTICS_SERVICE_URI:http://localhost:9003}
+          predicates:
+            - Path=/api/report-definition/**,/api/report-template/**,/api/report/**,/api/report-version/**,/api/chart-definition/**,/api/chart-folder/**,/api/chart-link/**,/api/dashboard/**,/api/dashboard-share/**,/api/page-definition/**,/api/bigscreen-project/**,/api/style-config/**,/api/versions/**,/api/dynamic-parameter/**,/api/ai/**,/api/nl-dashboard/**,/api/public/share/**,/api/share/**,/api/subscriptions/**
+          filters:
+            - StripPrefix=1
+            - RemoveResponseHeader=Connection
+            - AddResponseHeader=Connection, keep-alive
+
+        # --- 协作服务 → dp-collaboration-service:9004 ---
+        - id: collaboration-routes
+          uri: ${COLLABORATION_SERVICE_URI:http://localhost:9004}
+          predicates:
+            - Path=/api/chat/**,/api/notification/**,/api/notification-setting/**,/api/message-channel/**,/api/announcement/**,/api/comments/**,/api/team-spaces/**,/api/tickets/**
+          filters:
+            - StripPrefix=1
+            - RemoveResponseHeader=Connection
+            - AddResponseHeader=Connection, keep-alive
+
+        # --- WebSocket → system-service (WebSocket handler lives there) ---
+        - id: ws-routes
+          uri: ${SYSTEM_SERVICE_WS_URI:ws://localhost:9001}
+          predicates:
+            - Path=/api/ws/**
+          filters:
+            - StripPrefix=1
+
+# Actuator 监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+
+logging:
+  level:
+    com.dataplatform.gateway: INFO
+    org.springframework.cloud.gateway: INFO

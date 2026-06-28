@@ -1,0 +1,704 @@
+/**
+ * 全局深色模式样式覆盖
+ * 
+ * 独立 CSS 文件，通过 main.ts 最后导入，确保最高优先级。
+ * 覆盖 Naive UI CSS-in-JS 内部变量和页面级白色背景。
+ */
+
+/* ========== 布局基础 - 深海军蓝科技风 ========== */
+html.dark body {
+  background-color: var(--dp-bg-canvas, #060d1a) !important;
+  color: var(--dp-text-primary, #f1f5f9) !important;
+}
+
+html.dark .n-layout-header {
+  background: rgba(15, 23, 42, 0.88) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .n-layout > .n-layout-scroll-container {
+  background: var(--dp-bg-canvas, #060d1a) !important;
+}
+
+html.dark .n-layout-content {
+  background: var(--dp-gradient-page, linear-gradient(160deg, #060d1a 0%, #0d1829 100%)) !important;
+}
+
+html.dark .n-layout-footer {
+  background: rgba(6, 13, 26, 0.7) !important;
+  border-top-color: rgba(255, 255, 255, 0.04) !important;
+  color: #475569 !important;
+}
+
+html.dark .n-layout-sider {
+  background: var(--dp-bg-sidebar, #0d1829) !important;
+  border-right-color: rgba(255, 255, 255, 0.04) !important;
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+html.dark .n-layout-sider .n-layout-sider-scroll-container {
+  background: var(--dp-bg-sidebar, #0d1829) !important;
+}
+
+/* ========== Naive UI 卡片 ========== */
+html.dark .n-card {
+  --n-color: var(--dp-bg-elevated, #1e293b) !important;
+  --n-color-embedded: var(--dp-bg-secondary, #1a2438) !important;
+  --n-border-color: var(--dp-border-light, rgba(255,255,255,0.06)) !important;
+  --n-text-color: var(--dp-text-primary, #f1f5f9) !important;
+  --n-title-text-color: var(--dp-text-primary, #f1f5f9) !important;
+  --n-close-icon-color: #64748b !important;
+  --n-close-icon-color-hover: #94a3b8 !important;
+  --n-close-color-hover: rgba(255,255,255,0.06) !important;
+  --n-action-color: var(--dp-bg-secondary, #1a2438) !important;
+  background-color: var(--dp-bg-elevated, #1e293b) !important;
+  color: var(--dp-text-primary, #f1f5f9) !important;
+}
+
+html.dark .n-card-header {
+  border-bottom-color: var(--dp-border-light, rgba(255,255,255,0.06)) !important;
+}
+
+html.dark .n-card-header__main {
+  color: var(--dp-text-primary, #f1f5f9) !important;
+}
+
+/* ========== Naive UI 输入框 ========== */
+html.dark .n-input {
+  --n-color: var(--dp-bg-secondary, #1a2438) !important;
+  --n-color-focus: var(--dp-bg-secondary, #1a2438) !important;
+  --n-color-disabled: var(--dp-bg-elevated, #1e293b) !important;
+  --n-border: 1px solid var(--dp-border-default, rgba(255,255,255,0.1)) !important;
+  --n-border-hover: 1px solid var(--dp-border-strong, rgba(255,255,255,0.18)) !important;
+  --n-border-focus: 1px solid var(--dp-color-primary, #3b82f6) !important;
+  --n-text-color: var(--dp-text-primary, #f1f5f9) !important;
+  --n-placeholder-color: var(--dp-text-tertiary, #64748b) !important;
+  --n-caret-color: var(--dp-color-primary, #3b82f6) !important;
+}
+
+html.dark .n-input .n-input__input-el,
+html.dark .n-input .n-input__textarea-el {
+  color: #e2e8f0 !important;
+  caret-color: var(--color-primary, #409EFF) !important;
+}
+
+html.dark .n-input .n-input__input-el::placeholder,
+html.dark .n-input .n-input__textarea-el::placeholder {
+  color: #475569 !important;
+}
+
+/* ========== Naive UI 选择器 ========== */
+html.dark .n-base-selection {
+  --n-color: var(--dp-bg-secondary, #1a2438) !important;
+  --n-color-active: var(--dp-bg-secondary, #1a2438) !important;
+  --n-color-disabled: var(--dp-bg-elevated, #1e293b) !important;
+  --n-border: 1px solid var(--dp-border-default, rgba(255,255,255,0.1)) !important;
+  --n-border-hover: 1px solid var(--dp-border-strong, rgba(255,255,255,0.18)) !important;
+  --n-border-focus: 1px solid var(--dp-color-primary, #3b82f6) !important;
+  --n-border-active: 1px solid var(--dp-color-primary, #3b82f6) !important;
+  --n-text-color: var(--dp-text-primary, #f1f5f9) !important;
+  --n-placeholder-color: var(--dp-text-tertiary, #64748b) !important;
+}
+
+/* ========== Naive UI 标签页 ========== */
+html.dark .n-tabs {
+  --n-tab-text-color: #94a3b8 !important;
+  --n-tab-text-color-active: #f1f5f9 !important;
+  --n-tab-text-color-hover: #cbd5e1 !important;
+  --n-tab-text-color-disabled: #475569 !important;
+  --n-bar-color: var(--color-primary, #409EFF) !important;
+  --n-tab-border-color: #334155 !important;
+  --n-pane-text-color: #e2e8f0 !important;
+  --n-tab-color-segment: #1e293b !important;
+}
+
+html.dark .n-tabs-nav {
+  border-bottom-color: #334155 !important;
+}
+
+html.dark .n-tab-pane {
+  color: #e2e8f0 !important;
+}
+
+/* ========== Naive UI 数据表格 ========== */
+html.dark .n-data-table {
+  --n-th-color: var(--dp-bg-elevated, #1e293b) !important;
+  --n-td-color: var(--dp-bg-primary, #0f172a) !important;
+  --n-td-color-striped: var(--dp-bg-secondary, #1a2438) !important;
+  --n-td-color-hover: rgba(59, 130, 246, 0.07) !important;
+  --n-border-color: var(--dp-border-light, rgba(255,255,255,0.06)) !important;
+  --n-th-text-color: var(--dp-text-secondary, #94a3b8) !important;
+  --n-td-text-color: var(--dp-text-primary, #e2e8f0) !important;
+}
+
+/* ========== Naive UI 表单 ========== */
+html.dark .n-form-item-label__text {
+  color: #94a3b8 !important;
+}
+
+html.dark .n-form-item .n-form-item-feedback__line {
+  color: #64748b !important;
+}
+
+/* ========== Naive UI 单选/复选 ========== */
+html.dark .n-radio__label {
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-radio-group {
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-checkbox__label {
+  color: #cbd5e1 !important;
+}
+
+/* ========== Naive UI 提醒/警告框 ========== */
+html.dark .n-alert {
+  --n-color: rgba(59, 130, 246, 0.08) !important;
+  --n-border: 1px solid rgba(59, 130, 246, 0.2) !important;
+  --n-title-text-color: #e2e8f0 !important;
+  --n-content-text-color: #cbd5e1 !important;
+  --n-icon-color: #60a5fa !important;
+}
+
+/* ========== Naive UI 按钮 ========== */
+html.dark .n-button--default-type {
+  --n-color: #1e293b !important;
+  --n-color-hover: #334155 !important;
+  --n-color-pressed: #0f172a !important;
+  --n-border: 1px solid #334155 !important;
+  --n-border-hover: 1px solid #475569 !important;
+  --n-text-color: #e2e8f0 !important;
+  --n-text-color-hover: #f1f5f9 !important;
+}
+
+/* ========== Naive UI 分页 ========== */
+html.dark .n-pagination {
+  --n-item-color: #1e293b !important;
+  --n-item-color-hover: rgba(255,255,255,0.06) !important;
+  --n-item-color-active: rgba(59, 130, 246, 0.12) !important;
+  --n-item-text-color: #94a3b8 !important;
+  --n-item-border-color: #334155 !important;
+  --n-button-color-hover: rgba(255,255,255,0.06) !important;
+}
+
+/* ========== Naive UI 弹出层/下拉/对话框/抽屉 ========== */
+html.dark .n-popover {
+  --n-color: #1e293b !important;
+  --n-text-color: #e2e8f0 !important;
+}
+
+html.dark .n-dropdown-menu {
+  --n-color: #1e293b !important;
+  --n-option-text-color: #e2e8f0 !important;
+  --n-option-color-hover: rgba(255,255,255,0.06) !important;
+}
+
+html.dark .n-dialog {
+  --n-color: #1e293b !important;
+  --n-text-color: #e2e8f0 !important;
+  --n-title-text-color: #f1f5f9 !important;
+  --n-border: 1px solid #334155 !important;
+}
+
+html.dark .n-drawer {
+  --n-color: #1e293b !important;
+  --n-text-color: #e2e8f0 !important;
+  --n-title-text-color: #f1f5f9 !important;
+  --n-header-border-bottom: 1px solid #334155 !important;
+}
+
+html.dark .n-drawer-content {
+  background-color: #1e293b !important;
+}
+
+html.dark .n-modal {
+  --n-color: #1e293b !important;
+  --n-text-color: #e2e8f0 !important;
+}
+
+/* ========== Naive UI 上传 ========== */
+html.dark .n-upload-dragger {
+  background: #111827 !important;
+  border-color: #334155 !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .n-upload-trigger {
+  border-color: #334155 !important;
+}
+
+/* ========== Naive UI 分割线 ========== */
+html.dark .n-divider {
+  --n-color: #334155 !important;
+}
+
+html.dark .n-divider__title {
+  color: #64748b !important;
+  background-color: var(--dp-bg-primary, #0f172a) !important;
+}
+
+/* ========== Naive UI 文字/标题 ========== */
+html.dark .n-text {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-h1, html.dark .n-h2, html.dark .n-h3,
+html.dark .n-h4, html.dark .n-h5, html.dark .n-h6 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .n-statistic-value {
+  color: #f1f5f9 !important;
+}
+
+html.dark .n-statistic__label {
+  color: #94a3b8 !important;
+}
+
+html.dark .n-empty__description {
+  color: #64748b !important;
+}
+
+html.dark .n-descriptions {
+  color: #cbd5e1 !important;
+}
+
+/* ========== Naive UI 菜单 ========== */
+html.dark .n-menu {
+  --n-item-text-color: #cbd5e1 !important;
+  --n-item-text-color-hover: #f1f5f9 !important;
+  --n-item-text-color-active: #60a5fa !important;
+  --n-item-text-color-child-active: #60a5fa !important;
+  --n-item-icon-color: #cbd5e1 !important;
+  --n-item-icon-color-hover: #f1f5f9 !important;
+  --n-item-icon-color-active: #60a5fa !important;
+  --n-item-icon-color-child-active: #60a5fa !important;
+  --n-item-color-hover: rgba(255, 255, 255, 0.06) !important;
+  --n-item-color-active: rgba(59, 130, 246, 0.1) !important;
+  --n-item-color-active-hover: rgba(59, 130, 246, 0.12) !important;
+  --n-arrow-color: #94a3b8 !important;
+  --n-arrow-color-hover: #e2e8f0 !important;
+  --n-arrow-color-active: #60a5fa !important;
+  --n-arrow-color-child-active: #60a5fa !important;
+  --n-group-text-color: #64748b !important;
+  --n-color: transparent !important;
+}
+
+/* ========== Naive UI 面包屑 ========== */
+html.dark .n-breadcrumb {
+  --n-item-text-color: #94a3b8 !important;
+  --n-item-text-color-hover: #e2e8f0 !important;
+  --n-item-text-color-active: #f1f5f9 !important;
+  --n-separator-color: #475569 !important;
+}
+
+/* ========== Naive UI Tag ========== */
+html.dark .n-tag {
+  --n-border: 1px solid #334155 !important;
+}
+
+/* ========== Naive UI Switch ========== */
+html.dark .n-switch {
+  --n-rail-color: #334155 !important;
+}
+
+/* ========== Naive UI Skeleton ========== */
+html.dark .n-skeleton {
+  --n-color: #263348 !important;
+  --n-color-end: #334155 !important;
+}
+
+/* ========== Naive UI Toggle Button (sidebar) ========== */
+html.dark .n-layout-toggle-button {
+  background: var(--dp-bg-elevated, #1e293b) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #64748b !important;
+}
+
+html.dark .n-layout-toggle-button:hover {
+  background: var(--dp-bg-tertiary, #1e2d45) !important;
+  border-color: var(--dp-color-primary, #3b82f6) !important;
+  color: var(--dp-color-primary, #3b82f6) !important;
+}
+
+/* ========== 页面级白色背景通用修复 ========== */
+html.dark [class$="-page"],
+html.dark [class*="-page "],
+html.dark [class$="-container"],
+html.dark [class*="-container "] {
+  background-color: transparent !important;
+  color: #e2e8f0;
+}
+
+html.dark [class*="stat-item"],
+html.dark [class*="stat-card"] {
+  background-color: var(--dp-bg-elevated, #1e293b) !important;
+  color: var(--dp-text-primary, #f1f5f9) !important;
+  border-color: var(--dp-border-light, rgba(255,255,255,0.06)) !important;
+}
+
+html.dark [class*="stat-value"] {
+  color: #f1f5f9 !important;
+}
+
+html.dark [class*="stat-label"] {
+  color: #94a3b8 !important;
+}
+
+html.dark [class*="card-header"],
+html.dark [class*="-header-custom"] {
+  color: #f1f5f9 !important;
+}
+
+/* ========== 常见页面统计头部 ========== */
+html.dark .page-header-stats {
+  background-color: transparent !important;
+}
+
+html.dark .page-header-stats .stat-item {
+  background: var(--dp-bg-elevated, #1e293b) !important;
+  border-color: var(--dp-border-light, rgba(255,255,255,0.06)) !important;
+}
+
+/* ========== TabsNav 标签栏 ========== */
+html.dark .tabs-nav {
+  background: var(--dp-bg-primary, #0f172a) !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) !important;
+}
+
+html.dark .scroll-btn {
+  background: var(--dp-bg-primary, #0f172a) !important;
+  color: #64748b !important;
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+html.dark .scroll-btn:hover {
+  background: var(--dp-bg-elevated, #1e293b) !important;
+  color: var(--dp-color-primary, #3b82f6) !important;
+  border-color: var(--dp-color-primary, #3b82f6) !important;
+}
+
+html.dark .scroll-btn--left {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .scroll-btn--right {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .tab-item {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .tab-item:hover {
+  color: #e2e8f0 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark .tab-item--active {
+  background: rgba(59, 130, 246, 0.12) !important;
+  border-color: rgba(59, 130, 246, 0.2) !important;
+  border-bottom: 2px solid var(--color-primary, #3b82f6) !important;
+  color: #60a5fa !important;
+  box-shadow: none !important;
+}
+
+html.dark .tab-item--active:hover {
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+html.dark .tab-item--home.tab-item--active {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(16, 185, 129, 0.2) !important;
+  border-bottom: 2px solid #10b981 !important;
+  color: #34d399 !important;
+  box-shadow: none !important;
+}
+
+html.dark .tab-dot {
+  background: #475569 !important;
+}
+
+html.dark .tab-item:hover .tab-dot {
+  background: #60a5fa !important;
+}
+
+html.dark .tab-item--active .tab-dot {
+  background: #3b82f6 !important;
+  box-shadow: none !important;
+}
+
+html.dark .tab-item--home .tab-dot {
+  background: #059669 !important;
+}
+
+html.dark .tab-item--home:hover .tab-dot {
+  background: #34d399 !important;
+}
+
+html.dark .tab-item--home.tab-item--active .tab-dot {
+  background: #10b981 !important;
+  box-shadow: none !important;
+}
+
+html.dark .tab-title {
+  color: inherit !important;
+}
+
+html.dark .tab-close {
+  color: #64748b !important;
+}
+
+html.dark .tab-close:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+}
+
+html.dark .tab-item--active .tab-close {
+  color: #60a5fa !important;
+}
+
+html.dark .tab-item--active .tab-close:hover {
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+}
+
+html.dark .tabs-actions {
+  background: #1f2937 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .action-btn {
+  color: #64748b !important;
+  border-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+html.dark .action-btn:hover {
+  color: #e2e8f0 !important;
+}
+
+html.dark .action-btn::before {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .tabs-count {
+  background: #3b82f6 !important;
+  box-shadow: none !important;
+}
+
+/* ========== MainLayout Header/Logo ========== */
+html.dark .logo-text {
+  color: #f1f5f9 !important;
+  -webkit-text-fill-color: #f1f5f9 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+html.dark .header-action::before {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .logo::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent) !important;
+}
+
+/* ========== 内容区域通用 ========== */
+html.dark .content {
+  background: #111827 !important;
+}
+
+/* ========== MainLayout 布局元素 ========== */
+html.dark .header {
+  background: #1f2937 !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .hamburger:hover,
+html.dark .header-action:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .user-info {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+html.dark .user-info:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+html.dark .header-action {
+  color: #94a3b8 !important;
+}
+
+html.dark .header-action:hover {
+  color: #e2e8f0 !important;
+}
+
+html.dark .user-name {
+  color: #e2e8f0 !important;
+}
+
+html.dark .user-info:hover .user-name {
+  color: #f1f5f9 !important;
+}
+
+html.dark .logo {
+  background: #1e293b !important;
+  color: #f1f5f9 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .logo-icon {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3) !important;
+  border: none !important;
+}
+
+html.dark .logo:hover .logo-icon {
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.4) !important;
+}
+
+html.dark .n-menu-item:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .n-menu-item-content {
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-menu-item:hover .n-menu-item-content {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-menu-item-content--selected,
+html.dark .n-menu-item-content--selected .n-menu-item-content__header,
+html.dark .n-menu-item-content--selected .n-menu-item-content-header {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: #60a5fa !important;
+  box-shadow: none !important;
+}
+
+html.dark .n-menu-item-content--selected::after {
+  background: #3b82f6 !important;
+}
+
+html.dark .n-menu-item-content--selected .n-icon {
+  color: #60a5fa !important;
+}
+
+html.dark .n-submenu > .n-menu-item-content {
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-submenu:hover > .n-menu-item-content {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-submenu-children .n-menu-item-content {
+  color: #a1b0c4 !important;
+}
+
+html.dark .n-submenu-children .n-menu-item:hover .n-menu-item-content {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-submenu-children .n-menu-item-content--selected {
+  color: #60a5fa !important;
+  background: rgba(59, 130, 246, 0.15) !important;
+}
+
+html.dark .n-menu-item-content .n-icon {
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-menu-item:hover .n-menu-item-content .n-icon {
+  color: #e2e8f0 !important;
+}
+
+html.dark .sidebar-footer {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .sidebar-version {
+  color: #64748b !important;
+}
+
+html.dark .sidebar-copyright {
+  color: #475569 !important;
+}
+
+html.dark .sidebar-wrapper {
+  background: #111827 !important;
+}
+
+html.dark .footer {
+  background: #111827 !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  color: #64748b !important;
+}
+
+html.dark .footer-sep {
+  color: #475569 !important;
+}
+
+html.dark .n-breadcrumb-item {
+  color: #94a3b8 !important;
+}
+
+html.dark .breadcrumb .n-breadcrumb-item:last-child .n-breadcrumb-item__link {
+  color: #e2e8f0 !important;
+}
+
+html.dark .breadcrumb .n-breadcrumb-item__link {
+  color: #94a3b8 !important;
+}
+
+html.dark .hamburger {
+  color: #94a3b8 !important;
+}
+
+html.dark .hamburger:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #e2e8f0 !important;
+}
+
+/* ========== 通知中心暗黑模式 ========== */
+html.dark .notification-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .notification-empty {
+  color: #64748b !important;
+}
+
+html.dark .notification-item {
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+  background: transparent !important;
+}
+
+html.dark .notification-item--unread {
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+html.dark .notification-item:hover {
+  background: rgba(59, 130, 246, 0.12) !important;
+}
+
+html.dark .notification-item-content {
+  color: #94a3b8 !important;
+}
+
+html.dark .notification-item-time {
+  color: #64748b !important;
+}

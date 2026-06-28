@@ -1,0 +1,26 @@
+# ============================================================
+# dp-collaboration-service — 仅保留本服务差异化配置
+# 共享配置见 dp-service-starter/application-common.yml
+# ============================================================
+server:
+  port: 9004
+
+spring:
+  application:
+    name: dp-collaboration-service
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+    include: common
+
+# MyBatis type-aliases
+mybatis:
+  type-aliases-package: com.dataplatform.message.entity,com.dataplatform.data.entity,com.dataplatform.system.entity
+
+# 应用标识
+app:
+  name: DataTeaCup Collaboration Service
+
+# Sentinel 应用名
+sentinel:
+  app:
+    name: dp-collaboration-service

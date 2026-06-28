@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.system.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="nickname" property="nickname"/>
+        <result column="email" property="email"/>
+        <result column="avatar" property="avatar"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="phone" property="phone"/>
+        <result column="gender" property="gender"/>
+        <result column="status" property="status"/>
+        <result column="must_change_password" property="mustChangePassword"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM sys_user WHERE id = #{id}
+    </select>
+
+    <select id="selectByUsername" resultMap="BaseResultMap">
+        SELECT * FROM sys_user WHERE username = #{username}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT * FROM sys_user
+        <where>
+            <if test="filters != null and filters.size() > 0">
+                <foreach collection="filters" item="filter" separator=" AND ">
+                    <choose>
+                        <when test="filter.operator == 'eq' and filter.field == 'id'">id = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'username'">username = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'nickname'">nickname = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'email'">email = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'status'">status = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'createTime'">create_time = #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'id'">id != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'username'">username != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'nickname'">nickname != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'email'">email != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'status'">status != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'createTime'">create_time != #{filter.value}</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'username'">username LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'nickname'">nickname LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'email'">email LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'username'">username NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'nickname'">nickname NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'email'">email NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'createTime'">create_time NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'username'">username LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'nickname'">nickname LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'email'">email LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'createTime'">create_time LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'username'">username LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'nickname'">nickname LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'email'">email LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'id'">id &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'status'">status &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'createTime'">create_time &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'id'">id &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'status'">status &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'createTime'">create_time &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'id'">id &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'status'">status &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'createTime'">create_time &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'id'">id &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'status'">status &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'createTime'">create_time &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'username'">username IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'nickname'">nickname IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'email'">email IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'createTime'">create_time IS NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'username'">username IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'nickname'">nickname IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'email'">email IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'createTime'">create_time IS NOT NULL</when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM sys_user
+        <where>
+            <if test="filters != null and filters.size() > 0">
+                <foreach collection="filters" item="filter" separator=" AND ">
+                    <choose>
+                        <when test="filter.operator == 'eq' and filter.field == 'id'">id = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'username'">username = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'nickname'">nickname = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'email'">email = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'status'">status = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'createTime'">create_time = #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'id'">id != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'username'">username != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'nickname'">nickname != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'email'">email != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'status'">status != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'createTime'">create_time != #{filter.value}</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'username'">username LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'nickname'">nickname LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'email'">email LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'username'">username NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'nickname'">nickname NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'email'">email NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'createTime'">create_time NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'username'">username LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'nickname'">nickname LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'email'">email LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'createTime'">create_time LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'username'">username LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'nickname'">nickname LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'email'">email LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'id'">id &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'status'">status &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'createTime'">create_time &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'id'">id &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'status'">status &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'createTime'">create_time &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'id'">id &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'status'">status &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'createTime'">create_time &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'id'">id &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'status'">status &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'createTime'">create_time &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'username'">username IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'nickname'">nickname IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'email'">email IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'createTime'">create_time IS NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'username'">username IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'nickname'">nickname IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'email'">email IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'createTime'">create_time IS NOT NULL</when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_user (username, password, nickname, email, dept_id, phone, gender, status, must_change_password, create_time)
+        VALUES (#{username}, #{password}, #{nickname}, #{email}, #{deptId}, #{phone}, #{gender}, #{status}, #{mustChangePassword}, NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE sys_user
+        <set>
+            <if test="password != null">password = #{password},</if>
+            <if test="nickname != null">nickname = #{nickname},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="mustChangePassword != null">must_change_password = #{mustChangePassword},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM sys_user WHERE id = #{id}
+    </delete>
+
+    <insert id="insertUserRoles">
+        INSERT INTO sys_user_role (user_id, role_id) VALUES
+        <foreach collection="roleIds" item="roleId" separator=",">
+            (#{userId}, #{roleId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteUserRoles">
+        DELETE FROM sys_user_role WHERE user_id = #{userId}
+    </delete>
+
+    <select id="selectRoleIdsByUserId" resultType="long">
+        SELECT role_id FROM sys_user_role WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectByDeptId" resultMap="BaseResultMap">
+        SELECT * FROM sys_user WHERE dept_id = #{deptId} AND status = 1
+    </select>
+</mapper>
+

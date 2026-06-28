@@ -1,0 +1,242 @@
+version: '3.8'
+
+x-service-env: &service-env
+  SPRING_PROFILES_ACTIVE: prod
+  DB_URL: jdbc:mysql://mysql:3306/data_platform?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+  DB_HOST: mysql
+  DB_PORT: 3306
+  DB_NAME: data_platform
+  DB_USERNAME: ${DB_USERNAME:-datateacup}
+  DB_PASSWORD: ${DB_PASSWORD:-datateacup2026}
+  JWT_SECRET: ${JWT_SECRET:-please-change-this-to-a-secure-256bit-secret-key}
+  USER_DEFAULT_PASSWORD: ${USER_DEFAULT_PASSWORD:-Dp@2024!}
+  REDIS_ENABLED: "true"
+  REDIS_HOST: redis
+  REDIS_PORT: 6379
+  REDIS_PASSWORD: ${REDIS_PASSWORD:-datateacup2026}
+  EXPORT_FILE_PATH: /app/exports
+  DATATEACUP_LICENSE_FILE: /app/license/datateacup-license.json
+  DATATEACUP_LICENSE_PUBLIC_KEY: ${DATATEACUP_LICENSE_PUBLIC_KEY:-}
+  DATATEACUP_LICENSE_KEY_HASH: ${DATATEACUP_LICENSE_KEY_HASH:-}
+  XXL_JOB_EXECUTOR_LOGPATH: /app/logs/xxl-job
+  JASYPT_PASSWORD: ${JASYPT_PASSWORD:-datateacup-encrypt-key}
+  NACOS_ENABLED: "false"
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: datateacup-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-datateacup2026}
+      MYSQL_DATABASE: data_platform
+      MYSQL_USER: ${DB_USERNAME:-datateacup}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-datateacup2026}
+      TZ: Asia/Shanghai
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docs/sql/full/datateacup_full.sql:/docker-entrypoint-initdb.d/01-datateacup.sql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --max-connections=500
+      - --innodb-buffer-pool-size=512M
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-datateacup2026}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - datateacup-net
+
+  # Redis Cache (optional but recommended for production)
+  redis:
+    image: redis:7-alpine
+    container_name: datateacup-redis
+    restart: unless-stopped
+    command: redis-server --requirepass ${REDIS_PASSWORD:-datateacup2026} --appendonly yes --maxmemory 256mb --maxmemory-policy volatile-lru
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-datateacup2026}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - datateacup-net
+
+  # ==================== 微服务 ====================
+  system-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE: dp-system-service
+    container_name: datateacup-system-service
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    environment:
+      <<: *service-env
+      SERVER_PORT: 9001
+      LOGGING_FILE_NAME: /app/logs/dp-system-service.log
+    ports:
+      - "9001:9001"
+    volumes:
+      - app-logs:/app/logs
+      - app-exports:/app/exports
+      - ./runtime/license:/app/license
+    networks:
+      - datateacup-net
+
+  data-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE: dp-data-service
+    container_name: datateacup-data-service
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    environment:
+      <<: *service-env
+      SERVER_PORT: 9002
+      LOGGING_FILE_NAME: /app/logs/dp-data-service.log
+      AI_ENABLED: ${AI_ENABLED:-true}
+      AI_PROVIDER: ${AI_PROVIDER:-deepseek}
+      AI_API_KEY: ${AI_API_KEY:-}
+      AI_BASE_URL: ${AI_BASE_URL:-https://api.deepseek.com}
+      AI_MODEL: ${AI_MODEL:-deepseek-v4-flash}
+      AI_DEEPSEEK_API_KEY: ${AI_DEEPSEEK_API_KEY:-}
+      AI_DEEPSEEK_URL: ${AI_DEEPSEEK_URL:-https://api.deepseek.com}
+      AI_DEEPSEEK_MODEL: ${AI_DEEPSEEK_MODEL:-deepseek-v4-flash}
+      AI_DEEPSEEK_THINKING_TYPE: ${AI_DEEPSEEK_THINKING_TYPE:-disabled}
+      AI_DEEPSEEK_REASONING_EFFORT: ${AI_DEEPSEEK_REASONING_EFFORT:-high}
+    ports:
+      - "9002:9002"
+    volumes:
+      - app-logs:/app/logs
+      - app-exports:/app/exports
+      - ./runtime/license:/app/license
+    networks:
+      - datateacup-net
+
+  analytics-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE: dp-analytics-service
+    container_name: datateacup-analytics-service
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    environment:
+      <<: *service-env
+      SERVER_PORT: 9003
+      LOGGING_FILE_NAME: /app/logs/dp-analytics-service.log
+      AI_ENABLED: ${AI_ENABLED:-true}
+      AI_PROVIDER: ${AI_PROVIDER:-deepseek}
+      AI_API_KEY: ${AI_API_KEY:-}
+      AI_BASE_URL: ${AI_BASE_URL:-https://api.deepseek.com}
+      AI_MODEL: ${AI_MODEL:-deepseek-v4-flash}
+      AI_DEEPSEEK_API_KEY: ${AI_DEEPSEEK_API_KEY:-}
+      AI_DEEPSEEK_URL: ${AI_DEEPSEEK_URL:-https://api.deepseek.com}
+      AI_DEEPSEEK_MODEL: ${AI_DEEPSEEK_MODEL:-deepseek-v4-flash}
+      AI_DEEPSEEK_THINKING_TYPE: ${AI_DEEPSEEK_THINKING_TYPE:-disabled}
+      AI_DEEPSEEK_REASONING_EFFORT: ${AI_DEEPSEEK_REASONING_EFFORT:-high}
+    ports:
+      - "9003:9003"
+    volumes:
+      - app-logs:/app/logs
+      - app-exports:/app/exports
+      - ./runtime/license:/app/license
+    networks:
+      - datateacup-net
+
+  collaboration-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE: dp-collaboration-service
+    container_name: datateacup-collaboration-service
+    restart: unless-stopped
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    environment:
+      <<: *service-env
+      SERVER_PORT: 9004
+      LOGGING_FILE_NAME: /app/logs/dp-collaboration-service.log
+    ports:
+      - "9004:9004"
+    volumes:
+      - app-logs:/app/logs
+      - app-exports:/app/exports
+      - ./runtime/license:/app/license
+    networks:
+      - datateacup-net
+
+  gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE: dp-gateway
+    container_name: datateacup-gateway
+    restart: unless-stopped
+    depends_on:
+      - system-service
+      - data-service
+      - analytics-service
+      - collaboration-service
+    environment:
+      SPRING_PROFILES_ACTIVE: microservice
+      SERVER_PORT: 8888
+      GATEWAY_PORT: 8888
+      SYSTEM_SERVICE_URI: http://system-service:9001
+      DATA_SERVICE_URI: http://data-service:9002
+      ANALYTICS_SERVICE_URI: http://analytics-service:9003
+      COLLABORATION_SERVICE_URI: http://collaboration-service:9004
+    ports:
+      - "${GATEWAY_PORT:-8888}:8888"
+    networks:
+      - datateacup-net
+
+  frontend:
+    build:
+      context: ./dp-ui
+      dockerfile: Dockerfile
+    container_name: datateacup-frontend
+    restart: unless-stopped
+    depends_on:
+      - gateway
+    ports:
+      - "${APP_PORT:-80}:80"
+    networks:
+      - datateacup-net
+
+volumes:
+  mysql-data:
+    driver: local
+  redis-data:
+    driver: local
+  app-logs:
+    driver: local
+  app-exports:
+    driver: local
+
+networks:
+  datateacup-net:
+    driver: bridge

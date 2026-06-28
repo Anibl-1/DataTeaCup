@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.ResourcePermissionMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.data.entity.ResourcePermission">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="resource_type" property="resourceType"/>
+        <result column="resource_id" property="resourceId"/>
+        <result column="operations" property="operations"/>
+        <result column="inherited" property="inherited"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectByRoleAndResource" resultMap="BaseResultMap">
+        SELECT * FROM resource_permission
+        WHERE role_id = #{roleId}
+          AND resource_type = #{resourceType}
+          AND resource_id = #{resourceId}
+    </select>
+
+    <select id="selectByRoleIdsAndResource" resultMap="BaseResultMap">
+        SELECT * FROM resource_permission
+        WHERE role_id IN
+        <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+          AND resource_type = #{resourceType}
+          AND resource_id = #{resourceId}
+    </select>
+
+    <select id="selectAccessibleResourceIds" resultType="java.lang.Long">
+        SELECT DISTINCT resource_id FROM resource_permission
+        WHERE role_id IN
+        <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+          AND resource_type = #{resourceType}
+          AND operations LIKE CONCAT('%', #{operation}, '%')
+    </select>
+
+    <delete id="deleteByResource">
+        DELETE FROM resource_permission
+        WHERE resource_type = #{resourceType}
+          AND resource_id = #{resourceId}
+    </delete>
+
+    <delete id="deleteByRoleId">
+        DELETE FROM resource_permission
+        WHERE role_id = #{roleId}
+    </delete>
+
+    <select id="selectByResourceType" resultMap="BaseResultMap">
+        SELECT * FROM resource_permission
+        WHERE resource_type = #{resourceType}
+    </select>
+
+    <delete id="deleteByRoleAndResource">
+        DELETE FROM resource_permission
+        WHERE role_id = #{roleId}
+          AND resource_type = #{resourceType}
+          AND resource_id = #{resourceId}
+    </delete>
+
+    <select id="selectByResourceTypeAndId" resultMap="BaseResultMap">
+        SELECT * FROM resource_permission
+        WHERE resource_type = #{resourceType}
+          AND resource_id = #{resourceId}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT rp.* FROM resource_permission rp
+        INNER JOIN user_role ur ON rp.role_id = ur.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.message.mapper.ChatConversationMemberMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.message.entity.ChatConversationMember">
+        <id column="id" property="id"/>
+        <result column="conversation_id" property="conversationId"/>
+        <result column="user_id" property="userId"/>
+        <result column="unread_count" property="unreadCount"/>
+        <result column="join_time" property="joinTime"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO chat_conversation_member (conversation_id, user_id, unread_count, join_time)
+        VALUES (#{conversationId}, #{userId}, #{unreadCount}, #{joinTime})
+    </insert>
+
+    <insert id="batchInsert">
+        INSERT INTO chat_conversation_member (conversation_id, user_id, unread_count, join_time)
+        VALUES
+        <foreach collection="members" item="member" separator=",">
+            (#{member.conversationId}, #{member.userId}, #{member.unreadCount}, #{member.joinTime})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByConversationId">
+        DELETE FROM chat_conversation_member WHERE conversation_id = #{conversationId}
+    </delete>
+
+    <select id="selectByConversationId" resultMap="BaseResultMap">
+        SELECT id, conversation_id, user_id, unread_count, join_time
+        FROM chat_conversation_member
+        WHERE conversation_id = #{conversationId}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT id, conversation_id, user_id, unread_count, join_time
+        FROM chat_conversation_member
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectPrivateConversationId" resultType="java.lang.Long">
+        SELECT m1.conversation_id
+        FROM chat_conversation_member m1
+        INNER JOIN chat_conversation_member m2 ON m1.conversation_id = m2.conversation_id
+        INNER JOIN chat_conversation c ON c.id = m1.conversation_id
+        WHERE m1.user_id = #{userIdA}
+          AND m2.user_id = #{userIdB}
+          AND c.type = 'private'
+        LIMIT 1
+    </select>
+
+    <update id="incrementUnreadCount">
+        UPDATE chat_conversation_member
+        SET unread_count = unread_count + 1
+        WHERE conversation_id = #{conversationId}
+          AND user_id != #{excludeUserId}
+    </update>
+
+    <update id="resetUnreadCount">
+        UPDATE chat_conversation_member
+        SET unread_count = 0
+        WHERE conversation_id = #{conversationId}
+          AND user_id = #{userId}
+    </update>
+
+    <select id="selectMembersWithNickname" resultType="com.dataplatform.message.entity.ChatConversationMember">
+        SELECT m.id, m.conversation_id AS conversationId, m.user_id AS userId,
+               m.unread_count AS unreadCount, m.join_time AS joinTime,
+               u.nickname, u.username
+        FROM chat_conversation_member m
+        LEFT JOIN sys_user u ON u.id = m.user_id
+        WHERE m.conversation_id = #{conversationId}
+    </select>
+
+</mapper>

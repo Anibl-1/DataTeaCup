@@ -1,0 +1,422 @@
+/*
+ * page-common.css
+ * 页面级公共样式 - 仅放不在 style.css 中的补充样式
+ * 注意: 统计卡片、卡片标题、分页等基础样式已在 style.css 中定义
+ */
+
+/* ========== 统计卡片脉冲徽标 ========== */
+.stat-badge {
+  position: relative;
+}
+
+.stat-badge-success .pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--color-success);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.stat-badge-error {
+  color: var(--color-error);
+}
+
+/* ========== 表格统一样式 ========== */
+.custom-table {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ========== 表格工具栏 ========== */
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+html.dark .table-toolbar {
+  background: #141e30;
+  border-color: #3E5068;
+}
+
+/* ========== 页面标题区通用样式 ========== */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.page-header .header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.page-header .page-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.page-header .title-icon {
+  color: var(--color-primary);
+}
+
+.page-header .page-desc {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+html.dark .page-header .page-title {
+  color: var(--text-primary);
+}
+
+html.dark .page-header .page-desc {
+  color: var(--text-secondary);
+}
+
+/* ========== 深色模式 - 通用 stat-card ========== */
+html.dark .stat-card {
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .stat-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .stat-card .stat-value,
+html.dark .stat-value {
+  color: #f1f5f9;
+}
+
+html.dark .stat-card .stat-label,
+html.dark .stat-label {
+  color: #94a3b8;
+}
+
+/* ========== 深色模式 - 通用卡片内容区域 ========== */
+html.dark .card-header {
+  background: linear-gradient(135deg, #1a2536 0%, #1e293b 100%) !important;
+  border-bottom-color: #334155 !important;
+}
+
+html.dark .card-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .card-code {
+  color: #64748b !important;
+}
+
+html.dark .card-body {
+  background: #1e293b;
+}
+
+html.dark .card-desc {
+  color: #94a3b8 !important;
+}
+
+html.dark .card-time {
+  color: #64748b !important;
+}
+
+html.dark .card-footer {
+  background: #1a2536 !important;
+  border-top-color: #334155 !important;
+}
+
+html.dark .meta-item {
+  color: #94a3b8 !important;
+}
+
+/* ========== 深色模式 - 通用 pipeline/flow 卡片 ========== */
+html.dark .pipeline-card,
+html.dark .flow-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+html.dark .pipeline-card:hover,
+html.dark .flow-card:hover {
+  border-color: #60a5fa;
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);
+}
+
+/* ========== 深色模式 - 通用筛选卡片 ========== */
+html.dark .filter-card {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+/* ========== 深色模式 - JSON 代码块 ========== */
+html.dark .json-block {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+/* ========== 深色模式 - 通用 n-h3/n-h4 标题 ========== */
+html.dark .n-h3,
+html.dark .n-h4,
+html.dark .n-h5,
+html.dark .n-h6 {
+  color: #e2e8f0 !important;
+}
+
+/* ========== 深色模式 - n-text code ========== */
+html.dark .n-text--code {
+  background: #1a2536 !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+/* ========== 深色模式 - n-descriptions ========== */
+html.dark .n-descriptions-table-body .n-descriptions-table-row td {
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-descriptions--bordered .n-descriptions-table-header,
+html.dark .n-descriptions--bordered .n-descriptions-table-body td {
+  border-color: #334155 !important;
+}
+
+html.dark .n-descriptions--bordered {
+  border-color: #334155 !important;
+}
+
+/* ========== 深色模式 - n-alert ========== */
+html.dark .n-alert--error-type {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+/* ========== 深色模式 - 分页信息 ========== */
+html.dark .pagination-info .n-tag {
+  background: #1a2536 !important;
+  border-color: #334155 !important;
+  color: #94a3b8 !important;
+}
+
+/* ========== 表单提示文本 ========== */
+.form-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.form-hint-secondary {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.text-muted {
+  color: var(--text-tertiary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+/* 文件选择成功卡片 */
+.file-selected-card {
+  margin-top: 16px;
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f4 100%);
+  border: 2px solid var(--color-success);
+}
+
+html.dark .file-selected-card {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* ========== 表格操作列按钮美化 ========== */
+/* 将裸文本按钮升级为精致的胶囊按钮，适用于所有表格内的操作按钮 */
+.n-data-table .n-button--text-type,
+.n-data-table .n-button--quaternary-type {
+  padding: 0 10px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  line-height: 28px !important;
+}
+
+/* 主操作按钮 (primary) - 蓝色系 */
+.n-data-table .n-button--text-type.n-button--primary-type,
+.n-data-table .n-button--quaternary-type.n-button--primary-type {
+  color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+.n-data-table .n-button--text-type.n-button--primary-type:hover,
+.n-data-table .n-button--quaternary-type.n-button--primary-type:hover {
+  color: #2563eb !important;
+  background: rgba(59, 130, 246, 0.15) !important;
+}
+
+/* 信息按钮 (info) - 青色系 */
+.n-data-table .n-button--text-type.n-button--info-type,
+.n-data-table .n-button--quaternary-type.n-button--info-type {
+  color: #06b6d4 !important;
+  background: rgba(6, 182, 212, 0.08) !important;
+}
+.n-data-table .n-button--text-type.n-button--info-type:hover,
+.n-data-table .n-button--quaternary-type.n-button--info-type:hover {
+  color: #0891b2 !important;
+  background: rgba(6, 182, 212, 0.15) !important;
+}
+
+/* 成功按钮 (success) - 绿色系 */
+.n-data-table .n-button--text-type.n-button--success-type,
+.n-data-table .n-button--quaternary-type.n-button--success-type {
+  color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.08) !important;
+}
+.n-data-table .n-button--text-type.n-button--success-type:hover,
+.n-data-table .n-button--quaternary-type.n-button--success-type:hover {
+  color: #059669 !important;
+  background: rgba(16, 185, 129, 0.15) !important;
+}
+
+/* 警告按钮 (warning) - 橙色系 */
+.n-data-table .n-button--text-type.n-button--warning-type,
+.n-data-table .n-button--quaternary-type.n-button--warning-type {
+  color: #f59e0b !important;
+  background: rgba(245, 158, 11, 0.08) !important;
+}
+.n-data-table .n-button--text-type.n-button--warning-type:hover,
+.n-data-table .n-button--quaternary-type.n-button--warning-type:hover {
+  color: #d97706 !important;
+  background: rgba(245, 158, 11, 0.15) !important;
+}
+
+/* 危险按钮 (error/delete) - 红色系 */
+.n-data-table .n-button--text-type.n-button--error-type,
+.n-data-table .n-button--quaternary-type.n-button--error-type {
+  color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+.n-data-table .n-button--text-type.n-button--error-type:hover,
+.n-data-table .n-button--quaternary-type.n-button--error-type:hover {
+  color: #dc2626 !important;
+  background: rgba(239, 68, 68, 0.15) !important;
+}
+
+/* 默认按钮 (default) - 灰色系 */
+.n-data-table .n-button--text-type.n-button--default-type,
+.n-data-table .n-button--quaternary-type.n-button--default-type {
+  color: #64748b !important;
+  background: rgba(100, 116, 139, 0.08) !important;
+}
+.n-data-table .n-button--text-type.n-button--default-type:hover,
+.n-data-table .n-button--quaternary-type.n-button--default-type:hover {
+  color: #475569 !important;
+  background: rgba(100, 116, 139, 0.15) !important;
+}
+
+/* 按钮按下效果 */
+.n-data-table .n-button--text-type:active,
+.n-data-table .n-button--quaternary-type:active {
+  transform: scale(0.96);
+}
+
+/* 按钮带图标时的间距优化 */
+.n-data-table .n-button--text-type .n-button__icon,
+.n-data-table .n-button--quaternary-type .n-button__icon {
+  margin-right: 2px !important;
+}
+
+/* ========== 深色模式 - 表格操作按钮 ========== */
+html.dark .n-data-table .n-button--text-type.n-button--primary-type,
+html.dark .n-data-table .n-button--quaternary-type.n-button--primary-type {
+  color: #60a5fa !important;
+  background: rgba(96, 165, 250, 0.1) !important;
+}
+html.dark .n-data-table .n-button--text-type.n-button--primary-type:hover,
+html.dark .n-data-table .n-button--quaternary-type.n-button--primary-type:hover {
+  background: rgba(96, 165, 250, 0.2) !important;
+}
+
+html.dark .n-data-table .n-button--text-type.n-button--info-type,
+html.dark .n-data-table .n-button--quaternary-type.n-button--info-type {
+  color: #22d3ee !important;
+  background: rgba(34, 211, 238, 0.1) !important;
+}
+html.dark .n-data-table .n-button--text-type.n-button--info-type:hover,
+html.dark .n-data-table .n-button--quaternary-type.n-button--info-type:hover {
+  background: rgba(34, 211, 238, 0.2) !important;
+}
+
+html.dark .n-data-table .n-button--text-type.n-button--success-type,
+html.dark .n-data-table .n-button--quaternary-type.n-button--success-type {
+  color: #34d399 !important;
+  background: rgba(52, 211, 153, 0.1) !important;
+}
+html.dark .n-data-table .n-button--text-type.n-button--success-type:hover,
+html.dark .n-data-table .n-button--quaternary-type.n-button--success-type:hover {
+  background: rgba(52, 211, 153, 0.2) !important;
+}
+
+html.dark .n-data-table .n-button--text-type.n-button--warning-type,
+html.dark .n-data-table .n-button--quaternary-type.n-button--warning-type {
+  color: #fbbf24 !important;
+  background: rgba(251, 191, 36, 0.1) !important;
+}
+html.dark .n-data-table .n-button--text-type.n-button--warning-type:hover,
+html.dark .n-data-table .n-button--quaternary-type.n-button--warning-type:hover {
+  background: rgba(251, 191, 36, 0.2) !important;
+}
+
+html.dark .n-data-table .n-button--text-type.n-button--error-type,
+html.dark .n-data-table .n-button--quaternary-type.n-button--error-type {
+  color: #f87171 !important;
+  background: rgba(248, 113, 113, 0.1) !important;
+}
+html.dark .n-data-table .n-button--text-type.n-button--error-type:hover,
+html.dark .n-data-table .n-button--quaternary-type.n-button--error-type:hover {
+  background: rgba(248, 113, 113, 0.2) !important;
+}
+
+html.dark .n-data-table .n-button--text-type.n-button--default-type,
+html.dark .n-data-table .n-button--quaternary-type.n-button--default-type {
+  color: #94a3b8 !important;
+  background: rgba(148, 163, 184, 0.1) !important;
+}
+html.dark .n-data-table .n-button--text-type.n-button--default-type:hover,
+html.dark .n-data-table .n-button--quaternary-type.n-button--default-type:hover {
+  background: rgba(148, 163, 184, 0.2) !important;
+}
+
+/* ========== 深色模式 - card-header-custom ========== */
+html.dark .card-header-custom {
+  color: #e2e8f0;
+}
+
+/* ========== 深色模式 - n-layout-header ========== */
+html.dark .n-layout-header {
+  background: linear-gradient(135deg, #111827 0%, #1f2937 100%) !important;
+  border-bottom-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* ========== 深色模式 - n-layout-footer ========== */
+html.dark .n-layout-footer {
+  background: #111827 !important;
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  color: #64748b !important;
+}

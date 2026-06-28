@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.CollectTaskMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.data.entity.CollectTask">
+        <id column="id" property="id"/>
+        <result column="task_name" property="taskName"/>
+        <result column="data_source_id" property="dataSourceId"/>
+        <result column="data_source_name" property="dataSourceName"/>
+        <result column="target_data_source_id" property="targetDataSourceId"/>
+        <result column="target_data_source_name" property="targetDataSourceName"/>
+        <result column="table_name" property="tableName"/>
+        <result column="target_table_name" property="targetTableName"/>
+        <result column="collect_mode" property="collectMode"/>
+        <result column="custom_sql" property="customSql"/>
+        <result column="incremental_field" property="incrementalField"/>
+        <result column="incremental_type" property="incrementalType"/>
+        <result column="last_collect_value" property="lastCollectValue"/>
+        <result column="field_mapping" property="fieldMapping"/>
+        <result column="transform_rules" property="transformRules"/>
+        <result column="batch_size" property="batchSize"/>
+        <result column="auto_create_table" property="autoCreateTable"/>
+        <result column="status" property="status"/>
+        <result column="schedule_enabled" property="scheduleEnabled"/>
+        <result column="cron_expression" property="cronExpression"/>
+        <result column="schedule_description" property="scheduleDescription"/>
+        <result column="next_execute_time" property="nextExecuteTime"/>
+        <result column="last_execute_time" property="lastExecuteTime"/>
+        <result column="last_execute_result" property="lastExecuteResult"/>
+        <result column="execute_count" property="executeCount"/>
+        <result column="success_count" property="successCount"/>
+        <result column="fail_count" property="failCount"/>
+        <result column="max_retry_count" property="maxRetryCount"/>
+        <result column="retry_interval" property="retryInterval"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM collect_task WHERE id = #{id}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT * FROM collect_task
+        <where>
+            <if test="filters != null and filters.size() > 0">
+                <foreach collection="filters" item="filter" separator=" AND ">
+                    <choose>
+                        <when test="filter.operator == 'eq' and filter.field == 'id'">id = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'taskName'">task_name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'dataSourceName'">data_source_name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'tableName'">table_name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'status'">status = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'createTime'">create_time = #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'id'">id != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'taskName'">task_name != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'dataSourceName'">data_source_name != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'tableName'">table_name != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'status'">status != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'createTime'">create_time != #{filter.value}</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'taskName'">task_name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'dataSourceName'">data_source_name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'tableName'">table_name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'status'">status LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'taskName'">task_name NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'dataSourceName'">data_source_name NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'tableName'">table_name NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'status'">status NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'createTime'">create_time NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'taskName'">task_name LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'dataSourceName'">data_source_name LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'tableName'">table_name LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'status'">status LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'createTime'">create_time LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'taskName'">task_name LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'dataSourceName'">data_source_name LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'tableName'">table_name LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'status'">status LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'id'">id &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'createTime'">create_time &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'id'">id &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'createTime'">create_time &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'id'">id &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'createTime'">create_time &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'id'">id &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'createTime'">create_time &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'taskName'">task_name IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'dataSourceName'">data_source_name IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'tableName'">table_name IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'status'">status IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'createTime'">create_time IS NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'taskName'">task_name IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'dataSourceName'">data_source_name IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'tableName'">table_name IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'status'">status IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'createTime'">create_time IS NOT NULL</when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM collect_task
+        <where>
+            <if test="filters != null and filters.size() > 0">
+                <foreach collection="filters" item="filter" separator=" AND ">
+                    <choose>
+                        <when test="filter.operator == 'eq' and filter.field == 'id'">id = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'taskName'">task_name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'dataSourceName'">data_source_name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'tableName'">table_name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'status'">status = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'createTime'">create_time = #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'id'">id != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'taskName'">task_name != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'dataSourceName'">data_source_name != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'tableName'">table_name != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'status'">status != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'createTime'">create_time != #{filter.value}</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'taskName'">task_name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'dataSourceName'">data_source_name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'tableName'">table_name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'status'">status LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'taskName'">task_name NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'dataSourceName'">data_source_name NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'tableName'">table_name NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'status'">status NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'createTime'">create_time NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'taskName'">task_name LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'dataSourceName'">data_source_name LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'tableName'">table_name LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'status'">status LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'createTime'">create_time LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'taskName'">task_name LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'dataSourceName'">data_source_name LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'tableName'">table_name LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'status'">status LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'id'">id &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'createTime'">create_time &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'id'">id &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'createTime'">create_time &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'id'">id &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'createTime'">create_time &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'id'">id &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'createTime'">create_time &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'taskName'">task_name IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'dataSourceName'">data_source_name IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'tableName'">table_name IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'status'">status IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'createTime'">create_time IS NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'taskName'">task_name IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'dataSourceName'">data_source_name IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'tableName'">table_name IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'status'">status IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'createTime'">create_time IS NOT NULL</when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="countToday" resultType="long">
+        SELECT COUNT(*) FROM collect_task
+        WHERE DATE(create_time) = CURDATE()
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO collect_task (
+            task_name, data_source_id, data_source_name, 
+            target_data_source_id, target_data_source_name,
+            table_name, target_table_name, collect_mode, custom_sql,
+            incremental_field, incremental_type, last_collect_value,
+            field_mapping, transform_rules, batch_size, auto_create_table,
+            status, schedule_enabled, cron_expression, schedule_description,
+            execute_count, success_count, fail_count,
+            max_retry_count, retry_interval, create_time
+        )
+        VALUES (
+            #{taskName}, #{dataSourceId}, #{dataSourceName},
+            #{targetDataSourceId}, #{targetDataSourceName},
+            #{tableName}, #{targetTableName}, #{collectMode}, #{customSql},
+            #{incrementalField}, #{incrementalType}, #{lastCollectValue},
+            #{fieldMapping}, #{transformRules}, #{batchSize}, #{autoCreateTable},
+            #{status}, #{scheduleEnabled}, #{cronExpression}, #{scheduleDescription},
+            0, 0, 0,
+            #{maxRetryCount}, #{retryInterval}, NOW()
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE collect_task
+        <set>
+            <if test="taskName != null">task_name = #{taskName},</if>
+            <if test="dataSourceId != null">data_source_id = #{dataSourceId},</if>
+            <if test="dataSourceName != null">data_source_name = #{dataSourceName},</if>
+            <if test="targetDataSourceId != null">target_data_source_id = #{targetDataSourceId},</if>
+            <if test="targetDataSourceName != null">target_data_source_name = #{targetDataSourceName},</if>
+            <if test="tableName != null">table_name = #{tableName},</if>
+            <if test="targetTableName != null">target_table_name = #{targetTableName},</if>
+            <if test="collectMode != null">collect_mode = #{collectMode},</if>
+            <if test="customSql != null">custom_sql = #{customSql},</if>
+            <if test="incrementalField != null">incremental_field = #{incrementalField},</if>
+            <if test="incrementalType != null">incremental_type = #{incrementalType},</if>
+            <if test="lastCollectValue != null">last_collect_value = #{lastCollectValue},</if>
+            <if test="fieldMapping != null">field_mapping = #{fieldMapping},</if>
+            <if test="transformRules != null">transform_rules = #{transformRules},</if>
+            <if test="batchSize != null">batch_size = #{batchSize},</if>
+            <if test="autoCreateTable != null">auto_create_table = #{autoCreateTable},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="scheduleEnabled != null">schedule_enabled = #{scheduleEnabled},</if>
+            <if test="cronExpression != null">cron_expression = #{cronExpression},</if>
+            <if test="scheduleDescription != null">schedule_description = #{scheduleDescription},</if>
+            <if test="nextExecuteTime != null">next_execute_time = #{nextExecuteTime},</if>
+            <if test="lastExecuteTime != null">last_execute_time = #{lastExecuteTime},</if>
+            <if test="lastExecuteResult != null">last_execute_result = #{lastExecuteResult},</if>
+            <if test="executeCount != null">execute_count = #{executeCount},</if>
+            <if test="successCount != null">success_count = #{successCount},</if>
+            <if test="failCount != null">fail_count = #{failCount},</if>
+            <if test="maxRetryCount != null">max_retry_count = #{maxRetryCount},</if>
+            <if test="retryInterval != null">retry_interval = #{retryInterval},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM collect_task WHERE id = #{id}
+    </delete>
+    
+    <!-- 查询需要执行的定时任务 -->
+    <select id="selectScheduledTasksToExecute" resultMap="BaseResultMap">
+        SELECT * FROM collect_task 
+        WHERE schedule_enabled = 1 
+          AND next_execute_time IS NOT NULL 
+          AND next_execute_time &lt;= NOW()
+          AND status != 'running'
+        ORDER BY next_execute_time ASC
+        LIMIT 10
+    </select>
+    
+    <!-- 查询运行中且启用定时的任务（用于调度器） -->
+    <select id="selectScheduledRunningTasks" resultMap="BaseResultMap">
+        SELECT * FROM collect_task 
+        WHERE schedule_enabled = 1 
+          AND cron_expression IS NOT NULL 
+          AND cron_expression != ''
+          AND status = 'running'
+    </select>
+    
+    <!-- 更新下次执行时间 -->
+    <update id="updateNextExecuteTime">
+        UPDATE collect_task 
+        SET next_execute_time = #{nextExecuteTime}, update_time = NOW()
+        WHERE id = #{id}
+    </update>
+    
+    <!-- 增加执行次数 -->
+    <update id="incrementExecuteCount">
+        UPDATE collect_task 
+        SET execute_count = IFNULL(execute_count, 0) + 1, update_time = NOW()
+        WHERE id = #{id}
+    </update>
+    
+    <!-- 增加成功次数 -->
+    <update id="incrementSuccessCount">
+        UPDATE collect_task 
+        SET success_count = IFNULL(success_count, 0) + 1, update_time = NOW()
+        WHERE id = #{id}
+    </update>
+    
+    <!-- 增加失败次数 -->
+    <update id="incrementFailCount">
+        UPDATE collect_task 
+        SET fail_count = IFNULL(fail_count, 0) + 1, update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 按日期统计采集任务数量 -->
+    <select id="countByDate" resultType="long">
+        SELECT COUNT(*) FROM collect_task
+        WHERE DATE(create_time) = #{date}
+    </select>
+    
+    <!-- 统计本周创建的采集任务数量 -->
+    <select id="countThisWeek" resultType="long">
+        SELECT COUNT(*) FROM collect_task
+        WHERE YEARWEEK(create_time, 1) = YEARWEEK(CURDATE(), 1)
+    </select>
+    
+    <!-- 按状态统计采集任务数量 -->
+    <select id="countByStatus" resultType="long">
+        SELECT COUNT(*) FROM collect_task
+        WHERE status = #{status}
+    </select>
+</mapper>
+

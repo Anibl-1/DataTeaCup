@@ -1,0 +1,2 @@
+cd dp-ui
+npx lint-staged

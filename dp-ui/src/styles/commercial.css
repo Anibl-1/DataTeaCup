@@ -1,0 +1,902 @@
+/**
+ * commercial.css
+ * 商业化全局样式增强 - 统一 Naive UI 组件外观
+ * 让整体 UI 更精致、更有层次感
+ */
+
+/* ========== 全局平滑滚动 ========== */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ========== 全局选中文字颜色 ========== */
+::selection {
+  background: rgba(59, 130, 246, 0.15);
+  color: inherit;
+}
+
+html.dark ::selection {
+  background: rgba(59, 130, 246, 0.25);
+}
+
+/* ========== NCard 商业化增强 ========== */
+.n-card {
+  transition: box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease !important;
+  border-radius: var(--dp-radius-xl, 16px) !important;
+}
+
+.n-card:hover {
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.dark .n-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35) !important;
+}
+
+html.dark .n-card:hover {
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5) !important;
+}
+
+.n-card-header {
+  font-weight: 600 !important;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6) !important;
+}
+
+html.dark .n-card-header {
+  border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.n-card-header__main {
+  font-size: 15px !important;
+  letter-spacing: -0.01em;
+  color: var(--dp-text-primary, #0f172a);
+}
+
+/* ========== NButton 商业化增强 ========== */
+.n-button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  letter-spacing: 0.01em;
+  border-radius: var(--dp-radius-md, 8px) !important;
+}
+
+.n-button:active { transform: scale(0.96); }
+
+.n-button--primary-type {
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25) !important;
+}
+
+.n-button--primary-type:hover {
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+  transform: translateY(-1px);
+}
+
+.n-button--primary-type:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.2) !important;
+}
+
+/* ========== NInput 商业化增强 ========== */
+.n-input {
+  border-radius: var(--dp-radius-md, 8px) !important;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.n-input:hover:not(:focus-within) {
+  border-color: var(--dp-border-strong, #94a3b8) !important;
+}
+
+.n-input:focus-within {
+  border-color: var(--dp-color-primary, #2563eb) !important;
+  box-shadow: 0 0 0 3px var(--dp-color-primary-light, rgba(37, 99, 235, 0.1)) !important;
+}
+
+html.dark .n-input:focus-within {
+  border-color: var(--dp-color-primary, #3b82f6) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+}
+
+/* ========== NSelect / NBaseSelection 商业化增强 ========== */
+.n-base-selection {
+  border-radius: 8px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.n-base-selection:hover {
+  border-color: #94a3b8 !important;
+}
+
+.n-base-selection--active,
+.n-base-selection--focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* ========== NDataTable 商业化增强 ========== */
+.n-data-table {
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+
+.n-data-table-th {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.n-data-table-td {
+  font-size: 13px !important;
+  transition: background 0.15s ease !important;
+}
+
+/* 表格行悬停微动画 */
+.n-data-table-tr {
+  transition: background 0.15s ease !important;
+}
+
+/* ========== NTag 商业化增强 ========== */
+.n-tag {
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+}
+
+.n-tag--round {
+  border-radius: 20px !important;
+}
+
+/* ========== NModal/NDialog 商业化增强 ========== */
+.n-modal-mask {
+  backdrop-filter: blur(4px) !important;
+}
+
+.n-modal {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 20px rgba(0, 0, 0, 0.06) !important;
+}
+
+html.dark .n-modal {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 8px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.n-dialog {
+  border-radius: 14px !important;
+}
+
+.n-dialog__title {
+  font-weight: 600 !important;
+  font-size: 17px !important;
+}
+
+/* ========== NDrawer 商业化增强 ========== */
+.n-drawer {
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+html.dark .n-drawer {
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+.n-drawer-header__main {
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+/* ========== NDropdown 商业化增强 ========== */
+.n-dropdown-menu {
+  border-radius: 10px !important;
+  padding: 6px !important;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+html.dark .n-dropdown-menu {
+  border-color: #334155;
+}
+
+.n-dropdown-option-body {
+  border-radius: 6px !important;
+  transition: background 0.15s ease !important;
+}
+
+/* ========== NPopover 商业化增强 ========== */
+.n-popover:not(.n-popover--raw) {
+  border-radius: 10px !important;
+}
+
+/* ========== NMessage 商业化增强 ========== */
+.n-message {
+  border-radius: 10px !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.dark .n-message {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ========== NNotification 商业化增强 ========== */
+.n-notification {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.dark .n-notification {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ========== NPagination 商业化增强 ========== */
+.n-pagination .n-pagination-item {
+  border-radius: 8px !important;
+  font-weight: 500;
+  transition: all 0.2s ease !important;
+}
+
+.n-pagination .n-pagination-item:hover:not(.n-pagination-item--disabled) {
+  transform: translateY(-1px);
+}
+
+.n-pagination .n-pagination-item--active {
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ========== NTabs 商业化增强 ========== */
+.n-tabs-tab {
+  font-weight: 500 !important;
+  transition: color 0.2s ease !important;
+}
+
+.n-tabs-tab--active {
+  font-weight: 600 !important;
+}
+
+/* ========== NTooltip 商业化增强 ========== */
+.n-tooltip {
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  font-weight: 400;
+}
+
+/* ========== NSpin 商业化增强 ========== */
+.n-spin-description {
+  font-size: 13px !important;
+  color: #94a3b8 !important;
+}
+
+/* ========== NResult 商业化增强 ========== */
+.n-result-header__title {
+  font-weight: 600 !important;
+}
+
+/* ========== NForm 商业化增强 ========== */
+.n-form-item-label__text {
+  font-weight: 500 !important;
+}
+
+
+/* ========== 深色模式 - 全局表单控件 ========== */
+html.dark .n-base-selection {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+html.dark .n-base-selection:hover {
+  border-color: var(--color-primary, #60a5fa) !important;
+}
+
+html.dark .n-base-selection--active {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
+}
+
+html.dark .n-base-selection .n-base-selection-label {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-base-selection .n-base-selection-placeholder__inner {
+  color: #475569 !important;
+}
+
+/* ========== 深色模式 - NDatePicker ========== */
+html.dark .n-date-picker {
+  background: #0f172a !important;
+}
+
+html.dark .n-date-panel {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* ========== 深色模式 - 表格斑马纹/hover ========== */
+html.dark .n-data-table-tr:nth-child(even) .n-data-table-td {
+  background: #1a2536 !important;
+}
+
+html.dark .n-data-table-tr:hover .n-data-table-td {
+  background: rgba(59, 130, 246, 0.07) !important;
+}
+
+/* ========== 商业版 - 统计卡片通用增强 ========== */
+.page-header-stats .stat-item {
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.page-header-stats .stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+html.dark .page-header-stats .stat-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.page-header-stats .stat-value {
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.page-header-stats .stat-icon {
+  border-radius: 12px;
+}
+
+/* ========== 商业版 - 查询表单增强 ========== */
+.query-form {
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+/* ========== 商业版 - 表格工具栏增强 ========== */
+.table-toolbar {
+  border-radius: 12px;
+}
+
+/* ========== 管理页面主卡片增强 ========== */
+.main-card {
+  border-radius: var(--dp-radius-xl, 16px) !important;
+  overflow: hidden;
+  box-shadow: var(--dp-shadow-sm) !important;
+}
+
+.main-card:hover {
+  box-shadow: var(--dp-shadow-md) !important;
+}
+
+.main-card > .n-card-header {
+  background: var(--dp-bg-secondary, #f8fafc);
+}
+
+html.dark .main-card > .n-card-header {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ========== 状态点脉冲动画 ========== */
+.status-dot--success {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+}
+
+/* ========== 页面进入动画 ========== */
+.page-fade-enter-active {
+  transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1), transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-fade-leave-active {
+  transition: opacity 0.16s cubic-bezier(0.4, 0, 1, 1);
+}
+
+.page-fade-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-fade-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade-enter-active,
+  .page-fade-leave-active {
+    transition-duration: 0ms;
+  }
+}
+
+/* ========== 深色模式 - 全局主卡片header-extra按钮 ========== */
+html.dark .n-card-header__extra .n-button--default-type {
+  border-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-card-header__extra .n-button--default-type:hover {
+  border-color: var(--color-primary, #60a5fa) !important;
+  color: var(--color-primary, #60a5fa) !important;
+}
+
+/* ========== 深色模式 - Tabs 增强 ========== */
+html.dark .n-tabs-tab {
+  color: #94a3b8 !important;
+}
+
+html.dark .n-tabs-tab--active {
+  color: var(--color-primary, #60a5fa) !important;
+}
+
+html.dark .n-tabs-tab:hover {
+  color: #e2e8f0 !important;
+}
+
+/* ========== 深色模式 - Switch 增强 ========== */
+html.dark .n-switch .n-switch__rail {
+  background: #334155 !important;
+}
+
+/* ========== 深色模式 - Badge 增强 ========== */
+html.dark .n-badge sup {
+  box-shadow: 0 0 0 2px #111827 !important;
+}
+
+/* ========== 深色模式 - Empty 状态增强 ========== */
+html.dark .n-empty__description {
+  color: #64748b !important;
+}
+
+html.dark .n-empty__icon {
+  color: #475569 !important;
+}
+
+/* ========== 卡片内表格零边距 ========== */
+.main-card .n-card__content {
+  padding-bottom: 0;
+}
+
+.main-card .pagination-wrapper {
+  padding: 16px 0;
+}
+
+/* ========== 全局链接样式 ========== */
+a {
+  transition: color 0.2s ease;
+}
+
+/* ========== 深色模式 - Checkbox/Radio 增强 ========== */
+html.dark .n-checkbox__label,
+html.dark .n-radio__label {
+  color: #cbd5e1 !important;
+}
+
+/* ========== 深色模式 - Divider 增强 ========== */
+html.dark .n-divider {
+  border-color: #334155 !important;
+}
+
+html.dark .n-divider .n-divider__title {
+  color: #94a3b8 !important;
+}
+
+/* ========== 深色模式 - 全局管理页面增强 ========== */
+
+/* 页面容器背景 */
+html.dark .page-manage-container,
+html.dark .rls-config-page,
+html.dark .query-builder,
+html.dark .message-channel-page,
+html.dark .ops-manage-page,
+html.dark .upgrade-page,
+html.dark .ai-assistant,
+html.dark .chart-manage-container,
+html.dark .chart-center-page,
+html.dark .report-manage-container,
+html.dark .data-view-page,
+html.dark .data-transfer-page {
+  color: #e2e8f0;
+}
+
+/* 统计卡片深色模式 */
+html.dark .page-header-stats .stat-item {
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .page-header-stats .stat-info .stat-value {
+  color: #f1f5f9 !important;
+}
+
+html.dark .page-header-stats .stat-info .stat-label {
+  color: #94a3b8 !important;
+}
+
+/* 工具栏深色模式 */
+html.dark .table-toolbar,
+html.dark .rls-toolbar,
+html.dark .qb-toolbar {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* 模态框深色模式 */
+html.dark .n-modal .n-card {
+  background: #1e293b !important;
+}
+
+html.dark .n-modal .n-card-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .n-modal .n-card-header__main {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-modal .n-card__footer {
+  border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 表单标签深色模式 */
+html.dark .n-form-item .n-form-item-label__text {
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-form-item .n-form-item-feedback-wrapper {
+  color: #94a3b8 !important;
+}
+
+/* 空状态深色模式 */
+html.dark .empty-state {
+  color: #64748b !important;
+}
+
+html.dark .empty-state h3 {
+  color: #94a3b8 !important;
+}
+
+html.dark .empty-state p {
+  color: #64748b !important;
+}
+
+/* 分页区域深色模式 */
+html.dark .pagination-wrapper {
+  border-top-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* 查询表单深色模式 */
+html.dark .query-form {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* 表格行深色 hover */
+html.dark .n-data-table .n-data-table-tr:hover .n-data-table-td {
+  background: rgba(59, 130, 246, 0.06) !important;
+}
+
+/* Collapse 深色模式 */
+html.dark .n-collapse-item__header {
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-collapse-item__content-inner {
+  color: #94a3b8 !important;
+}
+
+/* Descriptions 深色模式 */
+html.dark .n-descriptions .n-descriptions-table-header {
+  background: #1a2536 !important;
+}
+
+html.dark .n-descriptions .n-descriptions-table-body .n-descriptions-table-row .n-descriptions-table-header {
+  color: #94a3b8 !important;
+}
+
+/* Alert 深色模式 */
+html.dark .n-alert {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Card header custom 深色模式 */
+html.dark .card-header-custom span,
+html.dark .card-title span {
+  color: #e2e8f0 !important;
+}
+
+/* Select/Input placeholder 深色模式 */
+html.dark .n-base-selection-placeholder__inner,
+html.dark .n-input__placeholder {
+  color: #475569 !important;
+}
+
+/* Upload dragger 深色模式 */
+html.dark .n-upload-dragger {
+  background: #1a2536 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .n-upload-dragger:hover {
+  border-color: var(--color-primary, #60a5fa) !important;
+}
+
+/* Progress 深色模式 */
+html.dark .n-progress .n-progress-graph-line-rail {
+  background: #334155 !important;
+}
+
+/* Popconfirm 深色模式 */
+html.dark .n-popconfirm .n-popconfirm__body {
+  color: #cbd5e1 !important;
+}
+
+/* Tag 内文字 */
+html.dark .n-tag--default-type {
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+  background: rgba(51, 65, 85, 0.5) !important;
+}
+
+/* Tree 深色模式 */
+html.dark .n-tree .n-tree-node-content__text {
+  color: #cbd5e1 !important;
+}
+
+html.dark .n-tree .n-tree-node:hover .n-tree-node-content {
+  background: rgba(59, 130, 246, 0.08) !important;
+}
+
+/* Statistic 深色模式 */
+html.dark .n-statistic .n-statistic-value__content {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-statistic .n-statistic__label {
+  color: #94a3b8 !important;
+}
+
+/* Code 深色模式 */
+html.dark .n-code {
+  background: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+/* Radio group 深色模式 */
+html.dark .n-radio-group .n-radio__label {
+  color: #cbd5e1 !important;
+}
+
+/* Tab 内容区域深色模式 */
+html.dark .n-tab-pane {
+  color: #e2e8f0 !important;
+}
+
+/* ========== 现代化全局增强 - 科技感/简约 ========== */
+
+/* 全局卡片圆角和边框精细化 */
+.n-card {
+  border-radius: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+html.dark .n-card {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* 按钮全局增强 */
+.n-button {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.n-button--primary-type:not(.n-button--disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+html.dark .n-button--primary-type:not(.n-button--disabled):hover {
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* 输入框全局增强 */
+.n-input,
+.n-base-selection {
+  border-radius: 8px !important;
+}
+
+/* 表格全局增强 */
+.n-data-table .n-data-table-th {
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.3px;
+  text-transform: none;
+}
+
+.n-data-table .n-data-table-td {
+  font-size: 13px !important;
+}
+
+/* 模态框增强 */
+.n-modal .n-card {
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+/* Tabs 增强 */
+.n-tabs .n-tabs-tab {
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  transition: color 0.2s ease !important;
+}
+
+/* Tag 增强 */
+.n-tag {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+}
+
+/* 全局滚动条美化 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* 页面过渡增强 */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+/* 深色模式 dialog */
+html.dark .n-dialog {
+  background: #1e293b !important;
+}
+
+html.dark .n-dialog .n-dialog__title {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-dialog .n-dialog__content {
+  color: #94a3b8 !important;
+}
+
+/* Drawer 深色模式 */
+html.dark .n-drawer-content {
+  background: #111827 !important;
+}
+
+html.dark .n-drawer-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .n-drawer-header__main {
+  color: #e2e8f0 !important;
+}
+
+/* Popover 深色模式 */
+html.dark .n-popover {
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Dropdown 深色增强 */
+html.dark .n-dropdown-menu {
+  background: #1e293b !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+html.dark .n-dropdown-option:hover .n-dropdown-option-body {
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* 全局 Loading 覆盖层增强 */
+.n-spin-container .n-spin-description {
+  color: #64748b !important;
+  font-size: 13px !important;
+}
+
+html.dark .n-spin-container .n-spin-description {
+  color: #94a3b8 !important;
+}
+
+/* Switch 增强 */
+.n-switch.n-switch--active .n-switch__rail {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Badge / Dot 增强 */
+.n-badge-sup {
+  font-weight: 600 !important;
+  font-size: 11px !important;
+}
+
+/* 空状态全局增强 */
+.n-empty .n-empty__description {
+  color: #9ca3af !important;
+  font-size: 13px !important;
+}
+
+html.dark .n-empty .n-empty__description {
+  color: #64748b !important;
+}
+
+html.dark .n-empty .n-empty__icon {
+  opacity: 0.5;
+}
+
+/* ========== 键盘焦点可见性增强 ========== */
+:focus-visible {
+  outline: 2px solid var(--color-primary, #3b82f6) !important;
+  outline-offset: 2px;
+}
+
+.n-button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+}
+
+html.dark :focus-visible {
+  outline-color: var(--color-primary, #60a5fa) !important;
+}
+
+html.dark .n-button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+}
+
+/* ========== 统一页面容器样式 ========== */
+.page-container-base {
+  padding: 20px;
+  animation: pageEnter 0.25s ease-out;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-container-base {
+    animation: none;
+  }
+}
+
+/* ========== 全局链接悬停效果 ========== */
+.n-a:hover {
+  text-decoration-color: currentColor !important;
+}
+
+/* ========== 表格空行最小高度 ========== */
+.n-data-table-empty {
+  min-height: 200px;
+}

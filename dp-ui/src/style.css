@@ -1,0 +1,3037 @@
+@import './styles/design-tokens.css';
+@import './styles/page-common.css';
+@import './styles/mobile.css';
+
+/* ========== PC端响应式断点变量 ========== */
+:root {
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+  --bp-2xl: 1366px;
+  --bp-3xl: 1440px;
+  --bp-4xl: 1920px;
+}
+
+/* DataTeaCup theme global variables */
+:root {
+  /* 主色 - 企业级蓝色 */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-primary-light: #dbeafe;
+  --color-primary-dark: #1e40af;
+  --color-secondary: #6366f1;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #06b6d4;
+  
+  /* 背景色 - 柔和的灰蓝色系 */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-hover: #e2e8f0;
+  --bg-sidebar: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  
+  /* 文本色 */
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #ffffff;
+  
+  /* 边框 */
+  --border-light: #e2e8f0;
+  --border-default: #cbd5e1;
+  --border-focus: rgba(59, 130, 246, 0.5);
+  
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* 阴影 - 更精细的层次感 */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.06);
+  --shadow-blue: 0 4px 16px rgba(59, 130, 246, 0.25);
+}
+
+/* 主题切换过渡动画 */
+html {
+  transition: color 200ms, background-color 200ms;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', 'Noto Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  color: var(--dp-text-primary, #0f172a);
+  background: var(--dp-bg-canvas, #f0f4f8);
+  min-height: 100vh;
+  /* 全局滚动条 */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+}
+
+body::-webkit-scrollbar { width: 6px; height: 6px; }
+body::-webkit-scrollbar-track { background: transparent; }
+body::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 3px;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+}
+
+/* 全局选中色 */
+::selection {
+  background: rgba(37, 99, 235, 0.15);
+  color: inherit;
+}
+html.dark ::selection {
+  background: rgba(59, 130, 246, 0.25);
+}
+
+#app {
+  width: 100%;
+  height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
+}
+
+/* 全局卡片样式统一在 commercial.css 中定义 */
+
+/* ========== 统计卡片样式 ========== */
+.stat-card {
+  background: var(--dp-bg-primary, #fff);
+  border: 1px solid var(--dp-border-light, #e2e8f0);
+  border-radius: var(--dp-radius-xl, 16px);
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--dp-gradient-primary, linear-gradient(135deg, #2563eb, #1e40af));
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--dp-shadow-lg, 0 10px 28px rgba(0,0,0,0.1));
+  border-color: rgba(37, 99, 235, 0.2);
+}
+
+.stat-card:hover::after {
+  opacity: 1;
+}
+
+/* ========== 按钮样式 ========== */
+.n-button--primary-type {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25) !important;
+  color: #fff !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 500 !important;
+}
+
+.n-button--primary-type:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35) !important;
+  transform: translateY(-1px);
+  color: #fff !important;
+}
+
+.n-button--primary-type:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.25) !important;
+}
+
+/* 成功按钮渐变 */
+.n-button--success-type {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25) !important;
+  color: #fff !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 500 !important;
+}
+
+.n-button--success-type:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35) !important;
+  transform: translateY(-1px);
+  color: #fff !important;
+}
+
+/* 警告按钮渐变 */
+.n-button--warning-type {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25) !important;
+  color: #fff !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 500 !important;
+}
+
+.n-button--warning-type:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%) !important;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35) !important;
+  transform: translateY(-1px);
+  color: #fff !important;
+}
+
+/* 错误按钮渐变 */
+.n-button--error-type {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25) !important;
+  color: #fff !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 500 !important;
+}
+
+.n-button--error-type:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.35) !important;
+  transform: translateY(-1px);
+  color: #fff !important;
+}
+
+/* Info按钮渐变 */
+.n-button--info-type {
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(6, 182, 212, 0.25) !important;
+  color: #fff !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  font-weight: 500 !important;
+}
+
+.n-button--info-type:hover {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%) !important;
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.35) !important;
+  transform: translateY(-1px);
+  color: #fff !important;
+}
+
+/* ========== 表格样式 ========== */
+.n-data-table {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 确保所有表格支持横向滚动，防止列被截断 */
+.n-data-table-wrapper {
+  overflow-x: auto !important;
+}
+
+.n-data-table-base-table {
+  min-width: 100%;
+}
+
+/* 条纹行更柔和 */
+.n-data-table-tr--striped .n-data-table-td {
+  background-color: rgba(248, 250, 252, 0.6) !important;
+}
+
+.n-data-table-th {
+  background: var(--dp-table-header-bg, linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%)) !important;
+  font-weight: 600 !important;
+  color: var(--dp-text-secondary, #475569) !important;
+  border-bottom: 1px solid var(--dp-border-light, #e2e8f0) !important;
+  font-size: 12px !important;
+  padding: 11px 16px !important;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.n-data-table-tr {
+  transition: background-color 0.2s ease !important;
+}
+
+.n-data-table-td {
+  padding: 12px 16px !important;
+  font-size: 13px !important;
+  color: #334155 !important;
+}
+
+.n-data-table-tr:hover .n-data-table-td {
+  background-color: rgba(59, 130, 246, 0.04) !important;
+}
+
+/* 表格行 hover 效果 - 左侧高亮指示条 */
+.n-data-table-tr:hover .n-data-table-td:first-child {
+  box-shadow: inset 3px 0 0 var(--color-primary) !important;
+}
+
+/* PageView 表头样式 - 覆盖Naive UI内部CSS变量 */
+.page-view-container .custom-header-table.n-data-table,
+.page-view-container .n-data-table.custom-header-table {
+  --n-th-color: var(--header-bg-color, #f5f7fa) !important;
+  --n-th-color-hover: var(--header-bg-color, #f5f7fa) !important;
+  --n-th-text-color: var(--header-text-color, #303133) !important;
+  --n-th-font-weight: var(--header-font-weight, 600) !important;
+  --n-th-icon-color: var(--header-text-color, #303133) !important;
+  --n-th-icon-color-active: var(--header-text-color, #303133) !important;
+}
+
+.page-view-container .custom-header-table .n-data-table-th,
+.page-view-container .custom-header-table .n-data-table-th:hover,
+.page-view-container .custom-header-table .n-data-table-th:active,
+.page-view-container .custom-header-table .n-data-table-th:focus,
+.page-view-container .custom-header-table .n-data-table-th--hover,
+.page-view-container .custom-header-table .n-data-table-th--sorting,
+.page-view-container .custom-header-table .n-data-table-th--sortable,
+.page-view-container .custom-header-table .n-data-table-th--sortable:hover,
+.page-view-container .custom-header-table .n-data-table-th--sortable:active,
+.page-view-container .custom-header-table .n-data-table-base-table-header .n-data-table-th {
+  background-color: var(--n-th-color, var(--header-bg-color, #f5f7fa)) !important;
+  background: var(--n-th-color, var(--header-bg-color, #f5f7fa)) !important;
+  color: var(--n-th-text-color, var(--header-text-color, #303133)) !important;
+  font-weight: var(--n-th-font-weight, var(--header-font-weight, 600)) !important;
+  transition: none !important;
+}
+
+.page-view-container .custom-header-table .n-data-table-th .n-data-table-th__title,
+.page-view-container .custom-header-table .n-data-table-th:hover .n-data-table-th__title,
+.page-view-container .custom-header-table .n-data-table-th:active .n-data-table-th__title {
+  color: var(--n-th-text-color, var(--header-text-color, #303133)) !important;
+}
+
+.page-view-container .custom-header-table .n-data-table-th .n-data-table-sorter,
+.page-view-container .custom-header-table .n-data-table-th:hover .n-data-table-sorter,
+.page-view-container .custom-header-table .n-data-table-th:active .n-data-table-sorter,
+.page-view-container .custom-header-table .n-data-table-sorter--asc,
+.page-view-container .custom-header-table .n-data-table-sorter--desc {
+  color: var(--n-th-text-color, var(--header-text-color, #303133)) !important;
+}
+
+/* 强制禁止表头hover变色 - 覆盖所有状态和内部元素 */
+.page-view-container .n-data-table.custom-header-table .n-data-table-thead .n-data-table-th,
+.page-view-container .n-data-table.custom-header-table .n-data-table-thead .n-data-table-th:hover,
+.page-view-container .n-data-table.custom-header-table .n-data-table-thead .n-data-table-th:active,
+.page-view-container .n-data-table.custom-header-table .n-data-table-thead .n-data-table-th:focus,
+.page-view-container .n-data-table.custom-header-table .n-data-table-thead .n-data-table-th[data-hover],
+.page-view-container .n-data-table.custom-header-table .n-data-table-base-table .n-data-table-th,
+.page-view-container .n-data-table.custom-header-table .n-data-table-base-table .n-data-table-th:hover {
+  background-color: var(--n-th-color, var(--header-bg-color, #f5f7fa)) !important;
+  background: var(--n-th-color, var(--header-bg-color, #f5f7fa)) !important;
+  color: var(--n-th-text-color, var(--header-text-color, #303133)) !important;
+}
+
+/* 表头内所有子元素也强制使用相同颜色 */
+.page-view-container .n-data-table.custom-header-table .n-data-table-thead .n-data-table-th *,
+.page-view-container .n-data-table.custom-header-table .n-data-table-thead .n-data-table-th:hover * {
+  color: var(--n-th-text-color, var(--header-text-color, #303133)) !important;
+}
+
+/* 输入框、选择器、标签样式统一在 commercial.css 中定义 */
+
+/* ========== 分页样式 - 清晰可读 ========== */
+.n-pagination {
+  gap: 4px;
+}
+
+.n-pagination .n-pagination-item {
+  border-radius: var(--radius-md) !important;
+  min-width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-light) !important;
+  background: var(--bg-primary) !important;
+  color: var(--text-secondary) !important;
+  font-weight: 500;
+}
+
+.n-pagination .n-pagination-item:hover:not(.n-pagination-item--disabled) {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  background: var(--color-primary-light) !important;
+}
+
+.n-pagination .n-pagination-item--active {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--text-inverse) !important;
+}
+
+.n-pagination .n-pagination-item--active:hover {
+  background: var(--color-primary-hover) !important;
+  border-color: var(--color-primary-hover) !important;
+  color: var(--text-inverse) !important;
+}
+
+.n-pagination .n-pagination-item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 分页快速跳转输入框 */
+.n-pagination .n-pagination-quick-jumper {
+  color: var(--text-secondary);
+}
+
+.n-pagination .n-pagination-quick-jumper .n-input {
+  width: 60px;
+}
+
+/* 分页大小选择器 */
+.n-pagination .n-base-selection {
+  border-radius: var(--radius-md) !important;
+}
+
+/* 模态框/对话框样式统一在 commercial.css 中定义 */
+
+/* 滚动条和页面过渡动画统一在 commercial.css 中定义 */
+
+/* ========== 动画效果 ========== */
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ========== 骨架屏加载效果 ========== */
+.skeleton-loading {
+  background: linear-gradient(90deg, #f0f4f8 25%, #e2e8f0 50%, #f0f4f8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--dp-radius-md, 8px);
+}
+
+html.dark .skeleton-loading {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+}
+
+.skeleton-loading--text {
+  height: 16px;
+  margin-bottom: 8px;
+}
+
+.skeleton-loading--title {
+  height: 24px;
+  width: 60%;
+  margin-bottom: 12px;
+}
+
+.skeleton-loading--avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.skeleton-loading--card {
+  height: 120px;
+  border-radius: var(--radius-lg);
+}
+
+/* ========== 空状态样式 ========== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  color: var(--text-tertiary);
+}
+
+.empty-state-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state-text {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  margin-top: 8px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.empty-state-action {
+  margin-top: 16px;
+}
+
+/* Naive UI empty component unified style */
+.n-empty {
+  padding: 48px 24px !important;
+}
+
+.n-empty .n-empty__icon {
+  font-size: 64px !important;
+  opacity: 0.5;
+  margin-bottom: 12px !important;
+}
+
+.n-empty .n-empty__description {
+  font-size: 14px !important;
+  color: var(--text-tertiary) !important;
+}
+
+/* ========== 状态指示器 ========== */
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-dot--success {
+  background: var(--color-success);
+}
+
+.status-dot--warning {
+  background: var(--color-warning);
+}
+
+.status-dot--error {
+  background: var(--color-error);
+}
+
+.status-dot--info {
+  background: var(--color-info);
+}
+
+/* ========== 渐变文字 - 移除 ========== */
+
+/* ========== 玻璃态效果 ========== */
+.glass-effect {
+  background: var(--dp-glass-bg, rgba(255, 255, 255, 0.72));
+  border: 1px solid var(--dp-glass-border, rgba(255, 255, 255, 0.4));
+  backdrop-filter: var(--dp-glass-blur, blur(16px) saturate(180%));
+  -webkit-backdrop-filter: var(--dp-glass-blur, blur(16px) saturate(180%));
+}
+
+html.dark .glass-effect {
+  background: var(--dp-glass-bg, rgba(15, 23, 42, 0.75));
+  border-color: var(--dp-glass-border, rgba(255, 255, 255, 0.08));
+}
+
+/* ========== 响应式工具类 ========== */
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-on-desktop {
+    display: none !important;
+  }
+}
+
+/* ========== 页面头部统计通用样式 ========== */
+.page-header-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.page-header-stats .stat-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  background: var(--bg-primary);
+  border-radius: 14px;
+  border: 1px solid var(--border-light);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header-stats .stat-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.page-header-stats .stat-item:hover {
+  border-color: rgba(59, 130, 246, 0.2);
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+.page-header-stats .stat-item:hover::after {
+  opacity: 1;
+}
+
+.page-header-stats .stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.page-header-stats .stat-item:hover .stat-icon {
+  transform: scale(1.06);
+}
+
+.page-header-stats .stat-icon-primary {
+  background: var(--dp-gradient-primary, linear-gradient(135deg, #2563eb 0%, #1e40af 100%));
+  color: #fff;
+}
+
+.page-header-stats .stat-icon-success {
+  background: var(--dp-gradient-success, linear-gradient(135deg, #10b981 0%, #059669 100%));
+  color: #fff;
+}
+
+.page-header-stats .stat-icon-warning {
+  background: var(--dp-gradient-warning, linear-gradient(135deg, #f59e0b 0%, #d97706 100%));
+  color: #fff;
+}
+
+.page-header-stats .stat-icon-error {
+  background: var(--dp-gradient-error, linear-gradient(135deg, #ef4444 0%, #dc2626 100%));
+  color: #fff;
+}
+
+.page-header-stats .stat-icon-info {
+  background: var(--dp-gradient-secondary, linear-gradient(135deg, #06b6d4 0%, #0891b2 100%));
+  color: #fff;
+}
+
+.page-header-stats .stat-icon-muted {
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+  color: #fff;
+}
+
+.page-header-stats .stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header-stats .stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.page-header-stats .stat-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ========== 卡片头部通用样式 ========== */
+.card-header-custom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-header-custom .header-icon {
+  transition: transform 0.25s ease;
+}
+
+.card-header-custom:hover .header-icon {
+  transform: scale(1.1);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* ========== 主卡片通用样式 ========== */
+.main-card {
+  border-radius: var(--radius-xl) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+}
+
+.main-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* ========== 工具栏通用样式 ========== */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar .n-input,
+.toolbar .n-select,
+.toolbar .n-date-picker {
+  min-width: 160px;
+}
+
+/* ========== 分页通用样式 ========== */
+.pagination-wrapper {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+}
+
+.pagination-info {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* ========== 页面动画 ========== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-page {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ========== 响应式页面头部统计 ========== */
+@media (max-width: 768px) {
+  .page-header-stats {
+    flex-direction: column;
+  }
+  
+  .page-header-stats .stat-item {
+    padding: 14px 16px;
+  }
+  
+  .page-header-stats .stat-value {
+    font-size: 20px;
+  }
+}
+
+/* 工具提示、消息、对话框、抽屉、下拉菜单样式统一在 commercial.css 中定义 */
+
+/* ========== 加载状态 ========== */
+.n-spin-content {
+  transition: opacity 0.2s ease;
+}
+
+.n-drawer-body-content-wrapper {
+  background: var(--bg-secondary);
+}
+
+/* ========== 选择器下拉 ========== */
+.n-base-select-menu {
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* ========== 日期选择器 ========== */
+.n-date-picker-panel {
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* ========== 时间线 ========== */
+.n-timeline-item-content {
+  padding-bottom: 12px;
+}
+
+/* ========== 徽章 ========== */
+.n-badge sup {
+  font-weight: 500;
+}
+
+/* ========== 进度条 ========== */
+.n-progress--line .n-progress-graph-line-fill {
+  border-radius: 4px;
+}
+
+/* ========== 开关 ========== */
+.n-switch {
+  transition: all 0.2s ease;
+}
+
+/* ========== 复选框 ========== */
+.n-checkbox {
+  transition: all 0.2s ease;
+}
+
+/* ========== 单选框 ========== */
+.n-radio {
+  transition: all 0.2s ease;
+}
+
+/* ========== 树形控件 ========== */
+.n-tree-node {
+  border-radius: var(--radius-md);
+}
+
+.n-tree-node:hover {
+  background: var(--bg-hover);
+}
+
+/* ========== 标签页 ========== */
+.n-tabs-tab {
+  transition: all 0.2s ease;
+}
+
+.n-tabs-tab:hover {
+  color: var(--color-primary);
+}
+
+/* ========== 折叠面板 ========== */
+.n-collapse-item {
+  border-radius: var(--radius-lg);
+  margin-bottom: 8px;
+}
+
+/* ========== 警告框 ========== */
+.n-alert {
+  border-radius: var(--radius-lg) !important;
+}
+
+/* ========== 描述列表 ========== */
+.n-descriptions {
+  border-radius: var(--radius-lg);
+}
+
+/* ========== 步骤条 ========== */
+.n-steps .n-step-indicator {
+  transition: all 0.2s ease;
+}
+
+/* ========== 上传组件 ========== */
+.n-upload-dragger {
+  border-radius: var(--radius-lg) !important;
+  transition: all 0.2s ease;
+}
+
+.n-upload-dragger:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+/* ========== 图片预览 ========== */
+.n-image-preview-toolbar {
+  border-radius: var(--radius-lg);
+  background: rgba(0, 0, 0, 0.75);
+}
+
+
+/* ========== 数据管理页面统一样式 ========== */
+/* 确保所有数据管理页面的表头、分页、操作按钮和统计卡片风格一致 */
+
+/* 数据页面表头统一：灰色背景、600字重 */
+.data-collect-page :deep(.n-data-table-th),
+.datasource-page :deep(.n-data-table-th),
+.data-sync-page :deep(.n-data-table-th),
+.data-import-page :deep(.n-data-table-th) {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+  font-weight: 600 !important;
+  color: #475569 !important;
+  border-bottom: 1px solid var(--border-light) !important;
+}
+
+/* 数据页面统计卡片统一使用 page-header-stats 全局样式 */
+.data-collect-page .page-header-stats,
+.datasource-page .page-header-stats,
+.data-sync-page .page-header-stats,
+.data-import-page .page-header-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.data-collect-page .page-header-stats .stat-item,
+.datasource-page .page-header-stats .stat-item,
+.data-sync-page .page-header-stats .stat-item,
+.data-import-page .page-header-stats .stat-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  transition: all 0.2s ease;
+}
+
+.data-collect-page .page-header-stats .stat-item:hover,
+.datasource-page .page-header-stats .stat-item:hover,
+.data-sync-page .page-header-stats .stat-item:hover,
+.data-import-page .page-header-stats .stat-item:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.data-collect-page .page-header-stats .stat-icon,
+.datasource-page .page-header-stats .stat-icon,
+.data-sync-page .page-header-stats .stat-icon,
+.data-import-page .page-header-stats .stat-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.data-collect-page .page-header-stats .stat-value,
+.datasource-page .page-header-stats .stat-value,
+.data-sync-page .page-header-stats .stat-value,
+.data-import-page .page-header-stats .stat-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.data-collect-page .page-header-stats .stat-label,
+.datasource-page .page-header-stats .stat-label,
+.data-sync-page .page-header-stats .stat-label,
+.data-import-page .page-header-stats .stat-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ========== 深色模式全局样式 ========== */
+html.dark {
+  /* 深色模式变量覆盖 - 品牌蓝色系 */
+  --color-primary: #60a5fa;
+  --color-primary-hover: #93c5fd;
+  --color-primary-light: rgba(59, 130, 246, 0.15);
+  --color-secondary: #38bdf8;
+  --color-success: #34D399;
+  --color-warning: #FBBF24;
+  --color-error: #F87171;
+  --color-info: #22D3EE;
+  
+  /* 深色背景 - 拉大层次对比 */
+  --bg-primary: #1E293B;
+  --bg-secondary: #0F172A;
+  --bg-tertiary: #2a3649;
+  --bg-hover: #253348;
+  
+  /* 深色文本 - 提高亮度 */
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-tertiary: #94A3B8;
+  --text-inverse: #0F172A;
+  
+  /* 深色边框 - 大幅提亮，确保元素边界可见 */
+  --border-light: #3E5068;
+  --border-default: #56687E;
+}
+
+html.dark body {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* 深色模式 n-layout 根容器 */
+html.dark .n-layout {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-layout-scroll-container {
+  background: var(--bg-secondary) !important;
+}
+
+html.dark .n-layout-content {
+  background: transparent !important;
+}
+
+/* 深色模式卡片 */
+html.dark .n-card {
+  background: var(--bg-primary) !important;
+  border-color: var(--border-light) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* 深色模式表格 */
+html.dark .n-data-table {
+  background: #1e293b !important;
+}
+
+html.dark .n-data-table-wrapper {
+  background: #1e293b !important;
+}
+
+html.dark .n-data-table-th {
+  background: #334155 !important;
+  color: #e2e8f0 !important;
+  border-color: #475569 !important;
+}
+
+html.dark .n-data-table-th__title {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-data-table-td {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .n-data-table-tr:nth-child(even) .n-data-table-td {
+  background: #263449 !important;
+}
+
+html.dark .n-data-table-tr:hover .n-data-table-td {
+  background: #374151 !important;
+}
+
+html.dark .n-data-table-empty {
+  background: #1e293b !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .n-data-table-base-table {
+  border-color: #334155 !important;
+}
+
+/* 深色模式输入框 */
+html.dark .n-input {
+  background: #243044 !important;
+  border-color: var(--border-light) !important;
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-input:hover {
+  border-color: var(--color-primary) !important;
+}
+
+html.dark .n-input:focus-within {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2) !important;
+}
+
+html.dark .n-input__input-el,
+html.dark .n-input__textarea-el {
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-input__placeholder {
+  color: var(--text-tertiary) !important;
+}
+
+/* 深色模式选择器 */
+html.dark .n-base-selection {
+  background: #243044 !important;
+  border-color: var(--border-light) !important;
+}
+
+html.dark .n-base-selection:hover {
+  border-color: var(--color-primary) !important;
+}
+
+html.dark .n-base-selection .n-base-selection-label {
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-base-select-menu {
+  background: var(--bg-primary) !important;
+  border-color: var(--border-light) !important;
+}
+
+html.dark .n-base-select-option {
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-base-select-option:hover {
+  background: var(--bg-hover) !important;
+}
+
+/* 深色模式下拉菜单 */
+html.dark .n-dropdown-menu {
+  background: var(--bg-primary) !important;
+  border-color: var(--border-light) !important;
+}
+
+html.dark .n-dropdown-option-body {
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-dropdown-option-body:hover {
+  background: var(--bg-hover) !important;
+}
+
+/* 深色模式模态框 */
+html.dark .n-modal {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-dialog {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-dialog .n-dialog__title {
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-dialog .n-dialog__content {
+  color: var(--text-secondary) !important;
+}
+
+html.dark .n-card-header {
+  border-color: var(--border-light) !important;
+}
+
+html.dark .n-card__content {
+  color: var(--text-primary) !important;
+}
+
+/* 深色模式分页 */
+html.dark .n-pagination .n-pagination-item {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--border-light) !important;
+  color: var(--text-secondary) !important;
+}
+
+html.dark .n-pagination .n-pagination-item:hover:not(.n-pagination-item--disabled) {
+  background: var(--color-primary-light) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+}
+
+html.dark .n-pagination .n-pagination-item--active {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+/* 深色模式标签 */
+html.dark .n-tag {
+  background: var(--bg-tertiary) !important;
+  border-color: var(--border-light) !important;
+  color: var(--text-primary) !important;
+}
+
+/* 深色模式按钮 */
+html.dark .n-button--default-type {
+  background: #243044 !important;
+  border-color: var(--border-light) !important;
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-button--default-type:hover {
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  background: #2d3d52 !important;
+}
+
+/* 深色模式有色按钮（secondary/tertiary 类型）增强可见度 */
+html.dark .n-button--info-type.n-button--dashed,
+html.dark .n-button--success-type.n-button--dashed,
+html.dark .n-button--warning-type.n-button--dashed,
+html.dark .n-button--error-type.n-button--dashed {
+  border-width: 1.5px !important;
+}
+
+/* 深色模式表单项 */
+html.dark .n-form-item-label {
+  color: var(--text-secondary) !important;
+}
+
+/* 深色模式面包屑 */
+html.dark .n-breadcrumb-item {
+  color: var(--text-secondary) !important;
+}
+
+html.dark .n-breadcrumb-item:last-child {
+  color: var(--text-primary) !important;
+}
+
+/* 深色模式滚动条统一在 commercial.css 中定义 */
+
+/* 深色模式页面头部统计 */
+html.dark .page-header-stats .stat-item {
+  background: var(--bg-primary);
+  border-color: var(--border-light);
+}
+
+html.dark .page-header-stats .stat-item:hover {
+  border-color: var(--color-primary);
+}
+
+html.dark .page-header-stats .stat-value {
+  color: var(--text-primary);
+}
+
+html.dark .page-header-stats .stat-label {
+  color: var(--text-secondary);
+}
+
+html.dark .page-header-stats .stat-icon-primary {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: #fff;
+}
+
+html.dark .page-header-stats .stat-icon-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #fff;
+}
+
+html.dark .page-header-stats .stat-icon-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: #fff;
+}
+
+html.dark .page-header-stats .stat-icon-error {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+}
+
+html.dark .page-header-stats .stat-icon-info {
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+  color: #fff;
+}
+
+html.dark .page-header-stats .stat-icon-muted {
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+  color: #fff;
+}
+
+/* 深色模式独立 stat-icon 变体 - 保持渐变完全一致 */
+html.dark .stat-icon-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #fff; }
+html.dark .stat-icon-success { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: #fff; }
+html.dark .stat-icon-warning { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff; }
+html.dark .stat-icon-info    { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: #fff; }
+html.dark .stat-icon-error   { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: #fff; }
+html.dark .stat-icon-muted   { background: linear-gradient(135deg, #64748b 0%, #475569 100%); color: #fff; }
+
+/* 深色模式分割线、工具提示统一在 commercial.css 中定义 */
+
+/* 深色模式弹出确认框 */
+html.dark .n-popconfirm {
+  background: var(--bg-primary) !important;
+}
+
+/* 深色模式树选择器 */
+html.dark .n-tree-select-menu {
+  background: var(--bg-primary) !important;
+}
+
+html.dark .n-tree-node-content {
+  color: var(--text-primary) !important;
+}
+
+html.dark .n-tree-node:hover {
+  background: var(--bg-hover) !important;
+}
+
+/* 深色模式单选/复选框样式统一在 commercial.css 中定义 */
+
+/* 深色模式数字输入框 */
+html.dark .n-input-number {
+  background: #243044 !important;
+}
+
+/* 深色模式警告框、空状态统一在 commercial.css 中定义 */
+
+/* 深色模式骨架屏 */
+html.dark .skeleton-loading {
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background-size: 200% 100%;
+}
+
+/* 深色模式表格行 hover 左侧边框 */
+html.dark .n-data-table-tr:hover .n-data-table-td:first-child {
+  border-left-color: var(--color-primary) !important;
+}
+
+/* 深色模式加载状态统一在 commercial.css 中定义 */
+
+
+/* ========== 模态框尺寸预设 ========== */
+.dp-modal-sm { width: 480px; }
+.dp-modal-md { width: 600px; }
+.dp-modal-lg { width: 800px; }
+.dp-modal-xl { width: 1000px; }
+
+/* ========== 弹窗宽度规范类 ========== */
+.modal-sm { width: 480px; border-radius: 16px; }
+.modal-md { width: 600px; border-radius: 16px; }
+.modal-lg { width: 800px; border-radius: 16px; }
+
+/* ========== 统计图标变体（独立类） ========== */
+.stat-icon-primary { background: var(--dp-gradient-primary, linear-gradient(135deg, #2563eb 0%, #1e40af 100%)); color: #fff; }
+.stat-icon-success { background: var(--dp-gradient-success, linear-gradient(135deg, #10b981 0%, #059669 100%)); color: #fff; }
+.stat-icon-warning { background: var(--dp-gradient-warning, linear-gradient(135deg, #f59e0b 0%, #d97706 100%)); color: #fff; }
+.stat-icon-info    { background: var(--dp-gradient-secondary, linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)); color: #fff; }
+.stat-icon-error   { background: var(--dp-gradient-error, linear-gradient(135deg, #ef4444 0%, #dc2626 100%)); color: #fff; }
+.stat-icon-muted   { background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%); color: #fff; }
+
+/* ========== 查询表单统一布局 ========== */
+.query-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  margin-bottom: 16px;
+}
+
+.query-form .n-form-item {
+  margin-bottom: 0 !important;
+  margin-right: 0 !important;
+}
+
+.query-form .n-input,
+.query-form .n-select,
+.query-form .n-date-picker,
+.query-form .n-input-number,
+.query-form .n-tree-select,
+.query-form .n-cascader {
+  min-width: 220px;
+}
+
+.query-form .query-form-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+html.dark .query-form {
+  background: #141e30;
+  border-color: var(--border-light);
+}
+
+/* ========== 统计卡片左边框颜色变体 ========== */
+.stat-card--primary { border-left-color: var(--color-primary); }
+.stat-card--success { border-left-color: var(--color-success); }
+.stat-card--warning { border-left-color: var(--color-warning); }
+.stat-card--error   { border-left-color: var(--color-error); }
+.stat-card--info    { border-left-color: var(--color-info); }
+.stat-card--purple  { border-left-color: #8a2be2; }
+.stat-card--teal    { border-left-color: #00796B; }
+
+/* ========== 文本颜色工具类 ========== */
+.text-primary { color: var(--color-primary); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-error   { color: var(--color-error); }
+.text-tertiary { color: var(--text-tertiary); }
+
+/* ========== 深色模式 - 通用修补 ========== */
+/* 页面级容器内的浅色硬编码背景统一修正 */
+html.dark .log-summary,
+html.dark .summary-bar,
+html.dark .stat-bar,
+html.dark .info-bar,
+html.dark .detail-header,
+html.dark .overview-header {
+  background: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* 深色模式 n-card header-extra 中的操作按钮间距 */
+html.dark .n-card-header__extra .n-space {
+  gap: 8px;
+}
+
+/* 深色模式 n-card 分割线 */
+html.dark .n-card-header {
+  border-bottom-color: #334155 !important;
+}
+
+html.dark .n-card__footer {
+  border-top-color: #334155 !important;
+}
+
+/* 深色模式 popover / tooltip 对比度 */
+html.dark .n-popover {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+/* 深色模式 date picker */
+html.dark .n-date-picker {
+  background: #283548 !important;
+}
+
+html.dark .n-date-panel {
+  background: #1E293B !important;
+}
+
+/* 深色模式 tab bar */
+html.dark .n-tabs-nav {
+  border-color: #334155 !important;
+}
+
+/* 深色模式下 drawer */
+html.dark .n-drawer-body-content-wrapper {
+  background: #1E293B !important;
+}
+
+/* 确保 primary 按钮在深色模式保持高可见 */
+html.dark .n-button--primary-type {
+  color: #fff !important;
+}
+
+/* ========== PC端响应式布局优化 ========== */
+/* 1280px (小屏笔记本) */
+@media (min-width: 1280px) and (max-width: 1365px) {
+  .page-header-stats .stat-item {
+    padding: 14px 16px !important;
+  }
+  .page-header-stats .stat-value {
+    font-size: 24px !important;
+  }
+  .n-card-header__extra .n-button {
+    padding: 0 12px !important;
+  }
+  .query-form .n-input,
+  .query-form .n-select,
+  .query-form .n-date-picker,
+  .toolbar .n-input,
+  .toolbar .n-select,
+  .toolbar .n-date-picker {
+    min-width: 180px !important;
+  }
+  /* 侧边栏优化 */
+  .n-layout-sider {
+    width: 200px !important;
+  }
+  /* 卡片间距 */
+  .n-grid {
+    gap: 12px !important;
+  }
+  /* 表格字体 */
+  .n-data-table-td {
+    font-size: 13px !important;
+  }
+}
+
+/* 1366px (标准笔记本) */
+@media (min-width: 1366px) and (max-width: 1439px) {
+  .page-header-stats .stat-item {
+    padding: 16px 18px !important;
+  }
+  .page-header-stats .stat-value {
+    font-size: 26px !important;
+  }
+  .query-form .n-input,
+  .query-form .n-select,
+  .query-form .n-date-picker,
+  .toolbar .n-input,
+  .toolbar .n-select,
+  .toolbar .n-date-picker {
+    min-width: 200px !important;
+  }
+  /* 侧边栏优化 */
+  .n-layout-sider {
+    width: 220px !important;
+  }
+  /* 卡片间距 */
+  .n-grid {
+    gap: 14px !important;
+  }
+}
+
+/* 1440px (大屏笔记本/小屏显示器) */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .page-header-stats .stat-item {
+    padding: 18px 20px !important;
+  }
+  .page-header-stats .stat-value {
+    font-size: 28px !important;
+  }
+  .query-form .n-input,
+  .query-form .n-select,
+  .query-form .n-date-picker,
+  .toolbar .n-input,
+  .toolbar .n-select,
+  .toolbar .n-date-picker {
+    min-width: 220px !important;
+  }
+  /* 侧边栏优化 */
+  .n-layout-sider {
+    width: 240px !important;
+  }
+  /* 卡片间距 */
+  .n-grid {
+    gap: 16px !important;
+  }
+  /* 图表高度 */
+  .chart-card .n-card__content {
+    min-height: 360px;
+  }
+}
+
+/* 1920px+ (大屏显示器) */
+@media (min-width: 1920px) {
+  .page-header-stats .stat-item {
+    padding: 20px 24px !important;
+  }
+  .page-header-stats .stat-value {
+    font-size: 32px !important;
+  }
+  .page-header-stats .stat-icon {
+    width: 52px !important;
+    height: 52px !important;
+  }
+  .query-form .n-input,
+  .query-form .n-select,
+  .query-form .n-date-picker,
+  .toolbar .n-input,
+  .toolbar .n-select,
+  .toolbar .n-date-picker {
+    min-width: 260px !important;
+  }
+  .n-card {
+    border-radius: 20px !important;
+  }
+  /* 侧边栏优化 */
+  .n-layout-sider {
+    width: 260px !important;
+  }
+  /* 卡片间距 */
+  .n-grid {
+    gap: 20px !important;
+  }
+  /* 图表高度 */
+  .chart-card .n-card__content {
+    min-height: 400px;
+  }
+  /* 表格行高 */
+  .n-data-table-td {
+    padding: 14px 16px !important;
+  }
+}
+
+/* ========== PC端深色模式增强 ========== */
+html.dark .dashboard-container {
+  background: transparent;
+}
+
+html.dark .stat-card-enhanced {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+html.dark .stat-card-value {
+  color: #f1f5f9;
+}
+
+html.dark .stat-card-label {
+  color: #94a3b8;
+}
+
+html.dark .chart-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .activity-card,
+html.dark .data-overview-card,
+html.dark .system-info-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .overview-item {
+  background: #0f172a;
+}
+
+html.dark .overview-item:hover {
+  background: #1e293b;
+}
+
+html.dark .overview-label {
+  color: #94a3b8;
+}
+
+html.dark .overview-value {
+  color: #f1f5f9;
+}
+
+html.dark .system-info-item {
+  border-bottom-color: #334155;
+}
+
+html.dark .info-label {
+  color: #94a3b8;
+}
+
+html.dark .info-value {
+  color: #e2e8f0;
+}
+
+/* ========== 深色模式增强 - 统计卡片 ========== */
+html.dark .stat-item {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .stat-value {
+  color: #f1f5f9 !important;
+}
+
+html.dark .stat-label {
+  color: #94a3b8 !important;
+}
+
+/* ========== 深色模式增强 - 日期选择器 ========== */
+html.dark .n-date-picker {
+  background: #243044 !important;
+}
+
+html.dark .n-date-picker-panel {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .n-date-picker-panel .n-date-panel-header {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-date-picker-panel .n-date-panel-weekdays {
+  color: #94a3b8 !important;
+}
+
+html.dark .n-date-picker-panel .n-date-panel-date {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-date-picker-panel .n-date-panel-date:hover {
+  background: #334155 !important;
+}
+
+html.dark .n-date-picker-panel .n-date-panel-date--selected {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+/* ========== 深色模式增强 - 数字输入框 ========== */
+html.dark .n-input-number {
+  background: #243044 !important;
+}
+
+html.dark .n-input-number .n-input-number-button {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-input-number .n-input-number-button:hover {
+  background: #475569 !important;
+}
+
+/* ========== 深色模式增强 - 复选框/开关 ========== */
+html.dark .n-checkbox .n-checkbox-box {
+  background: #243044 !important;
+  border-color: #475569 !important;
+}
+
+html.dark .n-checkbox .n-checkbox__label {
+  color: #e2e8f0 !important;
+}
+
+html.dark .n-switch:not(.n-switch--active) .n-switch__rail {
+  background: #475569 !important;
+}
+
+/* ========== 深色模式增强 - 抽屉 ========== */
+html.dark .n-drawer {
+  background: #1e293b !important;
+}
+
+html.dark .n-drawer-header {
+  background: #1e293b !important;
+  border-bottom-color: #334155 !important;
+}
+
+html.dark .n-drawer-header__main {
+  color: #f1f5f9 !important;
+}
+
+html.dark .n-drawer-body-content-wrapper {
+  background: #1e293b !important;
+}
+
+html.dark .n-drawer-footer {
+  background: #1e293b !important;
+  border-top-color: #334155 !important;
+}
+
+/* ========== 深色模式增强 - 结果/空状态 ========== */
+html.dark .n-result .n-result-header__title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .n-result .n-result-header__description {
+  color: #94a3b8 !important;
+}
+
+html.dark .n-empty {
+  color: #64748b !important;
+}
+
+html.dark .n-empty__description {
+  color: #64748b !important;
+}
+
+/* ========== 深色模式增强 - 骨架屏 ========== */
+html.dark .n-skeleton {
+  background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%) !important;
+  background-size: 200% 100% !important;
+}
+
+/* ========== 深色模式增强 - 标签页 ========== */
+html.dark .n-tabs .n-tabs-tab {
+  color: #94a3b8 !important;
+}
+
+html.dark .n-tabs .n-tabs-tab--active {
+  color: var(--color-primary) !important;
+}
+
+html.dark .n-tabs .n-tabs-bar {
+  background: var(--color-primary) !important;
+}
+
+/* ========== 深色模式增强 - 警告/提示 ========== */
+html.dark .n-alert {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .n-alert .n-alert-body__title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .n-alert .n-alert-body__content {
+  color: #94a3b8 !important;
+}
+
+/* ========== 深色模式增强 - 工具提示 ========== */
+html.dark .n-tooltip {
+  background: #334155 !important;
+  color: #f1f5f9 !important;
+}
+
+/* ========== 深色模式增强 - 加载指示器 ========== */
+html.dark .n-spin-content {
+  color: #94a3b8 !important;
+}
+
+/* ========== 深色模式 - 全局通用类覆盖 ========== */
+/* 通用浅色背景区块 → 深色 */
+html.dark .toolbar,
+html.dark .filter-bar,
+html.dark .import-section,
+html.dark .preview-section,
+html.dark .mapping-section,
+html.dark .progress-section,
+html.dark .cron-custom,
+html.dark .config-section,
+html.dark .setting-section,
+html.dark .info-section {
+  background: #1a2536 !important;
+  border-color: #334155 !important;
+}
+
+/* 通用标题/文本 */
+html.dark .page-title,
+html.dark .card-title,
+html.dark .section-title,
+html.dark .content-title,
+html.dark .result-title,
+html.dark .table-title,
+html.dark .panel-title,
+html.dark .modal-title,
+html.dark .empty-title,
+html.dark .upload-title,
+html.dark .header-title {
+  color: #f1f5f9 !important;
+}
+
+html.dark .page-desc,
+html.dark .section-desc,
+html.dark .empty-desc,
+html.dark .upload-hint,
+html.dark .card-desc,
+html.dark .hint-text,
+html.dark .help-text,
+html.dark .toolbar-hint,
+html.dark .sub-text {
+  color: #94a3b8 !important;
+}
+
+/* 通用次级文本 */
+html.dark .code-text,
+html.dark .meta-text,
+html.dark .time-text,
+html.dark .label-text {
+  color: #64748b !important;
+}
+
+/* 卡片自定义头部 */
+html.dark .card-header-custom {
+  color: #f1f5f9;
+}
+
+/* 通用分割线/边框 */
+html.dark .action-buttons,
+html.dark .pagination-wrapper,
+html.dark .filter-tags {
+  border-color: #334155 !important;
+}
+
+/* 通用空状态 */
+html.dark .empty-state,
+html.dark .empty-content {
+  color: #64748b !important;
+}
+html.dark .empty-state h3,
+html.dark .empty-content h3 {
+  color: #94a3b8 !important;
+}
+
+/* 通用tab内容区域 */
+html.dark .tab-content {
+  color: #e2e8f0;
+}
+
+/* 通用代码块 / JSON块 */
+html.dark .code-block,
+html.dark .json-block,
+html.dark .sql-block {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+  border-color: #334155 !important;
+}
+
+/* 通用表单/输入区域浅色背景 */
+html.dark .form-section,
+html.dark .edit-section,
+html.dark .detail-section {
+  background: #1a2536 !important;
+  border-color: #334155 !important;
+}
+
+/* 通用详情项 */
+html.dark .detail-item label,
+html.dark .info-label,
+html.dark .field-label {
+  color: #64748b !important;
+}
+html.dark .detail-item span,
+html.dark .info-value,
+html.dark .field-value {
+  color: #e2e8f0 !important;
+}
+
+/* 通用浅色面板 */
+html.dark .validation-panel,
+html.dark .warning-panel {
+  background: rgba(245, 158, 11, 0.08) !important;
+  border-color: rgba(245, 158, 11, 0.25) !important;
+}
+html.dark .validation-success,
+html.dark .success-panel {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #34d399 !important;
+}
+
+/* 进度文本 */
+html.dark .progress-text,
+html.dark .progress-msg {
+  color: #94a3b8 !important;
+}
+
+/* 确保所有 #f9fafb/#f8fafc/#f5f7fa/#f0f2f5 背景在深色模式下变暗 — 通配 */
+html.dark [style*="background: #f9fafb"],
+html.dark [style*="background: #f8fafc"],
+html.dark [style*="background: #f5f7fa"],
+html.dark [style*="background: #f0f2f5"],
+html.dark [style*="background:#f9fafb"],
+html.dark [style*="background:#f8fafc"] {
+  background: #1a2536 !important;
+}
+
+/* n-tabs 面板在深色模式下文字颜色 */
+html.dark .n-tab-pane {
+  color: #e2e8f0;
+}
+
+/* n-descriptions 组件 */
+html.dark .n-descriptions-table-header {
+  background: #263348 !important;
+}
+html.dark .n-descriptions-table-content {
+  color: #e2e8f0 !important;
+}
+
+/* n-collapse 折叠面板 */
+html.dark .n-collapse-item__header-main {
+  color: #e2e8f0 !important;
+}
+html.dark .n-collapse-item__content-inner {
+  color: #cbd5e1 !important;
+}
+
+/* n-list 列表 */
+html.dark .n-list-item {
+  border-color: #334155 !important;
+}
+
+/* n-upload 上传区域 */
+html.dark .n-upload-dragger {
+  background: #1a2536 !important;
+  border-color: #334155 !important;
+}
+html.dark .n-upload-dragger:hover {
+  border-color: var(--color-primary) !important;
+}
+
+/* n-timeline */
+html.dark .n-timeline-item-content__title {
+  color: #e2e8f0 !important;
+}
+html.dark .n-timeline-item-content__content {
+  color: #94a3b8 !important;
+}
+
+/* n-statistic */
+html.dark .n-statistic .n-statistic-value {
+  color: #f1f5f9 !important;
+}
+html.dark .n-statistic .n-statistic__label {
+  color: #94a3b8 !important;
+}
+
+/* n-thing */
+html.dark .n-thing-header__title {
+  color: #e2e8f0 !important;
+}
+html.dark .n-thing-main__description {
+  color: #94a3b8 !important;
+}
+
+/* ========== 深色模式 - 设计器通用 ========== */
+html.dark .designer-header {
+  background: #1e293b !important;
+  border-bottom-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .designer-left-panel,
+html.dark .designer-right-panel,
+html.dark .designer-center-panel,
+html.dark .left-panel,
+html.dark .right-panel,
+html.dark .center-panel {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .toolbar-row {
+  background: #1e293b !important;
+  border-bottom-color: #334155 !important;
+}
+
+html.dark .designer-body {
+  background: #0f172a !important;
+}
+
+html.dark .panel-card {
+  background: #1e293b !important;
+}
+
+html.dark .panel-toggle-btn {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #94a3b8 !important;
+}
+
+html.dark .panel-toggle-btn:hover {
+  background: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .floating-toolbar {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .chart-preview,
+html.dark .table-preview-wrapper {
+  background: #1e293b !important;
+}
+
+html.dark .chart-item-wrapper {
+  background: #1e293b !important;
+  border-color: #475569 !important;
+}
+
+html.dark .chart-item-wrapper:hover,
+html.dark .chart-item-wrapper.selected {
+  border-color: var(--color-primary) !important;
+}
+
+html.dark .page-canvas {
+  background: #0f172a !important;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) !important;
+}
+
+html.dark .chart-card-item {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .chart-card-item:hover {
+  border-color: var(--color-primary) !important;
+}
+
+html.dark .param-card,
+html.dark .sql-param-card,
+html.dark .sql-param-card-new {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .sql-field-mapping-content {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .sql-params-empty {
+  background: #1a2536 !important;
+  border-color: #334155 !important;
+  color: #64748b !important;
+}
+
+html.dark .generate-btn-wrapper {
+  background: #1e293b !important;
+  border-top-color: #334155 !important;
+}
+
+html.dark .config-collapse .n-collapse-item__content-inner {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .component-item {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .component-item:hover {
+  border-color: var(--color-primary) !important;
+}
+
+/* ========== 深色模式 - AI助手/聊天视图通用 ========== */
+html.dark .chat-input-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .msg-bubble {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .chart-preview-box {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .feature-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .data-preview {
+  background: #1e293b !important;
+}
+
+html.dark .config-modal-container {
+  background: #1e293b !important;
+}
+
+/* ========== 深色模式 - 表格数据管理 ========== */
+html.dark .app-body {
+  background: #0f172a !important;
+}
+
+html.dark .sidebar {
+  background: #1e293b !important;
+  border-right-color: #334155 !important;
+}
+
+html.dark .custom-tabs {
+  background: #1a2536 !important;
+  border-bottom-color: #334155 !important;
+}
+
+html.dark .tab-item.active {
+  background: #1e293b !important;
+}
+
+html.dark .query-result {
+  background: #1e293b !important;
+}
+
+html.dark .edit-pk-section {
+  background: rgba(245, 158, 11, 0.08) !important;
+  border-color: rgba(245, 158, 11, 0.25) !important;
+}
+
+html.dark .edit-pk-item {
+  background: #1e293b !important;
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+/* ========== 深色模式 - 通用白色背景最终兜底 ========== */
+html.dark .grid-item {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .item-thumb {
+  background: #1a2536 !important;
+}
+
+/* ========== 深色模式 - 查询设计器 ========== */
+html.dark .table-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .table-card:hover {
+  border-color: var(--color-primary) !important;
+}
+
+html.dark .drop-zone {
+  background: #1a2536 !important;
+  border-color: var(--dp-color-primary, #3b82f6) !important;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2) !important;
+}
+
+html.dark .condition-row {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .condition-row:hover {
+  border-color: #475569 !important;
+}
+
+html.dark .condition-row.is-incomplete {
+  background: rgba(245, 158, 11, 0.08) !important;
+  border-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+html.dark .join-config {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* ========== 深色模式 - 增强表格 ========== */
+html.dark .enhanced-table__filter-dropdown {
+  background-color: #1e293b !important;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.4), 0 6px 16px 0 rgba(0, 0, 0, 0.3), 0 9px 28px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+html.dark .enhanced-table__filter-clear {
+  background-color: #1e293b !important;
+  color: #cbd5e1 !important;
+}
+
+/* ========== 深色模式 - 其他辅助组件 ========== */
+html.dark .guide-overlay,
+html.dark .help-center {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .command-palette {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .template-gallery,
+html.dark .template-preview-modal,
+html.dark .template-save-modal {
+  background: #1e293b !important;
+}
+
+html.dark .widget-wrapper {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .kpi-card {
+  background: #1e293b !important;
+}
+
+html.dark .cell-style-editor {
+  background: #1e293b !important;
+}
+
+html.dark .pivot-config {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* ========== 深色模式 - 全局白色背景兜底修复 ========== */
+/* 图表中心 */
+html.dark .main-content,
+html.dark .chart-container,
+html.dark .table-wrapper,
+html.dark .parameter-panel,
+html.dark .param-panel-body,
+html.dark .param-panel-header {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .table-toolbar {
+  background: #243044 !important;
+  border-bottom-color: #334155 !important;
+}
+html.dark .table-toolbar-title { color: #e2e8f0 !important; }
+html.dark .param-panel-title { color: #e2e8f0 !important; }
+html.dark .info-bar-desc { color: #94a3b8 !important; }
+
+/* 数据传输/流程管理 */
+html.dark .pipeline-card,
+html.dark .pipeline-item,
+html.dark .nodes-section,
+html.dark .meta-tag {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .item-title { color: #e2e8f0 !important; }
+html.dark .item-meta { color: #94a3b8 !important; }
+html.dark .node-panel,
+html.dark .property-panel {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .canvas-node,
+html.dark .node-content {
+  background: #1e293b !important;
+  border-color: #475569 !important;
+}
+html.dark .node-item:hover {
+  background: #243044 !important;
+  border-color: var(--color-primary) !important;
+}
+html.dark .node-port {
+  background: #1e293b !important;
+  border-color: #64748b !important;
+}
+
+/* 报表/动态报表 */
+html.dark .mobile-data-card,
+html.dark .report-container {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 页面管理 */
+html.dark .icon-select-item {
+  background: #1e293b !important;
+}
+html.dark .icon-select-item:hover {
+  background: #243044 !important;
+}
+
+/* N-page-header 深色覆盖 */
+html.dark .n-page-header {
+  background: transparent !important;
+}
+html.dark .n-page-header .n-page-header__title {
+  color: #f1f5f9 !important;
+}
+html.dark .n-page-header .n-page-header__subtitle {
+  color: #94a3b8 !important;
+}
+html.dark .n-page-header .n-page-header__back .n-icon {
+  color: #94a3b8 !important;
+}
+
+/* N-tabs 深色模式增强 */
+html.dark .n-tabs-tab-pad { border-color: #334155 !important; }
+html.dark .n-tabs-wrapper { border-color: #334155 !important; }
+html.dark .n-tabs-pane-wrapper { color: #e2e8f0 !important; }
+
+/* ========== 深色模式 - 移动端视图 ========== */
+/* 通用移动端卡片和容器 */
+html.dark .item-card,
+html.dark .report-item,
+html.dark .chart-section,
+html.dark .table-section,
+html.dark .param-section,
+html.dark .chart-render-area,
+html.dark .chart-info-bar,
+html.dark .dv-card,
+html.dark .menu-list,
+html.dark .quick-entry-item,
+html.dark .stat-card-mobile,
+html.dark .section-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+html.dark .item-card-title,
+html.dark .report-item-title,
+html.dark .chart-info-name { color: #e2e8f0 !important; }
+html.dark .item-card-meta,
+html.dark .chart-info-time,
+html.dark .report-item-desc { color: #64748b !important; }
+
+/* 移动端面板/对话框全屏 */
+html.dark .fullscreen-panel,
+html.dark .table-fullscreen {
+  background: #0f172a !important;
+}
+
+/* 移动端分页 */
+html.dark .pagination-bar {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 移动端仪表盘 */
+html.dark .shortcut-item,
+html.dark .recent-item {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .shortcut-label,
+html.dark .recent-title { color: #e2e8f0 !important; }
+html.dark .recent-desc,
+html.dark .recent-time { color: #64748b !important; }
+
+/* 移动端个人中心 */
+html.dark .menu-item {
+  border-bottom-color: #334155 !important;
+}
+html.dark .menu-item-label { color: #e2e8f0 !important; }
+
+/* ========== 深色模式 - 通用文本色修正 ========== */
+html.dark .item-value,
+html.dark .cell-value,
+html.dark .pk-value,
+html.dark .edit-pk-value { color: #e2e8f0 !important; }
+html.dark .item-label,
+html.dark .cell-label,
+html.dark .pk-label,
+html.dark .edit-pk-label { color: #94a3b8 !important; }
+
+/* 自定义表头表格深色模式 */
+html.dark .custom-header-table :deep(.n-data-table .n-data-table-tr--striped .n-data-table-td) {
+  background: #1a2536 !important;
+}
+
+/* ========== 深色模式 - 再次兜底：所有子视图通用容器 ========== */
+html.dark .page-container,
+html.dark .view-container,
+html.dark .content-wrapper,
+html.dark .detail-content,
+html.dark .manage-content {
+  background: transparent !important;
+  color: #e2e8f0 !important;
+}
+
+/* 数据库管理器 */
+html.dark .db-sidebar,
+html.dark .db-content,
+html.dark .db-toolbar {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 查询条件面板统一 */
+html.dark .query-panel,
+html.dark .search-panel,
+html.dark .filter-panel {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 数据导入 */
+html.dark .step-content,
+html.dark .upload-area {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 变更密码/个人设置 */
+html.dark .settings-card,
+html.dark .password-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 数据视图 */
+html.dark .data-view-container {
+  background: transparent !important;
+}
+
+/* 集合日志 */
+html.dark .log-card,
+html.dark .log-detail {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 嵌入图表 */
+html.dark .chart-embed-container {
+  background: #0f172a !important;
+}
+
+/* 使用统计 */
+html.dark .usage-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 系统监控 */
+html.dark .monitor-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* ========== 深色模式 - 组件级兜底 ========== */
+/* SQL编辑器 */
+html.dark .sql-editor-wrap {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 图表编辑弹窗 */
+html.dark .chart-edit-modal,
+html.dark .chart-edit-form {
+  background: #1e293b !important;
+}
+
+/* 页面设计器 */
+html.dark .chart-library-panel,
+html.dark .component-library,
+html.dark .data-config-panel,
+html.dark .inline-chart-editor,
+html.dark .page-designer-container {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 查询设计器 */
+html.dark .query-designer {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* KPI卡片 */
+html.dark .kpi-card-value { color: #f1f5f9 !important; }
+html.dark .kpi-card-label { color: #94a3b8 !important; }
+html.dark .kpi-card-trend { color: #64748b !important; }
+
+/* 引导/帮助 */
+html.dark .guide-step {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+html.dark .help-article {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* 模板组件 */
+html.dark .template-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .template-card:hover {
+  border-color: var(--color-primary) !important;
+}
+html.dark .template-preview {
+  background: #0f172a !important;
+}
+
+/* 组件库项目 */
+html.dark .library-item {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .library-item:hover {
+  border-color: var(--color-primary) !important;
+}
+
+/* 数据配置面板 */
+html.dark .config-field {
+  background: #243044 !important;
+  border-color: #334155 !important;
+}
+
+/* 内联图表编辑器 */
+html.dark .editor-toolbar {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .editor-preview {
+  background: #0f172a !important;
+}
+
+/* ========== 深色模式 - Naive UI 全局组件兜底 ========== */
+/* 对话框 / 模态框 */
+html.dark .n-modal,
+html.dark .n-dialog {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+html.dark .n-dialog__title {
+  color: #f1f5f9 !important;
+}
+html.dark .n-dialog__content {
+  color: #cbd5e1 !important;
+}
+
+/* 抽屉 */
+html.dark .n-drawer-body-content-wrapper {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+html.dark .n-drawer-header {
+  background: #1e293b !important;
+  border-bottom-color: #334155 !important;
+}
+html.dark .n-drawer-header__main {
+  color: #f1f5f9 !important;
+}
+html.dark .n-drawer-footer {
+  background: #1e293b !important;
+  border-top-color: #334155 !important;
+}
+
+/* 下拉菜单 / Popover */
+html.dark .n-popover:not(.n-popover--raw) {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+html.dark .n-popover .n-popover-arrow {
+  background: #1e293b !important;
+}
+
+/* 下拉选择器弹出面板 */
+html.dark .n-base-select-menu {
+  background: #1e293b !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+html.dark .n-base-select-option {
+  color: #e2e8f0 !important;
+}
+html.dark .n-base-select-option--pending {
+  background: #334155 !important;
+}
+html.dark .n-base-select-option--selected {
+  background: rgba(59, 130, 246, 0.15) !important;
+  color: #60a5fa !important;
+}
+html.dark .n-base-select-group-header {
+  color: #94a3b8 !important;
+}
+
+/* 日期选择器弹出面板 */
+html.dark .n-date-panel {
+  background: #1e293b !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+html.dark .n-date-panel-header {
+  color: #e2e8f0 !important;
+}
+html.dark .n-date-panel-calendar .n-date-panel-date {
+  color: #cbd5e1 !important;
+}
+html.dark .n-date-panel-calendar .n-date-panel-date--current {
+  color: #60a5fa !important;
+}
+
+/* 表单控件 */
+html.dark .n-input {
+  --n-color: #1e293b !important;
+  --n-border: 1px solid #334155 !important;
+  --n-text-color: #e2e8f0 !important;
+  --n-placeholder-color: #64748b !important;
+  --n-caret-color: #60a5fa !important;
+  --n-color-focus: #1e293b !important;
+}
+html.dark .n-input-number {
+  --n-text-color: #e2e8f0 !important;
+}
+html.dark .n-base-selection {
+  --n-color: #1e293b !important;
+  --n-border: 1px solid #334155 !important;
+  --n-text-color: #e2e8f0 !important;
+  --n-placeholder-color: #64748b !important;
+}
+
+/* 卡片 */
+html.dark .n-card {
+  --n-color: #1e293b !important;
+  --n-border-color: #334155 !important;
+  --n-title-text-color: #f1f5f9 !important;
+  --n-text-color: #e2e8f0 !important;
+  --n-action-color: #1a2536 !important;
+}
+html.dark .n-card-header {
+  border-bottom-color: #334155 !important;
+}
+
+/* 消息 / 通知 */
+html.dark .n-message {
+  background: #1e293b !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 表格全局 */
+html.dark .n-data-table {
+  --n-th-color: #263348 !important;
+  --n-td-color: #1e293b !important;
+  --n-td-color-striped: #1a2536 !important;
+  --n-td-color-hover: #263449 !important;
+  --n-th-text-color: #e2e8f0 !important;
+  --n-td-text-color: #cbd5e1 !important;
+  --n-border-color: #334155 !important;
+}
+
+/* 标签页 */
+html.dark .n-tabs .n-tab-pane {
+  color: #e2e8f0 !important;
+}
+
+/* 分页器 */
+html.dark .n-pagination .n-pagination-item {
+  --n-item-color: transparent !important;
+  --n-item-text-color: #94a3b8 !important;
+  --n-item-border: 1px solid #334155 !important;
+  --n-item-color-active: rgba(59, 130, 246, 0.15) !important;
+  --n-item-text-color-active: #60a5fa !important;
+}
+
+/* 开关 */
+html.dark .n-switch {
+  --n-rail-color: #334155 !important;
+}
+
+/* 树形控件 */
+html.dark .n-tree .n-tree-node-content__text {
+  color: #e2e8f0 !important;
+}
+html.dark .n-tree .n-tree-node--selected .n-tree-node-content {
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+html.dark .n-tree .n-tree-node-content:hover {
+  background: #263449 !important;
+}
+
+/* 面包屑 */
+html.dark .n-breadcrumb-item {
+  color: #94a3b8 !important;
+}
+html.dark .n-breadcrumb-item:last-child {
+  color: #e2e8f0 !important;
+}
+
+/* 空状态 */
+html.dark .n-empty__description {
+  color: #64748b !important;
+}
+
+/* 工具提示 */
+html.dark .n-tooltip {
+  background: #334155 !important;
+  color: #e2e8f0 !important;
+}
+
+/* 滚动条全局美化 */
+html.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* ========== 深色模式 - 剩余组件兜底 ========== */
+/* PageDesigner */
+html.dark .designer-header,
+html.dark .toolbar-row {
+  background: #1e293b !important;
+  border-bottom-color: #334155 !important;
+}
+html.dark .designer-body {
+  background: #0f172a !important;
+}
+html.dark .designer-left-panel,
+html.dark .designer-right-panel {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .panel-collapse-btn {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #94a3b8 !important;
+}
+html.dark .mini-toolbar {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .chart-canvas-area {
+  background: #0f172a !important;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) !important;
+}
+html.dark .chart-item-wrapper {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+html.dark .chart-item-inner {
+  background: #1e293b !important;
+}
+html.dark .chart-component-item {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .chart-component-item:hover {
+  border-color: var(--color-primary) !important;
+}
+html.dark .param-component-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .property-panel-content {
+  background: #1e293b !important;
+}
+
+/* WidgetWrapper */
+html.dark .widget-wrapper {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* QueryDesigner ConditionRow */
+html.dark .condition-row {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* GuideOverlay */
+html.dark .guide-tooltip {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  color: #e2e8f0 !important;
+}
+html.dark .guide-highlight {
+  box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.7) !important;
+}
+html.dark .help-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+html.dark .help-card:hover {
+  border-color: var(--color-primary) !important;
+}
+
+/* KpiCard */
+html.dark .kpi-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* TemplateGallery / TemplatePreviewModal / TemplateSaveModal */
+html.dark .template-gallery {
+  background: #0f172a !important;
+}
+html.dark .template-gallery-header {
+  background: #1e293b !important;
+  border-bottom-color: #334155 !important;
+}
+html.dark .template-save-form {
+  background: #1e293b !important;
+}
+
+/* SqlEditor */
+html.dark .sql-editor-container {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* ========== Database Manager 深色模式 ========== */
+html.dark .sidebar {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .connection-panel {
+  background: linear-gradient(135deg, #1a2536 0%, #1e293b 100%) !important;
+  border-color: #334155 !important;
+}
+
+html.dark .connection-title {
+  color: #e2e8f0 !important;
+}
+
+html.dark .system-db-box {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.06) 100%) !important;
+}
+
+html.dark .system-db-title {
+  color: #34d399 !important;
+}
+
+html.dark .system-db-desc {
+  color: #94a3b8 !important;
+}
+
+html.dark .connected-panel {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(59, 130, 246, 0.06) 100%) !important;
+}
+
+html.dark .connected-title {
+  color: #60a5fa !important;
+}
+
+html.dark .connected-info {
+  color: #94a3b8 !important;
+}
+
+html.dark .connected-detail {
+  color: #64748b !important;
+}
+
+html.dark .group-header {
+  background: linear-gradient(135deg, #1a2536 0%, #1e293b 100%) !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .group-header:hover {
+  background: linear-gradient(135deg, #1e293b 0%, #263348 100%) !important;
+}
+
+html.dark .tree-item {
+  color: #cbd5e1 !important;
+}
+
+html.dark .tree-item:hover {
+  background: rgba(59, 130, 246, 0.08) !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .tree-item.active {
+  background: var(--dp-gradient-primary, linear-gradient(135deg, #2563eb 0%, #1e40af 100%)) !important;
+  color: #fff !important;
+}
+
+html.dark .empty-content {
+  color: #64748b !important;
+}
+
+html.dark .empty-content h3 {
+  color: #94a3b8 !important;
+}
+
+html.dark .result-title {
+  color: #e2e8f0 !important;
+}
+
+html.dark .toolbar-hint {
+  color: #94a3b8 !important;
+}
+
+html.dark .objects-panel {
+  background: transparent !important;
+}
+
+html.dark .empty-objects {
+  color: #64748b !important;
+}
+
+/* ========== PipelineMonitor/PipelineManage 深色模式 ========== */
+html.dark .pipeline-header,
+html.dark .monitor-header {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ========== SystemMonitor 深色模式 ========== */
+html.dark .system-monitor :deep(.n-page-header) {
+  background: #1e293b !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+html.dark .metric-card {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .metric-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ========== 全局页面容器 max-width 适配 ========== */
+/* 通用页面容器：限制最大宽度，防止超宽屏内容过度拉伸 */
+.page-container,
+.dashboard-container,
+.page-manage-container,
+.page-view-container {
+  max-width: var(--dp-content-max-width, 1600px);
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+@media (min-width: 1920px) {
+  .page-container,
+  .dashboard-container,
+  .page-manage-container,
+  .page-view-container {
+    max-width: 1800px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .page-container,
+  .dashboard-container,
+  .page-manage-container,
+  .page-view-container {
+    max-width: 2200px;
+  }
+}
+
+/* ========== 内部滚动区域统一滚动条样式 ========== */
+.n-card__content,
+.n-data-table-base-table-body,
+.n-drawer-body-content-wrapper,
+.n-modal,
+.sidebar-top,
+.n-virtual-list,
+.n-scrollbar-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+.n-card__content::-webkit-scrollbar,
+.n-data-table-base-table-body::-webkit-scrollbar,
+.n-drawer-body-content-wrapper::-webkit-scrollbar,
+.n-virtual-list::-webkit-scrollbar { width: 5px; height: 5px; }
+
+.n-card__content::-webkit-scrollbar-track,
+.n-data-table-base-table-body::-webkit-scrollbar-track,
+.n-drawer-body-content-wrapper::-webkit-scrollbar-track,
+.n-virtual-list::-webkit-scrollbar-track { background: transparent; }
+
+.n-card__content::-webkit-scrollbar-thumb,
+.n-data-table-base-table-body::-webkit-scrollbar-thumb,
+.n-drawer-body-content-wrapper::-webkit-scrollbar-thumb,
+.n-virtual-list::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 3px;
+}
+
+.n-card__content::-webkit-scrollbar-thumb:hover,
+.n-data-table-base-table-body::-webkit-scrollbar-thumb:hover,
+.n-virtual-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.55);
+}
+
+html.dark .n-card__content::-webkit-scrollbar-thumb,
+html.dark .n-data-table-base-table-body::-webkit-scrollbar-thumb,
+html.dark .n-drawer-body-content-wrapper::-webkit-scrollbar-thumb,
+html.dark .n-virtual-list::-webkit-scrollbar-thumb {
+  background: rgba(71, 85, 105, 0.45);
+}
+
+html.dark .n-card__content::-webkit-scrollbar-thumb:hover,
+html.dark .n-data-table-base-table-body::-webkit-scrollbar-thumb:hover,
+html.dark .n-virtual-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.65);
+}

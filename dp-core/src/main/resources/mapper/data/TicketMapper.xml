@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.TicketMapper">
+
+    <resultMap id="TicketResultMap" type="com.dataplatform.data.service.ticket.Ticket">
+        <id column="id" property="id"/>
+        <result column="ticket_no" property="ticketNo"/>
+        <result column="title" property="title"/>
+        <result column="description" property="description"/>
+        <result column="category" property="category"/>
+        <result column="priority" property="priority"/>
+        <result column="status" property="status"/>
+        <result column="submitter_id" property="submitterId"/>
+        <result column="submitter_name" property="submitterName"/>
+        <result column="assignee_id" property="assigneeId"/>
+        <result column="assignee_name" property="assigneeName"/>
+        <result column="attachments" property="attachments"
+                typeHandler="com.dataplatform.common.config.JsonStringListTypeHandler"/>
+        <result column="resolution" property="resolution"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="resolved_time" property="resolvedTime"/>
+    </resultMap>
+
+    <resultMap id="CommentResultMap" type="com.dataplatform.data.service.ticket.TicketComment">
+        <id column="id" property="id"/>
+        <result column="ticket_id" property="ticketId"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="content" property="content"/>
+        <result column="internal" property="internal"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <insert id="insertTicket" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_ticket (ticket_no, title, description, category, priority, status,
+            submitter_id, submitter_name, assignee_id, assignee_name, attachments, resolution, create_time, update_time)
+        VALUES (#{ticketNo}, #{title}, #{description}, #{category}, #{priority}, #{status},
+            #{submitterId}, #{submitterName}, #{assigneeId}, #{assigneeName},
+            #{attachments, typeHandler=com.dataplatform.common.config.JsonStringListTypeHandler},
+            #{resolution}, NOW(), NOW())
+    </insert>
+
+    <select id="selectById" resultMap="TicketResultMap">
+        SELECT * FROM sys_ticket WHERE id = #{id}
+    </select>
+
+    <select id="selectList" resultMap="TicketResultMap">
+        SELECT * FROM sys_ticket
+        <where>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="category != null">AND category = #{category}</if>
+            <if test="priority != null">AND priority = #{priority}</if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{size} OFFSET #{offset}
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM sys_ticket
+        <where>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="category != null">AND category = #{category}</if>
+            <if test="priority != null">AND priority = #{priority}</if>
+        </where>
+    </select>
+
+    <select id="selectBySubmitterId" resultMap="TicketResultMap">
+        SELECT * FROM sys_ticket WHERE submitter_id = #{submitterId} ORDER BY create_time DESC
+    </select>
+
+    <update id="updateStatus">
+        UPDATE sys_ticket SET status = #{status},
+        <if test="resolution != null">resolution = #{resolution},</if>
+        <if test="status == 'resolved' or status == 'closed'">resolved_time = NOW(),</if>
+        update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateAssignee">
+        UPDATE sys_ticket SET assignee_id = #{assigneeId}, assignee_name = #{assigneeName},
+        status = #{status}, update_time = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <insert id="insertComment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_ticket_comment (ticket_id, user_id, user_name, content, internal, create_time)
+        VALUES (#{ticketId}, #{userId}, #{userName}, #{content}, #{internal}, NOW())
+    </insert>
+
+    <select id="selectCommentsByTicketId" resultMap="CommentResultMap">
+        SELECT * FROM sys_ticket_comment WHERE ticket_id = #{ticketId} ORDER BY create_time ASC
+    </select>
+
+    <select id="countByStatus" resultType="long">
+        SELECT COUNT(*) FROM sys_ticket WHERE status = #{status}
+    </select>
+
+    <select id="selectMaxId" resultType="java.lang.Long">
+        SELECT COALESCE(MAX(id), 0) FROM sys_ticket
+    </select>
+
+    <delete id="deleteTicket">
+        DELETE FROM sys_ticket WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteCommentsByTicketId">
+        DELETE FROM sys_ticket_comment WHERE ticket_id = #{ticketId}
+    </delete>
+</mapper>

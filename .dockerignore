@@ -1,0 +1,41 @@
+.git
+.idea
+.vscode
+.devin
+.github
+
+# Build outputs and runtime data
+**/target/
+runtime/
+test-results/
+logs/
+_build.log
+_build.err.log
+ERR
+*.log
+*.tmp
+*.temp
+*.bak
+
+# Frontend dependencies/build outputs
+dp-ui/node_modules/
+dp-ui/dist/
+dp-ui/.env*
+!dp-ui/.env.example
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Internal docs excluded from public image context
+docs/design/
+docs/functional/
+docs/guide/
+docs/specs/
+docs/项目详细设计/
+
+# Local/editor artifacts
+Thumbs.db
+Desktop.ini
+*.swp

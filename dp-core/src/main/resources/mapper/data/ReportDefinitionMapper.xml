@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.ReportDefinitionMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.data.entity.ReportDefinition">
+        <id column="id" property="id"/>
+        <result column="report_name" property="reportName"/>
+        <result column="report_code" property="reportCode"/>
+        <result column="data_source_id" property="dataSourceId"/>
+        <result column="sql_content" property="sqlContent"/>
+        <result column="params" property="params"/>
+        <result column="description" property="description"/>
+        <result column="status" property="status"/>
+        <result column="mobile_enabled" property="mobileEnabled"/>
+        <result column="report_type" property="reportType"/>
+        <result column="allow_export_excel" property="allowExportExcel"/>
+        <result column="allow_export_pdf" property="allowExportPdf"/>
+        <result column="allow_print" property="allowPrint"/>
+        <result column="pdf_watermark" property="pdfWatermark"/>
+        <result column="watermark_type" property="watermarkType"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT id, report_name, report_code, data_source_id, sql_content, params, description, 
+               status, mobile_enabled, report_type, allow_export_excel, allow_export_pdf, allow_print, pdf_watermark, watermark_type, create_by, create_time, update_time 
+        FROM report_definition WHERE id = #{id}
+    </select>
+
+    <select id="selectByCode" resultMap="BaseResultMap">
+        SELECT id, report_name, report_code, data_source_id, sql_content, params, description, 
+               status, mobile_enabled, report_type, allow_export_excel, allow_export_pdf, allow_print, pdf_watermark, watermark_type, create_by, create_time, update_time 
+        FROM report_definition WHERE report_code = #{reportCode}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT id, report_name, report_code, data_source_id, sql_content, params, description, 
+               status, mobile_enabled, report_type, allow_export_excel, allow_export_pdf, allow_print, pdf_watermark, watermark_type, create_by, create_time, update_time 
+        FROM report_definition
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (report_name LIKE CONCAT('%', #{keyword}, '%') 
+                     OR report_code LIKE CONCAT('%', #{keyword}, '%')
+                     OR description LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM report_definition
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (report_name LIKE CONCAT('%', #{keyword}, '%') 
+                     OR report_code LIKE CONCAT('%', #{keyword}, '%')
+                     OR description LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*) FROM report_definition
+    </select>
+
+    <select id="selectAvailableReports" resultMap="BaseResultMap">
+        SELECT id, report_name, report_code, data_source_id, sql_content, params, description, 
+               status, mobile_enabled, report_type, allow_export_excel, allow_export_pdf, allow_print, pdf_watermark, watermark_type, create_by, create_time, update_time 
+        FROM report_definition
+        WHERE status = 1
+        ORDER BY report_name ASC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO report_definition (report_name, report_code, data_source_id, sql_content, 
+                                      params, description, status, report_type, allow_export_excel, allow_export_pdf, allow_print, pdf_watermark, watermark_type, create_by, create_time)
+        VALUES (#{reportName}, #{reportCode}, #{dataSourceId}, #{sqlContent}, 
+                #{params}, #{description}, #{status}, #{reportType}, #{allowExportExcel}, #{allowExportPdf}, #{allowPrint}, #{pdfWatermark}, #{watermarkType}, #{createBy}, NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE report_definition
+        <set>
+            <if test="reportName != null">report_name = #{reportName},</if>
+            <if test="reportCode != null">report_code = #{reportCode},</if>
+            <if test="dataSourceId != null">data_source_id = #{dataSourceId},</if>
+            <if test="sqlContent != null">sql_content = #{sqlContent},</if>
+            <if test="params != null">params = #{params},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="reportType != null">report_type = #{reportType},</if>
+            <if test="allowExportExcel != null">allow_export_excel = #{allowExportExcel},</if>
+            <if test="allowExportPdf != null">allow_export_pdf = #{allowExportPdf},</if>
+            <if test="allowPrint != null">allow_print = #{allowPrint},</if>
+            <if test="pdfWatermark != null">pdf_watermark = #{pdfWatermark},</if>
+            <if test="watermarkType != null">watermark_type = #{watermarkType},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM report_definition WHERE id = #{id}
+    </delete>
+</mapper>
+

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.message.mapper.ChatMessageMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.message.entity.ChatMessage">
+        <id column="id" property="id"/>
+        <result column="conversation_id" property="conversationId"/>
+        <result column="sender_id" property="senderId"/>
+        <result column="content_type" property="contentType"/>
+        <result column="content" property="content"/>
+        <result column="file_url" property="fileUrl"/>
+        <result column="file_name" property="fileName"/>
+        <result column="file_size" property="fileSize"/>
+        <result column="send_time" property="sendTime"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO chat_message (conversation_id, sender_id, content_type, content,
+                                  file_url, file_name, file_size, send_time)
+        VALUES (#{conversationId}, #{senderId}, #{contentType}, #{content},
+                #{fileUrl}, #{fileName}, #{fileSize}, #{sendTime})
+    </insert>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT id, conversation_id, sender_id, content_type, content,
+               file_url, file_name, file_size, send_time
+        FROM chat_message WHERE id = #{id}
+    </select>
+
+    <select id="selectByConversationId" resultMap="BaseResultMap">
+        SELECT * FROM (
+            SELECT id, conversation_id, sender_id, content_type, content,
+                   file_url, file_name, file_size, send_time
+            FROM chat_message
+            WHERE conversation_id = #{conversationId}
+            <if test="cursor != null">
+                AND id &lt; #{cursor}
+            </if>
+            ORDER BY id DESC
+            LIMIT #{limit}
+        ) t ORDER BY t.id ASC
+    </select>
+
+    <select id="selectLastContent" resultType="java.lang.String">
+        SELECT content FROM chat_message
+        WHERE conversation_id = #{conversationId}
+        ORDER BY send_time DESC, id DESC
+        LIMIT 1
+    </select>
+
+</mapper>

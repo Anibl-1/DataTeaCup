@@ -1,0 +1,87 @@
+# ============================================================
+# 微服务共享生产环境配置 (application-prod-common.yml)
+# 通过 spring.profiles.group.prod=prod-common 自动激活
+# ============================================================
+
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/data_platform?useUnicode=true&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Shanghai}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    druid:
+      initial-size: 10
+      max-active: 50
+      min-idle: 10
+      stat-view-servlet:
+        enabled: false
+
+  # 生产环境启用 Redis
+  data:
+    redis:
+      enabled: true
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
+# 生产环境安全配置
+jwt:
+  secret: ${JWT_SECRET:please-change-this-secret-key-in-production-256-bits}
+  expiration: 1800000
+
+user:
+  defaultPassword: ${USER_DEFAULT_PASSWORD:Dp@2024!}
+
+db-manager:
+  access-password: ${DB_MANAGER_PASSWORD:please-change-this}
+
+# 生产环境关闭 API 文档
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+# 生产环境优化超时
+server:
+  tomcat:
+    connection-timeout: 60000
+
+spring.mvc.async.request-timeout: 120000
+
+# Jasypt 加密
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASSWORD}
+
+# 导出配置
+export:
+  file:
+    path: ${EXPORT_FILE_PATH:../runtime/exports}
+    expire:
+      days: ${EXPORT_EXPIRE_DAYS:7}
+  pdf:
+    max-rows: ${EXPORT_PDF_MAX_ROWS:5000}
+
+# ELK 日志集成
+LOGSTASH_HOST: ${LOGSTASH_HOST:localhost}
+LOGSTASH_PORT: ${LOGSTASH_PORT:5000}
+
+# 生产日志 — 关闭 SQL 控制台日志
+logging:
+  level:
+    com.dataplatform: INFO
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+
+# Redis 安全
+security:
+  ip-filter:
+    use-redis: true
+
+# Redis 健康检查
+management:
+  health:
+    redis:
+      enabled: true

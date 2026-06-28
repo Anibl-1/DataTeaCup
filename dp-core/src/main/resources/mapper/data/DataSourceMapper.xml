@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.DataSourceMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.data.entity.DataSource">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="db_type" property="dbType"/>
+        <result column="host" property="host"/>
+        <result column="port" property="port"/>
+        <result column="database_name" property="database"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="group_name" property="groupName"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT id, name, db_type, host, port, `database` AS database_name, username, password, group_name, create_time, update_time 
+        FROM data_source WHERE id = #{id}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT id, name, db_type, host, port, `database` AS database_name, username, password, group_name, create_time, update_time 
+        FROM data_source
+        <where>
+            <if test="filters != null and filters.size() > 0">
+                <foreach collection="filters" item="filter" separator=" AND ">
+                    <choose>
+                        <when test="filter.operator == 'eq' and filter.field == 'id'">id = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'name'">name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'dbType'">db_type = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'host'">host = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'port'">port = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'database'">`database` = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'createTime'">create_time = #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'id'">id != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'name'">name != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'dbType'">db_type != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'host'">host != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'port'">port != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'database'">`database` != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'createTime'">create_time != #{filter.value}</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'name'">name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'dbType'">db_type LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'host'">host LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'database'">`database` LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'name'">name NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'dbType'">db_type NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'host'">host NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'database'">`database` NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'createTime'">create_time NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'name'">name LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'dbType'">db_type LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'host'">host LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'database'">`database` LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'createTime'">create_time LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'name'">name LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'dbType'">db_type LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'host'">host LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'database'">`database` LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'id'">id &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'port'">port &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'createTime'">create_time &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'id'">id &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'port'">port &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'createTime'">create_time &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'id'">id &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'port'">port &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'createTime'">create_time &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'id'">id &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'port'">port &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'createTime'">create_time &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'name'">name IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'dbType'">db_type IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'host'">host IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'database'">`database` IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'createTime'">create_time IS NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'name'">name IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'dbType'">db_type IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'host'">host IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'database'">`database` IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'createTime'">create_time IS NOT NULL</when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM data_source
+        <where>
+            <if test="filters != null and filters.size() > 0">
+                <foreach collection="filters" item="filter" separator=" AND ">
+                    <choose>
+                        <when test="filter.operator == 'eq' and filter.field == 'id'">id = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'name'">name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'dbType'">db_type = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'host'">host = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'port'">port = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'database'">`database` = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'createTime'">create_time = #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'id'">id != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'name'">name != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'dbType'">db_type != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'host'">host != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'port'">port != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'database'">`database` != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'createTime'">create_time != #{filter.value}</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'name'">name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'dbType'">db_type LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'host'">host LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'database'">`database` LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'name'">name NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'dbType'">db_type NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'host'">host NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'database'">`database` NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'createTime'">create_time NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'name'">name LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'dbType'">db_type LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'host'">host LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'database'">`database` LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'createTime'">create_time LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'name'">name LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'dbType'">db_type LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'host'">host LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'database'">`database` LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'id'">id &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'port'">port &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'createTime'">create_time &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'id'">id &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'port'">port &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'createTime'">create_time &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'id'">id &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'port'">port &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'createTime'">create_time &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'id'">id &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'port'">port &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'createTime'">create_time &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'name'">name IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'dbType'">db_type IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'host'">host IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'database'">`database` IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'createTime'">create_time IS NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'name'">name IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'dbType'">db_type IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'host'">host IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'database'">`database` IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'createTime'">create_time IS NOT NULL</when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO data_source (name, db_type, host, port, `database`, username, password, group_name, create_time)
+        VALUES (#{name}, #{dbType}, #{host}, #{port}, #{database}, #{username}, #{password}, #{groupName}, NOW())
+    </insert>
+    
+    <!-- 调试：检查插入的数据 -->
+    <!-- 注意：database字段使用反引号包裹，因为它是MySQL保留字 -->
+
+    <update id="update">
+        UPDATE data_source
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="dbType != null">db_type = #{dbType},</if>
+            <if test="host != null">host = #{host},</if>
+            <if test="port != null">port = #{port},</if>
+            <if test="database != null">`database` = #{database},</if>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="groupName != null">group_name = #{groupName},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM data_source WHERE id = #{id}
+    </delete>
+
+    <!-- 按数据库类型统计数据源数量 -->
+    <select id="countByDbType" resultType="java.util.Map">
+        SELECT db_type as name, COUNT(*) as value 
+        FROM data_source 
+        GROUP BY db_type
+    </select>
+
+    <!-- 查询所有分组名称 -->
+    <select id="selectGroups" resultType="java.lang.String">
+        SELECT DISTINCT group_name FROM data_source WHERE group_name IS NOT NULL AND group_name != '' ORDER BY group_name
+    </select>
+</mapper>
+

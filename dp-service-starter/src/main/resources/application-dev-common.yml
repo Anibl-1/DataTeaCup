@@ -1,0 +1,46 @@
+# ============================================================
+# 微服务共享开发环境配置 (application-dev-common.yml)
+# 通过 spring.profiles.group.dev=dev-common 自动激活
+# ============================================================
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/data_platform?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: race
+    druid:
+      initial-size: 3
+      max-active: 10
+      min-idle: 3
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin123
+
+jwt:
+  secret: data-platform-dev-secret-key-2024-must-be-at-least-256-bits
+  expiration: 7200000
+
+user:
+  defaultPassword: admin123
+
+db-manager:
+  access-password: admin123
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASSWORD:datateacup-dev-key-2026}
+
+security:
+  ip-filter:
+    use-redis: false
+
+logging:
+  level:
+    com.dataplatform: DEBUG

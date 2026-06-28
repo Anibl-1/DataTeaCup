@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.SyncTaskMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.data.service.sync.SyncTask">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="source_connector_type" property="sourceConnectorType"/>
+        <result column="source_config" property="sourceConfig" typeHandler="com.dataplatform.data.handler.JsonMapTypeHandler"/>
+        <result column="source_table" property="sourceTable"/>
+        <result column="target_table" property="targetTable"/>
+        <result column="sync_mode" property="syncMode"/>
+        <result column="sync_field" property="syncField"/>
+        <result column="batch_size" property="batchSize"/>
+        <result column="max_retries" property="maxRetries"/>
+        <result column="retry_interval_ms" property="retryIntervalMs"/>
+        <result column="cron_expression" property="cronExpression"/>
+        <result column="depends_on" property="dependsOn" typeHandler="com.dataplatform.data.handler.JsonListTypeHandler"/>
+        <result column="status" property="status"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="last_run_at" property="lastRunAt"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM sync_task WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM sync_task ORDER BY created_at DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sync_task (id, name, source_connector_type, source_config, source_table, target_table,
+                               sync_mode, sync_field, batch_size, max_retries, retry_interval_ms,
+                               cron_expression, depends_on, status, created_at, last_run_at)
+        VALUES (#{id}, #{name}, #{sourceConnectorType},
+                #{sourceConfig, typeHandler=com.dataplatform.data.handler.JsonMapTypeHandler},
+                #{sourceTable}, #{targetTable}, #{syncMode}, #{syncField}, #{batchSize},
+                #{maxRetries}, #{retryIntervalMs}, #{cronExpression},
+                #{dependsOn, typeHandler=com.dataplatform.data.handler.JsonListTypeHandler},
+                #{status}, #{createdAt}, #{lastRunAt})
+    </insert>
+
+    <update id="updateStatus">
+        UPDATE sync_task SET status = #{status} WHERE id = #{id}
+    </update>
+
+    <update id="update">
+        UPDATE sync_task
+        SET name = #{name},
+            source_connector_type = #{sourceConnectorType},
+            source_config = #{sourceConfig, typeHandler=com.dataplatform.data.handler.JsonMapTypeHandler},
+            source_table = #{sourceTable},
+            target_table = #{targetTable},
+            sync_mode = #{syncMode},
+            sync_field = #{syncField},
+            batch_size = #{batchSize},
+            max_retries = #{maxRetries},
+            retry_interval_ms = #{retryIntervalMs},
+            cron_expression = #{cronExpression},
+            depends_on = #{dependsOn, typeHandler=com.dataplatform.data.handler.JsonListTypeHandler},
+            status = #{status},
+            last_run_at = #{lastRunAt}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM sync_task WHERE id = #{id}
+    </delete>
+
+</mapper>

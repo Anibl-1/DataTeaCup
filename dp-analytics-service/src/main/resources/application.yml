@@ -1,0 +1,48 @@
+# ============================================================
+# dp-analytics-service — 仅保留本服务差异化配置
+# 共享配置见 dp-service-starter/application-common.yml
+# ============================================================
+server:
+  port: 9003
+
+spring:
+  application:
+    name: dp-analytics-service
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+    include: common
+
+# MyBatis type-aliases
+mybatis:
+  type-aliases-package: com.dataplatform.data.entity,com.dataplatform.system.entity
+
+# 应用标识
+app:
+  name: DataTeaCup Analytics Service
+
+# AI — analytics-service 需要 AI 功能
+ai:
+  enabled: ${AI_ENABLED:true}
+  provider: ${AI_PROVIDER:openai}
+  qwen:
+    api-key: ${AI_QWEN_KEY:}
+    base-url: ${AI_QWEN_URL:https://dashscope.aliyuncs.com/api/v1}
+    model: ${AI_QWEN_MODEL:qwen-turbo}
+  deepseek:
+    api-key: ${AI_DEEPSEEK_KEY:${AI_DEEPSEEK_API_KEY:${AI_API_KEY:}}}
+    base-url: ${AI_DEEPSEEK_URL:${AI_BASE_URL:https://api.deepseek.com}}
+    model: ${AI_DEEPSEEK_MODEL:${AI_MODEL:deepseek-v4-flash}}
+    thinking-type: ${AI_DEEPSEEK_THINKING_TYPE:disabled}
+    reasoning-effort: ${AI_DEEPSEEK_REASONING_EFFORT:high}
+  ollama:
+    base-url: ${AI_OLLAMA_URL:http://localhost:11434}
+    model: ${AI_OLLAMA_MODEL:llama2}
+  features:
+    sql-generation: true
+    data-analysis: true
+    code-optimization: true
+
+# Sentinel 应用名
+sentinel:
+  app:
+    name: dp-analytics-service

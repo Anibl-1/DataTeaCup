@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.PageChartMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.data.entity.PageChart">
+        <id column="id" property="id"/>
+        <result column="page_id" property="pageId"/>
+        <result column="chart_id" property="chartId"/>
+        <result column="mode" property="mode"/>
+        <result column="inline_config" property="inlineConfig"/>
+        <result column="x" property="x"/>
+        <result column="y" property="y"/>
+        <result column="w" property="w"/>
+        <result column="h" property="h"/>
+        <result column="left_pos" property="left"/>
+        <result column="top_pos" property="top"/>
+        <result column="width" property="width"/>
+        <result column="height" property="height"/>
+        <result column="sort_order" property="sortOrder"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <resultMap id="WithChartResultMap" type="com.dataplatform.data.entity.PageChart" extends="BaseResultMap">
+        <association property="chart" javaType="com.dataplatform.data.entity.ChartDefinition">
+            <id column="chart_id" property="id"/>
+            <result column="chart_name" property="chartName"/>
+            <result column="chart_code" property="chartCode"/>
+            <result column="chart_type" property="chartType"/>
+            <result column="data_source_id" property="dataSourceId"/>
+            <result column="sql_content" property="sqlContent"/>
+            <result column="chart_config" property="chartConfig"/>
+            <result column="description" property="description"/>
+            <result column="chart_status" property="status"/>
+        </association>
+    </resultMap>
+
+    <select id="selectByPageId" resultMap="WithChartResultMap">
+        SELECT 
+            pc.id, pc.page_id, pc.chart_id, pc.mode, pc.inline_config,
+            pc.x, pc.y, pc.w, pc.h, 
+            pc.left_pos, pc.top_pos, pc.width, pc.height,
+            pc.sort_order, pc.create_time, pc.update_time,
+            c.chart_name, c.chart_code, c.chart_type, c.data_source_id, c.sql_content, 
+            c.chart_config, c.description, c.status as chart_status
+        FROM page_chart pc
+        LEFT JOIN chart_definition c ON pc.chart_id = c.id
+        WHERE pc.page_id = #{pageId}
+        ORDER BY pc.sort_order ASC, pc.id ASC
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO page_chart 
+        (page_id, chart_id, mode, inline_config, x, y, w, h, left_pos, top_pos, width, height, sort_order, create_time, update_time)
+        VALUES 
+        (#{pageId}, #{chartId,jdbcType=BIGINT}, #{mode,jdbcType=VARCHAR}, #{inlineConfig,jdbcType=LONGVARCHAR}, #{x}, #{y}, #{w}, #{h}, #{left}, #{top}, #{width}, #{height}, #{sortOrder}, NOW(), NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE page_chart
+        <set>
+            <if test="chartId != null">chart_id = #{chartId},</if>
+            <if test="mode != null">mode = #{mode},</if>
+            inline_config = #{inlineConfig,jdbcType=LONGVARCHAR},
+            <if test="x != null">x = #{x},</if>
+            <if test="y != null">y = #{y},</if>
+            <if test="w != null">w = #{w},</if>
+            <if test="h != null">h = #{h},</if>
+            <if test="left != null">left_pos = #{left},</if>
+            <if test="top != null">top_pos = #{top},</if>
+            <if test="width != null">width = #{width},</if>
+            <if test="height != null">height = #{height},</if>
+            <if test="sortOrder != null">sort_order = #{sortOrder},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM page_chart WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteByPageId">
+        DELETE FROM page_chart WHERE page_id = #{pageId}
+    </delete>
+
+    <insert id="batchInsert">
+        INSERT INTO page_chart (page_id, chart_id, mode, inline_config, x, y, w, h, left_pos, top_pos, width, height, sort_order, create_time, update_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.pageId}, #{item.chartId,jdbcType=BIGINT}, #{item.mode,jdbcType=VARCHAR}, #{item.inlineConfig,jdbcType=LONGVARCHAR},
+             #{item.x,jdbcType=INTEGER}, #{item.y,jdbcType=INTEGER}, #{item.w,jdbcType=INTEGER}, #{item.h,jdbcType=INTEGER}, 
+             #{item.left,jdbcType=INTEGER}, #{item.top,jdbcType=INTEGER}, #{item.width,jdbcType=INTEGER}, #{item.height,jdbcType=INTEGER}, 
+             #{item.sortOrder,jdbcType=INTEGER}, NOW(), NOW())
+        </foreach>
+    </insert>
+
+</mapper>
+

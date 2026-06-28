@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+.vite/
+
+.env
+.env.*
+*.log
+stats.html
+
+.git
+.idea
+.vscode

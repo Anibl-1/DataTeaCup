@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.SyncExecutionLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.data.service.sync.SyncExecutionLog">
+        <id column="id" property="id"/>
+        <result column="task_id" property="taskId"/>
+        <result column="task_name" property="taskName"/>
+        <result column="sync_mode" property="syncMode"/>
+        <result column="synced_rows" property="syncedRows"/>
+        <result column="duration_ms" property="durationMs"/>
+        <result column="status" property="status"/>
+        <result column="error_message" property="errorMessage"/>
+        <result column="retry_count" property="retryCount"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+    </resultMap>
+
+    <insert id="insert">
+        INSERT INTO sync_execution_log (id, task_id, task_name, sync_mode, synced_rows, duration_ms,
+                                        status, error_message, retry_count, start_time, end_time)
+        VALUES (#{id}, #{taskId}, #{taskName}, #{syncMode}, #{syncedRows}, #{durationMs},
+                #{status}, #{errorMessage}, #{retryCount}, #{startTime}, #{endTime})
+    </insert>
+
+    <update id="update">
+        UPDATE sync_execution_log
+        SET synced_rows = #{syncedRows},
+            duration_ms = #{durationMs},
+            status = #{status},
+            error_message = #{errorMessage},
+            retry_count = #{retryCount},
+            end_time = #{endTime}
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectByTaskId" resultMap="BaseResultMap">
+        SELECT * FROM sync_execution_log
+        WHERE task_id = #{taskId}
+        ORDER BY start_time DESC
+        LIMIT #{limit}
+    </select>
+
+</mapper>

@@ -1,0 +1,357 @@
+/**
+ * High Contrast Mode Styles
+ * 高对比度模式样式 - 供视力障碍用户使用
+ * 
+ * Validates: Requirements 1.8
+ * 
+ * 设计原则:
+ * - 最小对比度 7:1 (WCAG 2.1 AAA 标准)
+ * - 更粗的边框
+ * - 更大的焦点指示器
+ * - 移除或简化渐变
+ * - 使用纯黑/白色
+ */
+
+/* ============================================================================
+   High Contrast Mode - Light Theme
+   ============================================================================ */
+
+.high-contrast:not(.dark) {
+  /* 文本颜色 */
+  --text-primary: var(--hc-text-primary, #000000);
+  --text-secondary: var(--hc-text-secondary, #1a1a1a);
+  --text-tertiary: var(--hc-text-tertiary, #333333);
+  
+  /* 背景颜色 */
+  --bg-primary: var(--hc-bg-primary, #FFFFFF);
+  --bg-secondary: var(--hc-bg-secondary, #F5F5F5);
+  --bg-tertiary: var(--hc-bg-tertiary, #EBEBEB);
+  
+  /* 主色调 */
+  --color-primary: var(--hc-primary, #0000CC);
+  --color-primary-hover: var(--hc-primary-hover, #0000AA);
+  --color-primary-pressed: var(--hc-primary-pressed, #000088);
+  
+  /* 状态颜色 */
+  --color-success: var(--hc-success, #006600);
+  --color-warning: var(--hc-warning, #CC6600);
+  --color-error: var(--hc-error, #CC0000);
+  --color-info: var(--hc-info, #0000CC);
+  
+  /* 边框颜色 */
+  --border-light: var(--hc-border-light, #666666);
+  --border-default: var(--hc-border-default, #333333);
+  --border-dark: var(--hc-border-dark, #000000);
+  
+  /* 焦点指示器 */
+  --focus-ring-color: var(--hc-focus-ring, #0000CC);
+  --focus-ring-width: var(--hc-focus-ring-width, 3px);
+  --focus-ring-offset: var(--hc-focus-ring-offset, 2px);
+}
+
+/* ============================================================================
+   High Contrast Mode - Dark Theme
+   ============================================================================ */
+
+.high-contrast.dark {
+  /* 文本颜色 */
+  --text-primary: var(--hc-text-primary, #FFFFFF);
+  --text-secondary: var(--hc-text-secondary, #F0F0F0);
+  --text-tertiary: var(--hc-text-tertiary, #E0E0E0);
+  
+  /* 背景颜色 */
+  --bg-primary: var(--hc-bg-primary, #000000);
+  --bg-secondary: var(--hc-bg-secondary, #0D0D0D);
+  --bg-tertiary: var(--hc-bg-tertiary, #1A1A1A);
+  
+  /* 主色调 */
+  --color-primary: var(--hc-primary, #66B3FF);
+  --color-primary-hover: var(--hc-primary-hover, #99CCFF);
+  --color-primary-pressed: var(--hc-primary-pressed, #3399FF);
+  
+  /* 状态颜色 */
+  --color-success: var(--hc-success, #66FF66);
+  --color-warning: var(--hc-warning, #FFCC00);
+  --color-error: var(--hc-error, #FF6666);
+  --color-info: var(--hc-info, #66B3FF);
+  
+  /* 边框颜色 */
+  --border-light: var(--hc-border-light, #999999);
+  --border-default: var(--hc-border-default, #CCCCCC);
+  --border-dark: var(--hc-border-dark, #FFFFFF);
+  
+  /* 焦点指示器 */
+  --focus-ring-color: var(--hc-focus-ring, #FFFF00);
+  --focus-ring-width: var(--hc-focus-ring-width, 3px);
+  --focus-ring-offset: var(--hc-focus-ring-offset, 2px);
+}
+
+/* ============================================================================
+   Global High Contrast Styles
+   ============================================================================ */
+
+.high-contrast {
+  /* 移除所有渐变背景 */
+  --gradient-primary: none;
+  --gradient-secondary: none;
+  
+  /* 增强文本可读性 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 焦点样式 - 更明显的焦点指示器 */
+.high-contrast *:focus {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color) !important;
+  outline-offset: var(--focus-ring-offset) !important;
+}
+
+.high-contrast *:focus:not(:focus-visible) {
+  outline: none !important;
+}
+
+.high-contrast *:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color) !important;
+  outline-offset: var(--focus-ring-offset) !important;
+}
+
+/* 链接样式 */
+.high-contrast a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+.high-contrast a:hover {
+  color: var(--color-primary-hover);
+  text-decoration-thickness: 3px;
+}
+
+.high-contrast a:active {
+  color: var(--color-primary-pressed);
+}
+
+/* 按钮样式 */
+.high-contrast button,
+.high-contrast [role="button"],
+.high-contrast .n-button {
+  border-width: 2px !important;
+  border-style: solid !important;
+  font-weight: 600 !important;
+}
+
+.high-contrast button:not(:disabled):hover,
+.high-contrast [role="button"]:not(:disabled):hover,
+.high-contrast .n-button:not(:disabled):hover {
+  border-width: 3px !important;
+}
+
+/* 输入框样式 */
+.high-contrast input,
+.high-contrast textarea,
+.high-contrast select,
+.high-contrast .n-input,
+.high-contrast .n-select {
+  border-width: 2px !important;
+  border-style: solid !important;
+  border-color: var(--border-default) !important;
+}
+
+.high-contrast input:focus,
+.high-contrast textarea:focus,
+.high-contrast select:focus,
+.high-contrast .n-input--focus,
+.high-contrast .n-select--focus {
+  border-color: var(--color-primary) !important;
+  border-width: 3px !important;
+}
+
+/* 卡片样式 */
+.high-contrast .n-card {
+  border: 2px solid var(--border-default) !important;
+  box-shadow: none !important;
+}
+
+/* 表格样式 */
+.high-contrast table,
+.high-contrast .n-data-table {
+  border: 2px solid var(--border-default) !important;
+}
+
+.high-contrast th,
+.high-contrast td,
+.high-contrast .n-data-table-th,
+.high-contrast .n-data-table-td {
+  border: 1px solid var(--border-default) !important;
+}
+
+.high-contrast th,
+.high-contrast .n-data-table-th {
+  background-color: var(--bg-tertiary) !important;
+  font-weight: 700 !important;
+}
+
+/* 移除阴影 */
+.high-contrast * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* 移除渐变背景 */
+.high-contrast [style*="gradient"] {
+  background: var(--bg-secondary) !important;
+}
+
+/* 图标增强 */
+.high-contrast svg,
+.high-contrast .n-icon {
+  stroke-width: 2px;
+}
+
+/* 分隔线 */
+.high-contrast hr,
+.high-contrast .n-divider {
+  border-color: var(--border-default) !important;
+  border-width: 2px !important;
+}
+
+/* 标签/徽章 */
+.high-contrast .n-tag,
+.high-contrast .n-badge {
+  border: 2px solid currentColor !important;
+  font-weight: 600 !important;
+}
+
+/* 模态框 */
+.high-contrast .n-modal,
+.high-contrast .n-dialog {
+  border: 3px solid var(--border-dark) !important;
+}
+
+/* 下拉菜单 */
+.high-contrast .n-dropdown-menu,
+.high-contrast .n-popover {
+  border: 2px solid var(--border-default) !important;
+}
+
+/* 选中状态 */
+.high-contrast [aria-selected="true"],
+.high-contrast .n-menu-item--selected,
+.high-contrast .n-tree-node--selected {
+  background-color: var(--color-primary) !important;
+  color: var(--bg-primary) !important;
+}
+
+/* 禁用状态 */
+.high-contrast [disabled],
+.high-contrast .n-button--disabled,
+.high-contrast .n-input--disabled {
+  opacity: 0.6 !important;
+  border-style: dashed !important;
+}
+
+/* 错误状态 */
+.high-contrast .n-form-item--error .n-input,
+.high-contrast .n-input--error {
+  border-color: var(--color-error) !important;
+  border-width: 3px !important;
+}
+
+/* 成功状态 */
+.high-contrast .n-form-item--success .n-input,
+.high-contrast .n-input--success {
+  border-color: var(--color-success) !important;
+  border-width: 3px !important;
+}
+
+/* 警告状态 */
+.high-contrast .n-form-item--warning .n-input,
+.high-contrast .n-input--warning {
+  border-color: var(--color-warning) !important;
+  border-width: 3px !important;
+}
+
+/* 复选框和单选框 */
+.high-contrast .n-checkbox,
+.high-contrast .n-radio {
+  border-width: 2px !important;
+}
+
+.high-contrast .n-checkbox--checked,
+.high-contrast .n-radio--checked {
+  border-width: 3px !important;
+}
+
+/* 开关 */
+.high-contrast .n-switch {
+  border: 2px solid var(--border-default) !important;
+}
+
+.high-contrast .n-switch--active {
+  border-color: var(--color-primary) !important;
+}
+
+/* 滑块 */
+.high-contrast .n-slider-rail {
+  background-color: var(--border-default) !important;
+  height: 6px !important;
+}
+
+.high-contrast .n-slider-handle {
+  border: 3px solid var(--color-primary) !important;
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* 进度条 */
+.high-contrast .n-progress-graph-line-rail {
+  background-color: var(--border-default) !important;
+}
+
+/* 工具提示 */
+.high-contrast .n-tooltip {
+  border: 2px solid var(--border-dark) !important;
+  font-weight: 500 !important;
+}
+
+/* 面包屑 */
+.high-contrast .n-breadcrumb-item__link {
+  text-decoration: underline !important;
+}
+
+/* 分页 */
+.high-contrast .n-pagination-item {
+  border: 2px solid var(--border-default) !important;
+}
+
+.high-contrast .n-pagination-item--active {
+  border-color: var(--color-primary) !important;
+  border-width: 3px !important;
+}
+
+/* 标签页 */
+.high-contrast .n-tabs-tab {
+  border-bottom: 3px solid transparent !important;
+}
+
+.high-contrast .n-tabs-tab--active {
+  border-bottom-color: var(--color-primary) !important;
+}
+
+/* 手风琴/折叠面板 */
+.high-contrast .n-collapse-item {
+  border: 2px solid var(--border-default) !important;
+  margin-bottom: 4px !important;
+}
+
+/* 时间线 */
+.high-contrast .n-timeline-item-timeline__line {
+  background-color: var(--border-default) !important;
+  width: 3px !important;
+}
+
+.high-contrast .n-timeline-item-timeline__circle {
+  border: 3px solid var(--color-primary) !important;
+}

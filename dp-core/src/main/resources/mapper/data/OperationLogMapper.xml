@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dataplatform.data.mapper.OperationLogMapper">
+    
+    <resultMap id="BaseResultMap" type="com.dataplatform.system.entity.OperationLog">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="operation_type" property="operationType"/>
+        <result column="module_name" property="moduleName"/>
+        <result column="operation_desc" property="operationDesc"/>
+        <result column="request_method" property="requestMethod"/>
+        <result column="request_url" property="requestUrl"/>
+        <result column="request_params" property="requestParams"/>
+        <result column="response_result" property="responseResult"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="duration_ms" property="durationMs"/>
+        <result column="status" property="status"/>
+        <result column="error_message" property="errorMessage"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    
+    <insert id="insert" parameterType="com.dataplatform.system.entity.OperationLog">
+        INSERT INTO sys_operation_log (
+            user_id, username, operation_type, module_name, operation_desc,
+            request_method, request_url, request_params, response_result,
+            ip_address, duration_ms, status, error_message
+        ) VALUES (
+            #{userId}, #{username}, #{operationType}, #{moduleName}, #{operationDesc},
+            #{requestMethod}, #{requestUrl}, #{requestParams}, #{responseResult},
+            #{ipAddress}, #{durationMs}, #{status}, #{errorMessage}
+        )
+    </insert>
+    
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM sys_operation_log WHERE id = #{id}
+    </select>
+    
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT * FROM sys_operation_log
+        <where>
+            <if test="params.userId != null">
+                AND user_id = #{params.userId}
+            </if>
+            <if test="params.username != null and params.username != ''">
+                AND username LIKE CONCAT('%', #{params.username}, '%')
+            </if>
+            <if test="params.moduleName != null and params.moduleName != ''">
+                AND module_name = #{params.moduleName}
+            </if>
+            <if test="params.operationType != null and params.operationType != ''">
+                AND operation_type = #{params.operationType}
+            </if>
+            <if test="params.status != null and params.status != ''">
+                AND status = #{params.status}
+            </if>
+            <if test="params.startTime != null">
+                AND create_time &gt;= #{params.startTime}
+            </if>
+            <if test="params.endTime != null">
+                AND create_time &lt;= #{params.endTime}
+            </if>
+            <if test="params.keyword != null and params.keyword != ''">
+                AND (operation_desc LIKE CONCAT('%', #{params.keyword}, '%')
+                     OR request_url LIKE CONCAT('%', #{params.keyword}, '%'))
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        <if test="params.page != null and params.pageSize != null">
+            LIMIT #{params.offset}, #{params.pageSize}
+        </if>
+    </select>
+    
+    <select id="countByParams" resultType="int">
+        SELECT COUNT(*) FROM sys_operation_log
+        <where>
+            <if test="params.userId != null">
+                AND user_id = #{params.userId}
+            </if>
+            <if test="params.username != null and params.username != ''">
+                AND username LIKE CONCAT('%', #{params.username}, '%')
+            </if>
+            <if test="params.moduleName != null and params.moduleName != ''">
+                AND module_name = #{params.moduleName}
+            </if>
+            <if test="params.operationType != null and params.operationType != ''">
+                AND operation_type = #{params.operationType}
+            </if>
+            <if test="params.status != null and params.status != ''">
+                AND status = #{params.status}
+            </if>
+            <if test="params.startTime != null">
+                AND create_time &gt;= #{params.startTime}
+            </if>
+            <if test="params.endTime != null">
+                AND create_time &lt;= #{params.endTime}
+            </if>
+            <if test="params.keyword != null and params.keyword != ''">
+                AND (operation_desc LIKE CONCAT('%', #{params.keyword}, '%')
+                     OR request_url LIKE CONCAT('%', #{params.keyword}, '%'))
+            </if>
+        </where>
+    </select>
+    
+    <select id="countByUser" resultType="map">
+        SELECT 
+            username,
+            COUNT(*) as count,
+            SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) as success_count,
+            SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed_count
+        FROM sys_operation_log
+        WHERE create_time BETWEEN #{startTime} AND #{endTime}
+        GROUP BY username
+        ORDER BY count DESC
+        LIMIT 10
+    </select>
+    
+    <select id="countByModule" resultType="map">
+        SELECT 
+            module_name,
+            COUNT(*) as count
+        FROM sys_operation_log
+        WHERE create_time BETWEEN #{startTime} AND #{endTime}
+        GROUP BY module_name
+        ORDER BY count DESC
+    </select>
+    
+    <select id="countByOperation" resultType="map">
+        SELECT 
+            operation_type,
+            COUNT(*) as count
+        FROM sys_operation_log
+        WHERE create_time BETWEEN #{startTime} AND #{endTime}
+        GROUP BY operation_type
+        ORDER BY count DESC
+    </select>
+    
+    <select id="countTrend" resultType="map">
+        SELECT 
+            DATE_FORMAT(create_time, #{groupBy}) as time_key,
+            COUNT(*) as count,
+            SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) as success_count,
+            SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed_count
+        FROM sys_operation_log
+        WHERE create_time BETWEEN #{startTime} AND #{endTime}
+        GROUP BY time_key
+        ORDER BY time_key
+    </select>
+    
+    <delete id="deleteBeforeTime">
+        DELETE FROM sys_operation_log WHERE create_time &lt; #{time}
+    </delete>
+    
+</mapper>

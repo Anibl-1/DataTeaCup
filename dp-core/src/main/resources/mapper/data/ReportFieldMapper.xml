@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.ReportFieldMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.data.entity.ReportField">
+        <id column="id" property="id"/>
+        <result column="report_id" property="reportId"/>
+        <result column="field_name" property="fieldName"/>
+        <result column="field_label" property="fieldLabel"/>
+        <result column="field_type" property="fieldType"/>
+        <result column="sort_order" property="sortOrder"/>
+        <result column="is_visible" property="isVisible"/>
+        <result column="width" property="width"/>
+        <result column="align" property="align"/>
+        <result column="dict_type" property="dictType"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectByReportId" resultMap="BaseResultMap">
+        SELECT id, report_id, field_name, field_label, field_type, sort_order, 
+               is_visible, width, align, dict_type, create_time, update_time 
+        FROM report_field 
+        WHERE report_id = #{reportId}
+        ORDER BY sort_order ASC, id ASC
+    </select>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT id, report_id, field_name, field_label, field_type, sort_order, 
+               is_visible, width, align, dict_type, create_time, update_time 
+        FROM report_field WHERE id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO report_field (report_id, field_name, field_label, field_type, 
+                                 sort_order, is_visible, width, align, dict_type, create_time)
+        VALUES (#{reportId}, #{fieldName}, #{fieldLabel}, #{fieldType}, 
+                #{sortOrder}, #{isVisible}, #{width}, #{align}, #{dictType}, NOW())
+    </insert>
+
+    <insert id="batchInsert">
+        INSERT INTO report_field (report_id, field_name, field_label, field_type, 
+                                 sort_order, is_visible, width, align, dict_type, create_time)
+        VALUES
+        <foreach collection="fields" item="field" separator=",">
+            (#{field.reportId}, #{field.fieldName}, #{field.fieldLabel}, #{field.fieldType}, 
+             #{field.sortOrder}, #{field.isVisible}, #{field.width}, #{field.align}, #{field.dictType}, NOW())
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE report_field
+        <set>
+            <if test="fieldName != null">field_name = #{fieldName},</if>
+            <if test="fieldLabel != null">field_label = #{fieldLabel},</if>
+            <if test="fieldType != null">field_type = #{fieldType},</if>
+            <if test="sortOrder != null">sort_order = #{sortOrder},</if>
+            <if test="isVisible != null">is_visible = #{isVisible},</if>
+            <if test="width != null">width = #{width},</if>
+            <if test="align != null">align = #{align},</if>
+            <if test="dictType != null">dict_type = #{dictType},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteByReportId">
+        DELETE FROM report_field WHERE report_id = #{reportId}
+    </delete>
+
+    <delete id="delete">
+        DELETE FROM report_field WHERE id = #{id}
+    </delete>
+</mapper>
+

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.PageDefinitionMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.data.entity.PageDefinition">
+        <id column="id" property="id"/>
+        <result column="page_name" property="pageName"/>
+        <result column="page_code" property="pageCode"/>
+        <result column="layout_config" property="layoutConfig"/>
+        <result column="description" property="description"/>
+        <result column="theme" property="theme"/>
+        <result column="theme_config" property="themeConfig"/>
+        <result column="parameter_panel" property="parameterPanel"/>
+        <result column="status" property="status"/>
+        <result column="mobile_enabled" property="mobileEnabled"/>
+        <result column="layout_mode" property="layoutMode"/>
+        <result column="bigscreen_config" property="bigscreenConfig"/>
+        <result column="mobile_layout_config" property="mobileLayoutConfig"/>
+        <result column="project_id" property="projectId"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <sql id="allColumns">
+        id, page_name, page_code, layout_config, description, theme, theme_config,
+        parameter_panel, status, mobile_enabled, layout_mode, bigscreen_config,
+        mobile_layout_config, project_id, create_by, create_time, update_time
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="allColumns"/>
+        FROM page_definition WHERE id = #{id}
+    </select>
+
+    <select id="selectByCode" resultMap="BaseResultMap">
+        SELECT <include refid="allColumns"/>
+        FROM page_definition WHERE page_code = #{pageCode}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT <include refid="allColumns"/>
+        FROM page_definition
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (page_name LIKE CONCAT('%', #{keyword}, '%') 
+                     OR page_code LIKE CONCAT('%', #{keyword}, '%')
+                     OR description LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="layoutMode != null and layoutMode != ''">
+                AND layout_mode = #{layoutMode}
+            </if>
+            <if test="layoutMode == null or layoutMode == ''">
+                AND (layout_mode IS NULL OR layout_mode = '' OR layout_mode = 'desktop')
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM page_definition
+        <where>
+            <if test="keyword != null and keyword != ''">
+                AND (page_name LIKE CONCAT('%', #{keyword}, '%') 
+                     OR page_code LIKE CONCAT('%', #{keyword}, '%')
+                     OR description LIKE CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="layoutMode != null and layoutMode != ''">
+                AND layout_mode = #{layoutMode}
+            </if>
+            <if test="layoutMode == null or layoutMode == ''">
+                AND (layout_mode IS NULL OR layout_mode = '' OR layout_mode = 'desktop')
+            </if>
+        </where>
+    </select>
+
+    <select id="countByLayoutMode" resultType="long">
+        SELECT COUNT(*) FROM page_definition
+        <where>
+            <if test="layoutMode != null and layoutMode != ''">
+                AND layout_mode = #{layoutMode}
+            </if>
+            <if test="layoutMode == null or layoutMode == ''">
+                AND (layout_mode IS NULL OR layout_mode = '' OR layout_mode = 'desktop')
+            </if>
+        </where>
+    </select>
+
+    <select id="countAll" resultType="long">
+        SELECT COUNT(*) FROM page_definition
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO page_definition 
+        (page_name, page_code, layout_config, description, theme, theme_config, parameter_panel, 
+         status, layout_mode, bigscreen_config, mobile_layout_config, project_id, create_by, create_time, update_time)
+        VALUES 
+        (#{pageName}, #{pageCode}, #{layoutConfig}, #{description}, #{theme}, #{themeConfig}, #{parameterPanel}, 
+         #{status}, #{layoutMode}, #{bigscreenConfig}, #{mobileLayoutConfig}, #{projectId}, #{createBy}, NOW(), NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE page_definition
+        <set>
+            <if test="pageName != null">page_name = #{pageName},</if>
+            <if test="pageCode != null">page_code = #{pageCode},</if>
+            <if test="layoutConfig != null">layout_config = #{layoutConfig},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="theme != null">theme = #{theme},</if>
+            <if test="themeConfig != null">theme_config = #{themeConfig},</if>
+            parameter_panel = #{parameterPanel},
+            <if test="status != null">status = #{status},</if>
+            <if test="layoutMode != null">layout_mode = #{layoutMode},</if>
+            bigscreen_config = #{bigscreenConfig},
+            mobile_layout_config = #{mobileLayoutConfig},
+            <if test="projectId != null">project_id = #{projectId},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM page_definition WHERE id = #{id}
+    </delete>
+
+</mapper>
+

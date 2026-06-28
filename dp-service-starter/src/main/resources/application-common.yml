@@ -1,0 +1,270 @@
+# ============================================================
+# DataTeaCup 微服务共享配置 (application-common.yml)
+# 各服务通过 spring.profiles.include=common 引入
+# 服务自身 application.yml 中的同 key 配置优先级更高
+# ============================================================
+
+server:
+  servlet:
+    context-path: /
+    session:
+      timeout: 30m
+  tomcat:
+    connection-timeout: 300000
+
+spring:
+  # Profile 组：激活 dev 时自动加载 dev-common 共享开发配置
+  profiles:
+    group:
+      dev: dev-common
+      prod: prod-common
+
+  # Nacos（默认关闭，开发时可用静态路由）
+  cloud:
+    nacos:
+      discovery:
+        enabled: ${NACOS_ENABLED:false}
+        server-addr: ${NACOS_ADDR:localhost:8848}
+        namespace: ${NACOS_NAMESPACE:}
+        group: DEFAULT_GROUP
+
+  # 数据源（Phase 5 前所有服务共享 data_platform 库）
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:data_platform}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:race}
+    druid:
+      initial-size: 5
+      max-active: 20
+      min-idle: 5
+      max-wait: 60000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+
+  # Redis（可选：启用后支持分布式会话 + 跨服务权限缓存，关闭则使用内存模式）
+  data:
+    redis:
+      enabled: ${REDIS_ENABLED:false}
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      database: 0
+      timeout: 10000
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+  # Servlet
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  mvc:
+    async:
+      request-timeout: 300000
+  aop:
+    proxy-target-class: true
+  # 异步任务线程池
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 20
+        queue-capacity: 100
+      thread-name-prefix: async-task-
+    scheduling:
+      pool:
+        size: 4
+      thread-name-prefix: scheduler-
+
+# MyBatis
+mybatis:
+  mapper-locations: classpath*:mapper/**/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# JWT
+jwt:
+  secret: ${JWT_SECRET:dev-only-secret-key-please-change-in-production-256bit}
+  expiration: 1800000
+  refreshThreshold: 600000
+
+# Sa-Token
+sa-token:
+  token-name: Authorization
+  token-prefix: Bearer
+  timeout: 1800
+  active-timeout: 1800
+  is-concurrent: true
+  is-share: true
+  token-style: uuid
+  is-log: false
+  is-read-header: true
+  is-read-cookie: false
+
+# 通用应用配置
+app:
+  name: DataTeaCup Platform
+  version: 2.1.0
+  description: Empower Your Data Intelligence
+  captcha:
+    enabled: ${CAPTCHA_ENABLED:false}
+    width: 130
+    height: 40
+    length: 4
+    lineCount: 30
+    expireMs: 300000
+
+user:
+  defaultPassword: ${USER_DEFAULT_PASSWORD:Dp@2024!}
+
+# AI（默认关闭，仅 analytics-service 开启）
+ai:
+  provider: ${AI_PROVIDER:openai}
+  enabled: ${AI_ENABLED:false}
+  openai:
+    api-key: ${AI_OPENAI_KEY:${AI_API_KEY:}}
+    base-url: ${AI_OPENAI_URL:https://api.openai.com/v1}
+    model: ${AI_OPENAI_MODEL:gpt-4.1}
+    max-tokens: ${AI_OPENAI_MAX_TOKENS:2000}
+    temperature: 0.7
+  qwen:
+    api-key: ${AI_QWEN_KEY:placeholder}
+    base-url: ${AI_QWEN_URL:https://dashscope.aliyuncs.com/api/v1}
+    model: ${AI_QWEN_MODEL:qwen-turbo}
+  deepseek:
+    api-key: ${AI_DEEPSEEK_KEY:${AI_DEEPSEEK_API_KEY:${AI_API_KEY:}}}
+    base-url: ${AI_DEEPSEEK_URL:${AI_BASE_URL:https://api.deepseek.com}}
+    model: ${AI_DEEPSEEK_MODEL:${AI_MODEL:deepseek-v4-flash}}
+    thinking-type: ${AI_DEEPSEEK_THINKING_TYPE:disabled}
+    reasoning-effort: ${AI_DEEPSEEK_REASONING_EFFORT:high}
+  ollama:
+    base-url: ${AI_OLLAMA_URL:http://localhost:11434}
+    model: ${AI_OLLAMA_MODEL:llama2}
+  features:
+    sql-generation: true
+    data-analysis: true
+    code-optimization: true
+  timeout:
+    connect: 60000
+    read: 180000
+
+# DB 超时
+db:
+  query:
+    timeout: 300
+  connection:
+    timeout: 30
+  export:
+    timeout: 600
+
+# 导出
+export:
+  file:
+    path: ../runtime/exports
+    expire:
+      days: 7
+  excel:
+    max-rows-per-sheet: 1000000
+    flush-rows: 500
+  strategy:
+    zip:
+      threshold: 2000000
+    split:
+      threshold: 10000000
+    rows:
+      per:
+        file: 2000000
+  pdf:
+    max-rows: 5000
+
+# Sentinel
+sentinel:
+  flow:
+    api-qps: 1000
+    query-concurrent: 100
+  degrade:
+    error-ratio: 0.5
+    time-window: 30
+  system:
+    max-qps: 5000
+    max-thread: 500
+    max-load: 0.8
+  dashboard:
+    server: ${SENTINEL_DASHBOARD:localhost:8858}
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: ${app.name}
+    export:
+      prometheus:
+        enabled: true
+  health:
+    redis:
+      enabled: ${REDIS_ENABLED:false}
+
+# API 文档
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
+# XXL-Job
+xxl:
+  job:
+    enabled: false
+    admin:
+      addresses: ${XXL_JOB_ADMIN:http://localhost:8080/xxl-job-admin}
+    accessToken: ${XXL_JOB_TOKEN:}
+    executor:
+      appname: ${spring.application.name:datateacup-executor}
+      address:
+      ip:
+      port: 9999
+      logpath: ../runtime/logs/xxl-job
+      logretentiondays: 30
+
+# 日志
+logging:
+  level:
+    root: INFO
+    com.dataplatform: INFO
+    com.dataplatform.data.service.cache: WARN
+    org.springframework.web: INFO
+    OPERATION_LOG: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: ../runtime/logs/${spring.application.name:application}.log
+  logback:
+    rollingpolicy:
+      max-file-size: 50MB
+      max-history: 30
+
+# 安全 IP 过滤
+security:
+  ip-filter:
+    use-redis: ${REDIS_ENABLED:false}

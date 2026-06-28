@@ -1,0 +1,13 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+
+# Build analysis report
+stats.html
+
+# Test & coverage artifacts
+coverage/
+coverage-output.txt
+test-output.txt

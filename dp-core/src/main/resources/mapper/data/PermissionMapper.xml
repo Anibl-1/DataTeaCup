@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.data.mapper.PermissionMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.system.entity.Permission">
+        <id column="id" property="id"/>
+        <result column="permission_name" property="permissionName"/>
+        <result column="permission_code" property="permissionCode"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM sys_permission WHERE id = #{id}
+    </select>
+
+    <select id="selectByPermissionCode" resultMap="BaseResultMap">
+        SELECT * FROM sys_permission WHERE permission_code = #{permissionCode}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM sys_permission ORDER BY create_time ASC
+    </select>
+
+    <select id="selectByRoleId" resultMap="BaseResultMap">
+        SELECT p.* FROM sys_permission p
+        INNER JOIN sys_role_permission rp ON p.id = rp.permission_id
+        WHERE rp.role_id = #{roleId}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT DISTINCT p.* FROM sys_permission p
+        INNER JOIN sys_role_permission rp ON p.id = rp.permission_id
+        INNER JOIN sys_user_role ur ON rp.role_id = ur.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+</mapper>
+
+

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dataplatform.system.mapper.RoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.dataplatform.system.entity.Role">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_code" property="roleCode"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM sys_role WHERE id = #{id}
+    </select>
+
+    <select id="selectByRoleCode" resultMap="BaseResultMap">
+        SELECT * FROM sys_role WHERE role_code = #{roleCode}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT * FROM sys_role
+        <where>
+            <if test="filters != null and filters.size() > 0">
+                <foreach collection="filters" item="filter" separator=" AND ">
+                    <choose>
+                        <when test="filter.operator == 'eq' and filter.field == 'id'">id = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'roleName'">role_name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'roleCode'">role_code = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'description'">description = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'createTime'">create_time = #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'id'">id != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'roleName'">role_name != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'roleCode'">role_code != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'description'">description != #{filter.value}</when>
+                        <when test="filter.operator == 'ne' and filter.field == 'createTime'">create_time != #{filter.value}</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'roleName'">role_name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'roleCode'">role_code LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'description'">description LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'roleName'">role_name NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'roleCode'">role_code NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'description'">description NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'notContains' and filter.field == 'createTime'">create_time NOT LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'roleName'">role_name LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'roleCode'">role_code LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'description'">description LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'startsWith' and filter.field == 'createTime'">create_time LIKE CONCAT(#{filter.value}, '%')</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'roleName'">role_name LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'roleCode'">role_code LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'description'">description LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'endsWith' and filter.field == 'createTime'">create_time LIKE CONCAT('%', #{filter.value})</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'id'">id &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gt' and filter.field == 'createTime'">create_time &gt; #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'id'">id &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'gte' and filter.field == 'createTime'">create_time &gt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'id'">id &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lt' and filter.field == 'createTime'">create_time &lt; #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'id'">id &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'lte' and filter.field == 'createTime'">create_time &lt;= #{filter.value}</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'roleName'">role_name IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'roleCode'">role_code IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'description'">description IS NULL</when>
+                        <when test="filter.operator == 'isNull' and filter.field == 'createTime'">create_time IS NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'roleName'">role_name IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'roleCode'">role_code IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'description'">description IS NOT NULL</when>
+                        <when test="filter.operator == 'isNotNull' and filter.field == 'createTime'">create_time IS NOT NULL</when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+        ORDER BY create_time DESC
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM sys_role
+        <where>
+            <if test="filters != null and filters.size() > 0">
+                <foreach collection="filters" item="filter" separator=" AND ">
+                    <choose>
+                        <when test="filter.operator == 'eq' and filter.field == 'id'">id = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'roleName'">role_name = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'roleCode'">role_code = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'description'">description = #{filter.value}</when>
+                        <when test="filter.operator == 'eq' and filter.field == 'createTime'">create_time = #{filter.value}</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'roleName'">role_name LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'roleCode'">role_code LIKE CONCAT('%', #{filter.value}, '%')</when>
+                        <when test="filter.operator == 'contains' and filter.field == 'description'">description LIKE CONCAT('%', #{filter.value}, '%')</when>
+                    </choose>
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_role (role_name, role_code, description)
+        VALUES (#{roleName}, #{roleCode}, #{description})
+    </insert>
+
+    <update id="update">
+        UPDATE sys_role
+        <set>
+            <if test="roleName != null">role_name = #{roleName},</if>
+            <if test="roleCode != null">role_code = #{roleCode},</if>
+            <if test="description != null">description = #{description},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM sys_role WHERE id = #{id}
+    </delete>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        SELECT r.* FROM sys_role r
+        INNER JOIN sys_user_role ur ON r.id = ur.role_id
+        WHERE ur.user_id = #{userId}
+    </select>
+
+    <insert id="insertRolePermissions">
+        INSERT INTO sys_role_permission (role_id, permission_id) VALUES
+        <foreach collection="permissionIds" item="permissionId" separator=",">
+            (#{roleId}, #{permissionId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteRolePermissions">
+        DELETE FROM sys_role_permission WHERE role_id = #{roleId}
+    </delete>
+
+    <select id="selectPermissionIdsByRoleId" resultType="long">
+        SELECT permission_id FROM sys_role_permission WHERE role_id = #{roleId}
+    </select>
+
+</mapper>

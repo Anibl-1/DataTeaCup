@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+target/
+*.war
+*.jar
+
+# IDE
+.devin/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs and runtime data
+*.log
+_build.log
+_build.err.log
+ERR
+logs/
+runtime/
+test-results/
+dump.rdb
+diag-data.json
+tomcat.*/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Local tools
+tools/
+
+# Internal docs excluded from public release
+docs/design/
+docs/functional/
+docs/guide/
+docs/specs/
+docs/项目详细设计/
+
+# License files and release staging
+*license*.json
+*license*.key
+!**/src/test/**
+!docs/**/*.md
+.release/
+release/
+*-release/
