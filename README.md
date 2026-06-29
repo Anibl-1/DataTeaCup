@@ -79,6 +79,23 @@ DataTeaCup（数据茶杯）是一套公开开源的数据集成与智能 BI 平
 | 构建 | Maven、npm、Docker、Docker Compose、Nginx |
 | AI | OpenAI-compatible API、Qwen、DeepSeek、Ollama |
 
+
+开源版本说明
+没有许可文件时，系统会进入默认限制模式。项目仍会正常启动，普通功能可用，高级额度按默认值限制。
+
+限制项	默认值
+报表导出最大行数	100,000 行
+图表中心页面数量	10 个
+报表中心页面数量	20 个
+AI 每日提问次数	20 次
+数据流程数量	10 个
+商业授权使用 Ed25519 签名 JSON 文件。默认固定路径：
+
+Docker 容器：/app/license/datateacup-license.json
+本地运行：runtime/license/datateacup-license.json
+环境变量覆盖：DATATEACUP_LICENSE_FILE
+Spring 配置覆盖：datateacup.license.file
+
 ## 快速启动
 
 ### Docker Compose
