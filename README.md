@@ -157,44 +157,6 @@ SQL 脚本保存在 `docs/sql/`。
 
 初始化数据只包含默认管理员、角色权限、菜单、系统配置、字典、组织岗位、工作流默认规则和内置模板。运行日志、缓存、聊天记录、SQL 历史、导出记录、测试数据和临时内容不会写入开源初始化脚本。
 
-## 开源版本说明
-
-没有许可文件时，系统会进入默认限制模式。项目仍会正常启动，普通功能可用，高级额度按默认值限制。
-
-| 限制项 | 默认值 |
-| --- | ---: |
-| 报表导出最大行数 | 100,000 行 |
-| 图表中心页面数量 | 10 个 |
-| 报表中心页面数量 | 20 个 |
-| AI 每日提问次数 | 20 次 |
-| 数据流程数量 | 10 个 |
-
-商业授权使用 Ed25519 签名 JSON 文件。默认固定路径：
-
-- Docker 容器：`/app/license/datateacup-license.json`
-- 本地运行：`runtime/license/datateacup-license.json`
-- 环境变量覆盖：`DATATEACUP_LICENSE_FILE`
-- Spring 配置覆盖：`datateacup.license.file`
-
-## 发布边界
-
-开源仓库只保留源代码、Docker 配置、SQL 脚本和必要 Markdown 文档。不发布以下内容：
-
-- `.env`
-- `runtime/`
-- `test-results/`
-- `_build.log`
-- `_build.err.log`
-- `target/`
-- `node_modules/`
-- `dp-ui/dist/`
-- `.idea/`
-- `.devin/`
-- 许可文件、私钥、真实 API Key、真实数据库密码
-- 详细设计、内部规格、临时测试脚本和截图素材
-
-Markdown 文档可以通过文字、链接或相对路径说明截图位置和操作步骤；截图图片、浏览器遥测文件、运行日志和导出文件不进入开源仓库。
-
 ## 常用命令
 
 ```bash
