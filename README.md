@@ -325,7 +325,7 @@ AI_ENABLED=true
 AI_PROVIDER=deepseek
 AI_API_KEY=your-api-key
 AI_BASE_URL=https://api.deepseek.com
-AI_MODEL=deepseek-chat
+AI_MODEL=deepseek-v4-flash
 ```
 
 也可切换为 `openai`、`qwen` 或本地 `ollama`。请勿将真实 API Key 提交到版本库。
